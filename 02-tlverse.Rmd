@@ -1,259 +1,140 @@
-# (PART) Part 1: Preliminaries {-}
+# (PART) 1부: 예비 사항 {-}
 
-# About the `tlverse` {#tlverse}
+# `tlverse`에 대하여 {#tlverse}
 
-## What is the `tlverse`?
+## `tlverse`란 무엇인가?
 
-The `tlverse` is a new framework for Targeted Learning in `R`, inspired by
-the [`tidyverse` ecosystem](https://tidyverse.org) of `R` packages.
+`tlverse`는 `R`에서의 타겟 러닝을 위한 새로운 프레임워크로, `R` 패키지의 [`tidyverse` 생태계](https://tidyverse.org)에서 영감을 받았습니다.
 
-By analogy to the [`tidyverse`](https://tidyverse.org/):
+[`tidyverse`](https://tidyverse.org/)에 비유하자면:
 
-> The `tidyverse` is an opinionated collection of `R` packages designed for data
-> science. All packages share an underlying design philosophy, grammar, and data
-> structures.
+> `tidyverse`는 데이터 과학을 위해 설계된 `R` 패키지의 독자적인 컬렉션입니다. 모든 패키지는 기본 설계 철학, 문법 및 데이터 구조를 공유합니다.
 
-So, the [`tlverse`](https://tlverse.org) is
+따라서 [`tlverse`](https://tlverse.org)는
 
-> An opinionated collection of `R` packages for Targeted Learning sharing an
-> underlying design philosophy, grammar, and core set of data structures. The
-> `tlverse` aims to provide tools both for building Targeted Learning-based
-> data analyses and for implementing novel, state-of-the-art Targeted Learning
-> methods.
+> 기본 설계 철학, 문법 및 핵심 데이터 구조 집합을 공유하는 타겟 러닝을 위한 `R` 패키지의 독자적인 컬렉션입니다. `tlverse`는 타겟 러닝 기반 데이터 분석을 구축하고 최신의 새로운 타겟 러닝 방법을 구현하기 위한 도구를 제공하는 것을 목표로 합니다.
 
-## Anatomy of the `tlverse`
+## `tlverse`의 구조
 
-All Targeted Learning methods are targeted maximum likelihood (or minimum
-loss-based) estimators (i.e., TMLEs). The construction of any Targeted Learning
-estimator proceeds through a two-stage process:
+모든 타겟 러닝 방법은 타겟 최대 가능도(또는 최소 손실 기반) 추정량(즉, TMLE)입니다. 모든 타겟 러닝 추정량의 구성은 두 단계 과정을 통해 진행됩니다.
 
-1. Flexibly learning particular components of the data-generating distribution
-   often through machine learning (e.g., Super Learning), resulting in _initial
-   estimates_ of nuisance parameters.
-2. Use of a carefully constructed parametric model-based update, via maximum
-   likelihood estimation (i.e., MLE), incorporating the initial estimates
-   produced by the prior step to produce a TML estimator.
+1. 종종 기계 학습(예: 슈퍼 러닝)을 통해 데이터 생성 분포의 특정 구성 요소를 유연하게 학습하여 성가신 모수의 _초기 추정치_를 생성합니다.
+2. 이전 단계에서 생성된 초기 추정치를 통합하여 TML 추정량을 생성하기 위해 최대 가능도 추정(즉, MLE)을 통해 신중하게 구성된 매개변수 모델 기반 업데이트를 사용합니다.
 
-The packages making up the core components of the `tlverse` software ecosystem
--- `sl3` and `tmle3` -- address the above two goals, respectively. Together, the
-general functionality exposed by both allows one to build specific TMLEs
-tailored exactly to a particular statistical estimation problem.
+`tlverse` 소프트웨어 생태계의 핵심 구성 요소를 이루는 패키지인 `sl3`와 `tmle3`는 각각 위의 두 가지 목표를 다룹니다. 함께, 이 두 가지가 노출하는 일반적인 기능은 특정 통계적 추정 문제에 정확하게 맞춰진 특정 TMLE를 구축할 수 있게 합니다.
 
-The software packages that make up the **core** of the `tlverse` are
+`tlverse`의 **핵심**을 이루는 소프트웨어 패키지는 다음과 같습니다.
 
-* [`sl3`](https://github.com/tlverse/sl3): Modern Super Machine Learning
-  * _What?_ A modern object-oriented implementation of the Super Learner
-    algorithm, employing recently developed paradigms in `R` programming.
-  * _Why?_ A design that leverages modern ideas for faster computation, is
-    easily extensible and forward-looking, and forms one of the cornerstones of
-    the `tlverse`.
+* [`sl3`](https://github.com/tlverse/sl3): 최신 슈퍼 머신 러닝
+  * _무엇인가?_ `R` 프로그래밍에서 최근 개발된 패러다임을 사용하여 슈퍼 러너 알고리즘을 현대적으로 객체 지향적으로 구현한 것입니다.
+  * _왜?_ 더 빠른 계산을 위해 현대적인 아이디어를 활용하고, 쉽게 확장 가능하며 미래 지향적이며, `tlverse`의 초석 중 하나를 형성하는 디자인입니다.
 
-* [`tmle3`](https://github.com/tlverse/tmle3): An Engine for Targeted Learning
-  * _What?_ A generalized framework that simplifies Targeted Learning by
-    identifying and implementing a series of common statistical estimation
-    procedures.
-  * _Why?_ A common interface and engine that accommodates current algorithmic
-    approaches to Targeted Learning and yet remains a flexible enough engine to
-    power the implementation of emerging statistical techniques as they are
-    developed.
+* [`tmle3`](https://github.com/tlverse/tmle3): 타겟 러닝을 위한 엔진
+  * _무엇인가?_ 일련의 공통적인 통계적 추정 절차를 식별하고 구현함으로써 타겟 러닝을 단순화하는 일반화된 프레임워크입니다.
+  * _왜?_ 현재의 타겟 러닝에 대한 알고리즘적 접근 방식을 수용하면서도 개발되는 새로운 통계적 기법의 구현을 지원할 만큼 유연한 엔진인 공통 인터페이스 및 엔진입니다.
 
-Beyond these engines that provide the driving force behind the `tlverse`, there
-are a few supporting packages that play important roles in the **background**:
+`tlverse`를 구동하는 이러한 엔진 외에도 **백그라운드**에서 중요한 역할을 하는 몇 가지 지원 패키지가 있습니다.
 
-* [`origami`](https://github.com/tlverse/origami): A Generalized Framework for
-   Cross-Validation [@coyle2018origami]
-  * _What?_ A generalized framework for flexible cross-validation.
-  * _Why?_ Cross-validation is a key part of ensuring error estimates are honest
-    and in preventing overfitting. It is an essential part of both the Super
-    Learner ensemble modeling algorithm and in the construction of TML
-    estimators.
+* [`origami`](https://github.com/tlverse/origami): 교차 검증을 위한 일반화된 프레임워크 [@coyle2018origami]
+  * _무엇인가?_ 유연한 교차 검증을 위한 일반화된 프레임워크입니다.
+  * _왜?_ 교차 검증은 오차 추정치가 정직하도록 보장하고 과적합을 방지하는 데 핵심적인 부분입니다. 이는 슈퍼 러너 앙상블 모델링 알고리즘과 TML 추정량 구성 모두에 필수적인 부분입니다.
 
-* [`delayed`](https://github.com/tlverse/delayed): Parallelization Framework for
-   Dependent Tasks
-  * _What?_ A framework for delayed computations (i.e., futures) based on task
-    dependencies.
-  * _Why?_ Efficient allocation of compute resources is essential when deploying
-    computationally intensive algorithms at large scale.
+* [`delayed`](https://github.com/tlverse/delayed): 종속 작업에 대한 병렬화 프레임워크
+  * _무엇인가?_ 작업 종속성에 기반한 지연된 계산(즉, 퓨처)을 위한 프레임워크입니다.
+  * _왜?_ 계산 집약적인 알고리즘을 대규모로 배포할 때 효율적인 계산 리소스 할당이 필수적입니다.
 
-A key principle of the `tlverse` is extensibility. That is, the software
-ecosystem aims to support the development of novel Targeted Learning estimators
-as they reach maturity. To achieve this degree of flexibility, we follow the
-model of implementing new classes of estimators, for distinct causal inference
-problems in separate packages, all of which rely upon the core machinery
-provided by `sl3` and `tmle3`. There are currently three examples:
+`tlverse`의 핵심 원칙은 확장성입니다. 즉, 소프트웨어 생태계는 성숙 단계에 도달함에 따라 새로운 타겟 러닝 추정량 개발을 지원하는 것을 목표로 합니다. 이러한 유연성을 달성하기 위해 우리는 `sl3` 및 `tmle3`에서 제공하는 핵심 기능을 모두 사용하는 별도의 패키지에서 고유한 인과 추론 문제에 대한 새로운 추정량 클래스를 구현하는 모델을 따릅니다. 현재 세 가지 예가 있습니다.
 
-* [`tmle3mopttx`](https://github.com/tlverse/tmle3mopttx): Optimal Treatments
-  in the `tlverse`
-  * _What?_ Learn an optimal rule and estimate the mean outcome under the rule.
-  * _Why?_ Optimal treatments are a powerful tool in precision healthcare and
-    other settings where a one-size-fits-all treatment approach is not
-    appropriate.
+* [`tmle3mopttx`](https://github.com/tlverse/tmle3mopttx): `tlverse`에서의 최적 치료
+  * _무엇인가?_ 최적 규칙을 학습하고 해당 규칙 하에서의 평균 결과를 추정합니다.
+  * _왜?_ 최적 치료는 정밀 의료 및 모든 사람에게 맞는 단일 치료 접근 방식이 적절하지 않은 기타 환경에서 강력한 도구입니다.
 
-* [`tmle3shift`](https://github.com/tlverse/tmle3shift): Stochastic Shift
-  Interventions based on Modified Treatment Policies in the `tlverse`
-  * _What?_ Stochastic shift interventions for evaluating changes in
-    continuous-valued treatments.
-  * _Why?_ Not all treatment variables are binary or categorical. Estimating the
-    total effects of intervening on continuous-valued treatments provides a way
-    to probe how an effect changes with shifts in the treatment variable.
+* [`tmle3shift`](https://github.com/tlverse/tmle3shift): `tlverse`에서 수정된 치료 정책을 기반으로 한 확률적 이동 중재
+  * _무엇인가?_ 연속 값 치료의 변화를 평가하기 위한 확률적 이동 중재입니다.
+  * _왜?_ 모든 치료 변수가 이진 또는 범주형은 아닙니다. 연속 값 치료에 대한 중재의 총 효과를 추정하면 치료 변수의 이동에 따라 효과가 어떻게 변하는지 조사할 수 있는 방법을 제공합니다.
 
-* [`tmle3mediate`](https://github.com/tlverse/tmle3mediate): Causal Mediation
-  Analysis in the `tlverse`
-  * _What?_ Techniques for evaluating the direct and indirect effects of
-    treatments through mediating variables.
-  * _Why?_ Evaluating the total effect of a treatment does not provide
-    information about the pathways through which it may operate. When mediating
-    variables have been collected, one can instead evaluate direct and indirect
-    effect parameters that speak to the _action mechanism_ of the treatment.
+* [`tmle3mediate`](https://github.com/tlverse/tmle3mediate): `tlverse`에서의 인과 매개 분석
+  * _무엇인가?_ 매개 변수를 통해 치료의 직접 및 간접 효과를 평가하는 기법입니다.
+  * _왜?_ 치료의 총 효과를 평가하는 것은 치료가 작동할 수 있는 경로에 대한 정보를 제공하지 않습니다. 매개 변수가 수집된 경우 치료의 _작용 메커니즘_을 설명하는 직접 및 간접 효과 매개변수를 대신 평가할 수 있습니다.
 
-## Primer on the `R6` Class System
+## `R6` 클래스 시스템 입문
 
-The `tlverse` is designed using basic object oriented programming (OOP)
-principles and the [`R6` OOP framework](https://adv-r.hadley.nz/r6.html). While
-we've tried to make it easy to use the `tlverse` packages without worrying much
-about OOP, it is helpful to have some intuition about how the `tlverse` is
-structured. Here, we briefly outline some key concepts from OOP. Readers
-familiar with OOP basics are invited to skip this section.
+`tlverse`는 기본 객체 지향 프로그래밍(OOP) 원칙과 [`R6` OOP 프레임워크](https://adv-r.hadley.nz/r6.html)를 사용하여 설계되었습니다. OOP에 대해 많이 걱정하지 않고 `tlverse` 패키지를 쉽게 사용할 수 있도록 노력했지만, `tlverse`가 어떻게 구성되어 있는지에 대한 직관을 갖는 것이 도움이 됩니다. 여기서는 OOP의 몇 가지 주요 개념을 간략하게 설명합니다. OOP 기본 사항에 익숙한 독자는 이 섹션을 건너뛰어도 좋습니다.
 
-### Classes, Fields, and Methods
+### 클래스, 필드 및 메서드
 
-The key concept of OOP is that of an object, a collection of data and functions
-that corresponds to some conceptual unit. Objects have two main types of
-elements:
+OOP의 핵심 개념은 객체이며, 이는 일부 개념적 단위에 해당하는 데이터와 함수의 모음입니다. 객체에는 두 가지 주요 유형의 요소가 있습니다.
 
-1. _fields_, which can be thought of as nouns, are information about an object,
-   and
-2. _methods_, which can be thought of as verbs, are actions an object can
-   perform.
+1. _필드_는 명사로 생각할 수 있으며 객체에 대한 정보입니다.
+2. _메서드_는 동사로 생각할 수 있으며 객체가 수행할 수 있는 작업입니다.
 
-Objects are members of classes, which define what those specific fields and
-methods are. Classes can inherit elements from other classes (sometimes called
-base classes) -- accordingly, classes that are similar, but not exactly the
-same, can share some parts of their definitions.
+객체는 해당 특정 필드와 메서드가 무엇인지 정의하는 클래스의 멤버입니다. 클래스는 다른 클래스(때로는 기본 클래스라고도 함)에서 요소를 상속할 수 있습니다. 따라서 비슷하지만 정확히 같지는 않은 클래스는 정의의 일부를 공유할 수 있습니다.
 
-Many different implementations of OOP exist, with variations in how these
-concepts are implemented and used. `R` has several different implementations,
-including `S3`, `S4`, reference classes, and `R6`. The `tlverse` uses the `R6`
-implementation. In `R6`, methods and fields of a class object are accessed using
-the `$` operator. For a more thorough introduction to `R`'s various OOP systems,
-see http://adv-r.had.co.nz/OO-essentials.html, from Hadley Wickham's _Advanced
-R_ [@wickham2014advanced].
+이러한 개념이 구현되고 사용되는 방식에 차이가 있는 다양한 OOP 구현이 존재합니다. `R`에는 `S3`, `S4`, 참조 클래스 및 `R6`를 포함한 여러 가지 다른 구현이 있습니다. `tlverse`는 `R6` 구현을 사용합니다. `R6`에서 클래스 객체의 메서드와 필드는 `$` 연산자를 사용하여 액세스합니다. `R`의 다양한 OOP 시스템에 대한 자세한 소개는 Hadley Wickham의 _Advanced R_ [@wickham2014advanced]의 http://adv-r.had.co.nz/OO-essentials.html을 참조하십시오.
 
-### Object Oriented Programming: `Python` and `R` {-}
+### 객체 지향 프로그래밍: `Python`과 `R` {-}
 
-OO concepts (classes with inheritance) were baked into Python from the first
-published version (version 0.9 in 1991). In contrast, `R` gets its OO "approach"
-from its predecessor, `S`, first released in 1976. For the first 15 years, `S`
-had no support for classes, then, suddenly, `S` got two OO frameworks bolted on
-in rapid succession: informal classes with `S3` in 1991, and formal classes with
-`S4` in 1998. This process continues, with new OO frameworks being periodically
-released, to try to improve the lackluster OO support in `R`, with reference
-classes (`R5`, 2010) and `R6` (2014). Of these, `R6` behaves most like Python
-classes (and also most like OOP focused languages like C++ and Java), including
-having method definitions be part of class definitions, and allowing objects to
-be modified by reference.
+OO 개념(상속이 있는 클래스)은 최초 게시 버전(1991년 버전 0.9)부터 Python에 포함되었습니다. 대조적으로 `R`은 1976년에 처음 출시된 이전 버전인 `S`에서 OO "접근 방식"을 가져왔습니다. 처음 15년 동안 `S`는 클래스를 지원하지 않았지만, 갑자기 `S`는 1991년 `S3`를 사용한 비공식 클래스와 1998년 `S4`를 사용한 공식 클래스라는 두 가지 OO 프레임워크를 빠르게 연속적으로 추가했습니다. 이 프로세스는 `R`의 부실한 OO 지원을 개선하기 위해 참조 클래스(`R5`, 2010) 및 `R6`(2014)과 같이 새로운 OO 프레임워크가 주기적으로 출시되면서 계속됩니다. 이 중 `R6`는 메서드 정의가 클래스 정의의 일부가 되고 객체를 참조로 수정할 수 있도록 허용하는 등 Python 클래스(및 C++ 및 Java와 같은 OOP 중심 언어)와 가장 유사하게 작동합니다.
 
-# Software Setup {#setup}
+# 소프트웨어 설정 {#setup}
 
-## Setting up `R` and RStudio
+## `R` 및 RStudio 설정하기
 
-**`R`** and **RStudio** are separate downloads and installations. `R` is the
-underlying statistical computing environment. RStudio is a graphical integrated
-development environment (IDE) that makes using `R` much easier and more
-interactive. You need to install `R` before you install RStudio.
+**`R`**과 **RStudio**는 별도로 다운로드하여 설치해야 합니다. `R`은 기본 통계 컴퓨팅 환경입니다. RStudio는 `R` 사용을 훨씬 쉽고 대화형으로 만들어주는 그래픽 통합 개발 환경(IDE)입니다. RStudio를 설치하기 전에 `R`을 설치해야 합니다.
 
 ### Windows
 
-#### If you already have `R` and RStudio installed: {-}
+#### 이미 `R`과 RStudio가 설치되어 있는 경우: {-}
 
-* Open RStudio, and click on "Help" > "Check for updates". If a new version is
-  available, quit RStudio, and download the latest version for RStudio.
-* To check which version of `R` you are using, start RStudio and the first thing
-  that appears in the console indicates the version of `R` you are
-  running. Alternatively, you can type `sessionInfo()`, which will also display
-  which version of `R` you are running. Go on the [CRAN
-  website](https://cran.r-project.org/bin/windows/base/) and check whether a
-  more recent version is available. If so, please download and install it. You
-  can [check here](https://cran.r-project.org/bin/windows/base/rw-FAQ.html#How-do-I-UNinstall-R_003f)
-  for more information on how to remove old versions from your system if you
-  wish to do so.
+* RStudio를 열고 "Help" > "Check for updates"를 클릭합니다. 새 버전이 있으면 RStudio를 종료하고 RStudio 최신 버전을 다운로드합니다.
+* 사용 중인 `R` 버전을 확인하려면 RStudio를 시작하면 콘솔에 가장 먼저 나타나는 내용이 실행 중인 `R` 버전을 나타냅니다. 또는 `sessionInfo()`를 입력하면 실행 중인 `R` 버전도 표시됩니다. [CRAN 웹사이트](https://cran.r-project.org/bin/windows/base/)로 이동하여 최신 버전이 있는지 확인합니다. 있다면 다운로드하여 설치하십시오. 원한다면 시스템에서 이전 버전을 제거하는 방법에 대한 자세한 내용은 [여기](https://cran.r-project.org/bin/windows/base/rw-FAQ.html#How-do-I-UNinstall-R_003f)에서 확인할 수 있습니다.
 
-#### If you don't have `R` and RStudio installed: {-}
+#### `R`과 RStudio가 설치되어 있지 않은 경우: {-}
 
-* Download `R` from
-  the [CRAN website](http://cran.r-project.org/bin/windows/base/release.htm).
-* Run the `.exe` file that was just downloaded
-* Go to the [RStudio download page](https://www.rstudio.com/products/rstudio/download/#download)
-* Under *Installers* select **RStudio x.yy.zzz - Windows
-  XP/Vista/7/8** (where x, y, and z represent version numbers)
-* Double click the file to install it
-* Once it's installed, open RStudio to make sure it works and you don't get any
-  error messages.
+* [CRAN 웹사이트](http://cran.r-project.org/bin/windows/base/release.htm)에서 `R`을 다운로드합니다.
+* 방금 다운로드한 `.exe` 파일을 실행합니다.
+* [RStudio 다운로드 페이지](https://www.rstudio.com/products/rstudio/download/#download)로 이동합니다.
+* *Installers*에서 **RStudio x.yy.zzz - Windows XP/Vista/7/8**을 선택합니다(여기서 x, y, z는 버전 번호를 나타냄).
+* 파일을 두 번 클릭하여 설치합니다.
+* 설치가 완료되면 RStudio를 열어 작동하는지 확인하고 오류 메시지가 표시되지 않는지 확인합니다.
 
 ### macOS / Mac OS X
 
-#### If you already have `R` and RStudio installed: {-}
+#### 이미 `R`과 RStudio가 설치되어 있는 경우: {-}
 
-* Open RStudio, and click on "Help" > "Check for updates". If a new version is
-  available, quit RStudio, and download the latest version for RStudio.
-* To check the version of `R` you are using, start RStudio and the first thing
-  that appears on the terminal indicates the version of `R` you are running.
-  Alternatively, you can type `sessionInfo()`, which will also display which
-  version of `R` you are running. Go on the [CRAN
-  website](https://cran.r-project.org/bin/macosx/) and check whether a more
-  recent version is available. If so, please download and install it.
+* RStudio를 열고 "Help" > "Check for updates"를 클릭합니다. 새 버전이 있으면 RStudio를 종료하고 RStudio 최신 버전을 다운로드합니다.
+* 사용 중인 `R` 버전을 확인하려면 RStudio를 시작하면 터미널에 가장 먼저 나타나는 내용이 실행 중인 `R` 버전을 나타냅니다. 또는 `sessionInfo()`를 입력하면 실행 중인 `R` 버전도 표시됩니다. [CRAN 웹사이트](https://cran.r-project.org/bin/macosx/)로 이동하여 최신 버전이 있는지 확인합니다. 있다면 다운로드하여 설치하십시오.
 
-#### If you don't have `R` and RStudio installed: {-}
+#### `R`과 RStudio가 설치되어 있지 않은 경우: {-}
 
-* Download `R` from
-  the [CRAN website](http://cran.r-project.org/bin/macosx).
-* Select the `.pkg` file for the latest `R` version
-* Double click on the downloaded file to install R
-* It is also a good idea to install [XQuartz](https://www.xquartz.org/) (needed
-  by some packages)
-* Go to the [RStudio download
-  page](https://www.rstudio.com/products/rstudio/download/#download)
-* Under *Installers* select **RStudio x.yy.zzz - Mac OS X 10.6+ (64-bit)**
-  (where x, y, and z represent version numbers)
-* Double click the file to install RStudio
-* Once it's installed, open RStudio to make sure it works and you don't get any
-  error messages.
+* [CRAN 웹사이트](http://cran.r-project.org/bin/macosx)에서 `R`을 다운로드합니다.
+* 최신 `R` 버전의 `.pkg` 파일을 선택합니다.
+* 다운로드한 파일을 두 번 클릭하여 R을 설치합니다.
+* (일부 패키지에 필요한) [XQuartz](https://www.xquartz.org/)도 설치하는 것이 좋습니다.
+* [RStudio 다운로드 페이지](https://www.rstudio.com/products/rstudio/download/#download)로 이동합니다.
+* *Installers*에서 **RStudio x.yy.zzz - Mac OS X 10.6+ (64-bit)**를 선택합니다(여기서 x, y, z는 버전 번호를 나타냄).
+* 파일을 두 번 클릭하여 RStudio를 설치합니다.
+* 설치가 완료되면 RStudio를 열어 작동하는지 확인하고 오류 메시지가 표시되지 않는지 확인합니다.
 
 ### Linux
 
-* Follow the instructions for your distribution
-  from [CRAN](https://cloud.r-project.org/bin/linux), they provide information
-  to get the most recent version of `R` for common distributions. For most
-  distributions, you could use your package manager (e.g., for Debian/Ubuntu run
-  `sudo apt-get install r-base`, and for Fedora `sudo yum install R`), but we
-  don't recommend this approach as the versions provided by this are
-  usually out of date. In any case, make sure you have the most recent version
-  of `R`.
-* Go to the [RStudio download
-  page](https://www.rstudio.com/products/rstudio/download/#download)
-* Under *Installers* select the version that matches your distribution, and
-  install it with your preferred method (e.g., with Debian/Ubuntu `sudo dpkg -i
-  rstudio-x.yy.zzz-amd64.deb` at the terminal).
-* Once it's installed, open RStudio to make sure it works and you don't get any
-  error messages.
+* [CRAN](https://cloud.r-project.org/bin/linux)에서 배포판에 대한 지침을 따르십시오. 일반적인 배포판에 대한 최신 `R` 버전을 얻는 정보를 제공합니다. 대부분의 배포판에서는 패키지 관리자를 사용할 수 있지만(예: Debian/Ubuntu의 경우 `sudo apt-get install r-base`, Fedora의 경우 `sudo yum install R`), 이 방법으로 제공되는 버전은 일반적으로 오래되었으므로 권장하지 않습니다. 어떤 경우든 최신 버전의 `R`이 있는지 확인하십시오.
+* [RStudio 다운로드 페이지](https://www.rstudio.com/products/rstudio/download/#download)로 이동합니다.
+* *Installers*에서 배포판과 일치하는 버전을 선택하고 선호하는 방법으로 설치합니다(예: Debian/Ubuntu의 경우 터미널에서 `sudo dpkg -i rstudio-x.yy.zzz-amd64.deb`).
+* 설치가 완료되면 RStudio를 열어 작동하는지 확인하고 오류 메시지가 표시되지 않는지 확인합니다.
 
-These setup instructions are adapted from those written for [Data Carpentry: R
-for Data Analysis and Visualization of Ecological
-Data](http://www.datacarpentry.org/R-ecology-lesson/).
+이러한 설정 지침은 [Data Carpentry: R for Data Analysis and Visualization of Ecological Data](http://www.datacarpentry.org/R-ecology-lesson/)를 위해 작성된 지침을 수정한 것입니다.
 
-## Install `tlverse` {#installtlverse}
+## `tlverse` 설치하기 {#installtlverse}
 
-The `tlverse` ecosystem of packages are currently hosted at
-https://github.com/tlverse, not yet on [CRAN](https://CRAN.R-project.org/). You
-can use the [`usethis` package](https://usethis.r-lib.org/) to install them:
+`tlverse` 패키지 생태계는 현재 [CRAN](https://CRAN.R-project.org/)이 아닌 https://github.com/tlverse에 호스팅되어 있습니다. [`usethis` 패키지](https://usethis.r-lib.org/)를 사용하여 설치할 수 있습니다.
 
 ```{r installation, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("tlverse/tlverse")
 ```
 
-The `tlverse` depends on a large number of other packages that are also hosted
-on GitHub. Because of this, you may see the following error:
+`tlverse`는 GitHub에 호스팅된 다른 많은 패키지에 의존합니다. 이 때문에 다음과 같은 오류가 발생할 수 있습니다.
 
 ```
 Error: HTTP error 403.
@@ -269,37 +150,24 @@ Error: HTTP error 403.
   - Use `usethis::edit_r_environ()` and add the token as `GITHUB_PAT`.
 ```
 
-This just means that `R` tried to install too many packages from GitHub in too
-short of a window. To fix this, you need to tell `R` how to use GitHub as your
-user (you'll need a GitHub user account). Follow these two steps:
+이는 `R`이 너무 짧은 시간 안에 GitHub에서 너무 많은 패키지를 설치하려고 했음을 의미합니다. 이를 해결하려면 GitHub를 사용자로 사용하는 방법을 `R`에 알려야 합니다(GitHub 사용자 계정이 필요함). 다음 두 단계를 따르십시오.
 
-1. Type `usethis::create_github_token()` in your `R` console, which will direct
-   you to GitHub's page to create a New Personal Access Token (PAT).
-2. Create a PAT simply by clicking "Generate token" at the bottom of the page.
-3. Copy your PAT, a long string of lowercase letters and numbers.
-4. Type `usethis::edit_r_environ()` in your `R` console, which will open your
-   `.Renviron` file in the source window of RStudio.
+1. `R` 콘솔에 `usethis::create_github_token()`을 입력하면 새 개인용 액세스 토큰(PAT)을 만드는 GitHub 페이지로 이동합니다.
+2. 페이지 하단의 "Generate token"을 클릭하여 PAT를 만듭니다.
+3. 소문자와 숫자로 이루어진 긴 문자열인 PAT를 복사합니다.
+4. `R` 콘솔에 `usethis::edit_r_environ()`을 입력하면 RStudio의 소스 창에서 `.Renviron` 파일이 열립니다.
 
-    a. If your `.Renviron` file does not pop-up after calling
-       `usethis::edit_r_environ()`; then try inputting
-       `Sys.setenv(GITHUB_PAT = "yourPAT")`, replacing your PAT with inside the
-       quotes. If this does not error, then skip to step 8.
+    a. `usethis::edit_r_environ()`을 호출한 후 `.Renviron` 파일이 팝업되지 않으면 `Sys.setenv(GITHUB_PAT = "yourPAT")`를 입력하여 PAT를 따옴표 안에 바꾸십시오. 오류가 발생하지 않으면 8단계로 건너뜁니다.
 
-5. In your `.Renviron` file, type `GITHUB_PAT=` and then paste your PAT after
-   the equals symbol with no space.
-6. In your `.Renviron` file, press the enter key to ensure that your `.Renviron`
-   ends with a new line.
-7. Save your `.Renviron` file. The example below shows how this syntax should
-   look.
+5. `.Renviron` 파일에 `GITHUB_PAT=`를 입력한 다음 등호 뒤에 공백 없이 PAT를 붙여넣습니다.
+6. `.Renviron` 파일에서 Enter 키를 눌러 `.Renviron`이 새 줄로 끝나도록 합니다.
+7. `.Renviron` 파일을 저장합니다. 아래 예는 이 구문이 어떻게 보여야 하는지 보여줍니다.
 
   ```{r renviron-example, results="asis", eval=FALSE}
   GITHUB_PAT=yourPAT
 
   ```
 
-8. Restart R. You can restart `R` via the drop-down menu on RStudio's "Session"
-   tab, which is located at the top of the RStudio interface. You have to
-   restart `R` for the changes to take effect!
+8. R을 다시 시작합니다. RStudio 인터페이스 상단에 있는 RStudio의 "Session" 탭에 있는 드롭다운 메뉴를 통해 `R`을 다시 시작할 수 있습니다. 변경 사항을 적용하려면 `R`을 다시 시작해야 합니다!
 
-After following these steps, you should be able to successfully install the
-package which threw the error above.
+이 단계를 따른 후에는 위에서 오류가 발생한 패키지를 성공적으로 설치할 수 있습니다.

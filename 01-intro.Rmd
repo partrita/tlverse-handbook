@@ -1,162 +1,49 @@
-# Introduction {-}
+# 소개 {-}
 
 <!--
-`r if (knitr::is_latex_output()) '\\begin{shortbox}\n\\Boxhead{Test}'`
+`r if (knitr::is_latex_output()) '\begin{shortbox}
+\Boxhead{Test}'`
 test shortbox
-`r if (knitr::is_latex_output()) '\\end{shortbox}'`
+`r if (knitr::is_latex_output()) '\end{shortbox}'`
 
-`r if (knitr::is_latex_output()) '\\begin{VT1}\n\\VH{Test}'`
+`r if (knitr::is_latex_output()) '\begin{VT1}
+\VH{Test}'`
 test VT1
-`r if (knitr::is_latex_output()) '\\end{VT1}'`
+`r if (knitr::is_latex_output()) '\end{VT1}'`
 -->
 
-> "One enemy of robust science is our humanity -- our appetite for
-> being right, and our tendency to find patterns in noise, to see supporting
-> evidence for what we already believe is true, and to ignore the facts that do
-> not fit."
+> "견고한 과학의 한 가지 적은 우리의 인간성입니다. 즉, 옳고 싶어 하는 욕구, 잡음 속에서 패턴을 찾는 경향, 이미 사실이라고 믿는 것에 대한 뒷받침 증거를 보려는 경향, 그리고 맞지 않는 사실을 무시하려는 경향입니다."
 >
 > --- @naturenews_2015
 
-Scientific research is at a unique point in its history. The need to improve
-rigor and reproducibility is greater than ever. Corroboration moves science
-forward, yet there is growing alarm that results cannot be reproduced or
-validated, suggesting that many discoveries may be false or less robust than
-initially claimed [@baker2016there]. A failure to meet this need will result in
-further declines in the rate of scientific progress, tarnishing of the
-reputation of the scientific enterprise as a whole, and erosion of the public's
-trust in scientific findings [@munafo2017manifesto; @naturenews2_2015].
+과학 연구는 역사상 독특한 시점에 있습니다. 엄밀함과 재현성을 향상시킬 필요성이 그 어느 때보다 큽니다. 확증은 과학을 발전시키지만, 결과를 재현하거나 검증할 수 없다는 우려가 커지고 있으며, 이는 많은 발견이 거짓이거나 초기에 주장된 것보다 덜 견고할 수 있음을 시사합니다 [@baker2016there]. 이러한 필요를 충족시키지 못하면 과학 발전 속도가 더욱 저하되고, 과학 사업 전체의 명성이 손상되며, 과학적 발견에 대한 대중의 신뢰가 약화될 것입니다 [@munafo2017manifesto; @naturenews_2015].
 
-> "The key question we want to answer when seeing the results of any scientific
-> study is whether we can trust the data analysis."
+> "어떤 과학적 연구 결과를 볼 때 우리가 답하고 싶은 핵심 질문은 데이터 분석을 신뢰할 수 있는지 여부입니다."
 >
 > --- @peng2015reproducibility
 
-Unfortunately, in its current state, the culture of statistical data analysis
-enables, rather than precludes, the manner in which human bias may affect the
-results of (ideally objective) data analytic efforts. A significant degree of
-human bias enters into statistical data analysis efforts in the form of improper
-model selection. All procedures for estimation and hypothesis testing are
-derived based on a choice of a statistical model; thus, obtaining valid
-estimates and statistical inference relies critically on the chosen model
-containing an accurate representation of the process that generated the data.
+불행히도 현재 상태에서 통계적 데이터 분석 문화는 인간의 편견이 (이상적으로는 객관적인) 데이터 분석 노력의 결과에 영향을 미칠 수 있는 방식을 배제하기보다는 가능하게 합니다. 상당한 정도의 인간 편견이 부적절한 모델 선택의 형태로 통계적 데이터 분석 노력에 들어갑니다. 추정 및 가설 검정을 위한 모든 절차는 통계 모델 선택에 따라 파생됩니다. 따라서 유효한 추정치와 통계적 추론을 얻는 것은 선택한 모델이 데이터를 생성한 프로세스를 정확하게 표현하는지에 결정적으로 의존합니다.
 
-Consider, for example, a hypothetical study in which a treatment is assigned to
-a group of patients -- was the treatment assigned randomly, or were
-characteristics of the individuals (i.e., "baseline covariates") taken into
-account in making the treatment assignment decision? What's more, in light of
-patient characteristics and heterogeneity in clinician decision-making, are
-patients assigned to the treatment arm uniformly receiving the same treatment?
-Any such knowledge can -- indeed, _must_ -- be incorporated into the choice of
-statistical model.  Alternatively, the data could arise from an observational
-study (or "quasi-experiment"), in which there is no (or very limited) control
-over the treatment assignment mechanism. In such cases, available knowledge
-about the data-generating process (DGP) is even more limited. In these
-situations, the statistical model should contain *all* possible distributions of
-the data. In practice, however, models are not selected based on scientific
-knowledge available about the DGP; instead, models are often selected based on
-(1) the philosophical leanings of the analyst, (2) the relative convenience of
-implementation of statistical methods admissible within the choice of model, and
-(3) the results of significance testing (i.e., p-values).
+예를 들어, 환자 그룹에게 치료가 할당되는 가상 연구를 생각해 보십시오. 치료가 무작위로 할당되었습니까, 아니면 치료 할당 결정을 내릴 때 개인의 특성(즉, "기준 공변량")이 고려되었습니까? 더욱이 환자 특성과 임상의 의사 결정의 이질성을 고려할 때 치료군에 할당된 환자들이 동일한 치료를 균일하게 받고 있습니까? 그러한 모든 지식은 통계 모델 선택에 통합될 수 있으며, 실제로 통합되어야 _합니다_. 또는 데이터가 관찰 연구(또는 "준실험")에서 발생할 수 있으며, 이 경우 치료 할당 메커니즘에 대한 통제는 없거나 매우 제한적입니다. 이러한 경우 데이터 생성 프로세스(DGP)에 대한 사용 가능한 지식은 더욱 제한적입니다. 이러한 상황에서 통계 모델은 데이터의 *모든* 가능한 분포를 포함해야 합니다. 그러나 실제로는 DGP에 대한 과학적 지식에 기초하여 모델이 선택되지 않습니다. 대신 모델은 종종 (1) 분석가의 철학적 성향, (2) 모델 선택 내에서 허용되는 통계적 방법의 상대적 구현 편의성, (3) 유의성 검정 결과(즉, p-값)에 따라 선택됩니다.
 
-This practice of "cargo-cult statistics --- the ritualistic miming of statistics
-rather than conscientious practice," [@stark2018cargo] is characterized by
-arbitrary modeling choices, even when these choices often result in different
-answers to the same research question. As opposed to its original purpose of
-safeguarding the scientific process -- by providing formal techniques for
-evaluating the veracity of a claim using properly designed experiments and data
-collection procedures -- Statistics is increasingly often used "to aid and abet
-weak science, a role it can perform well when used mechanically or
-ritual[istically]" [@stark2018cargo].  The current trend in deriving scientific
-discoveries by way of abusing statistical methods helps to explain the modern
-epidemic of false findings from which scientific research is suffering
-[@vdl2014entering].
+이러한 "화물 숭배 통계 --- 양심적인 실행보다는 통계의 의례적인 모방"[@stark2018cargo] 관행은 임의적인 모델링 선택을 특징으로 하며, 이러한 선택이 종종 동일한 연구 질문에 대해 다른 답변을 초래하는 경우에도 마찬가지입니다. 과학적 프로세스를 보호하는 원래 목적과는 달리 --- 적절하게 설계된 실험 및 데이터 수집 절차를 사용하여 주장의 진실성을 평가하기 위한 공식적인 기술을 제공함으로써 --- 통계는 점점 더 자주 "약한 과학을 돕고 방조하는 데 사용되며, 기계적으로 또는 의례적으로 사용될 때 잘 수행할 수 있는 역할"[@stark2018cargo]입니다. 통계적 방법을 남용하여 과학적 발견을 도출하는 현재 추세는 과학 연구가 겪고 있는 잘못된 발견의 현대적 유행병을 설명하는 데 도움이 됩니다 [@vdl2014entering].
 
-> "We suggest that the weak statistical understanding is probably due to
-> inadequate "statistics lite" education. This approach does not build up
-> appropriate mathematical fundamentals and does not provide scientifically
-> rigorous introduction into statistics. Hence, students' knowledge may remain
-> imprecise, patchy, and prone to serious misunderstandings. What this approach
-> achieves, however, is providing students with false confidence of being able
-> to use inferential tools whereas they usually only interpret the p-value
-> provided by black box statistical software. While this educational problem
-> remains unaddressed, poor statistical practices will prevail regardless of
-> what procedures and measures may be favored and/or banned by editorials."
+> "우리는 약한 통계적 이해가 아마도 부적절한 "가벼운 통계" 교육 때문일 것이라고 제안합니다. 이 접근 방식은 적절한 수학적 기초를 구축하지 못하고 통계에 대한 과학적으로 엄밀한 소개를 제공하지 않습니다. 따라서 학생들의 지식은 부정확하고 단편적이며 심각한 오해를 일으키기 쉽습니다. 그러나 이 접근 방식이 달성하는 것은 학생들이 추론 도구를 사용할 수 있다는 잘못된 자신감을 제공하는 반면, 그들은 일반적으로 블랙박스 통계 소프트웨어가 제공하는 p-값만 해석한다는 것입니다. 이 교육 문제가 해결되지 않은 채로 남아 있는 한, 편집자들이 어떤 절차와 조치를 선호하거나 금지하든 관계없이 열악한 통계 관행이 만연할 것입니다."
 >
 > --- @szucs2017null
 
-Our team at the University of California, Berkeley is uniquely positioned to
-provide such an education. Spearheaded by Professor Mark van der Laan, and
-now spreading rapidly through his students and colleagues who have greatly
-enriched the field, the aptly named "Targeted Learning" paradigm emphasizes a
-focus upon (i.e., "targeting of") the scientific question motivating a given
-study or dataset. The philosophy of Targeted Learning runs counter to the
-current cultural problem of "convenience statistics," which opens the door to
-biased estimation, misleading data analytic results, and erroneous discoveries.
-Targeted Learning (TL) embraces the fundamentals that formalized the field of
-Statistics, notably including the dual notions that a statistical model must
-represent real knowledge about the data-generating experiment and that a target
-parameter (a particular feature of the data-generating probability distribution)
-represents what we seek to learn from the data [@vdl2014entering]. In this way,
-TL defines a ground truth and establishes a principled standard for inference,
-thereby curtailing opportunities for our all-too-human biases (e.g., hindsight
-bias, confirmation bias, and outcome bias) to infiltrate our efforts at
-objective data analysis.
+캘리포니아 대학교 버클리 캠퍼스의 우리 팀은 그러한 교육을 제공할 수 있는 독보적인 위치에 있습니다. 마크 반 더 란 교수가 주도하고 이제 그의 제자들과 동료들을 통해 빠르게 확산되어 이 분야를 크게 풍요롭게 한 "타겟 러닝" 패러다임은 특정 연구나 데이터 세트에 동기를 부여하는 과학적 질문에 대한 집중(즉, "타겟팅")을 강조합니다. 타겟 러닝의 철학은 편향된 추정, 오해의 소지가 있는 데이터 분석 결과, 잘못된 발견의 문을 여는 현재의 "편의 통계" 문화적 문제에 반대됩니다. 타겟 러닝(TL)은 통계 분야를 공식화한 기본 원칙, 특히 통계 모델이 데이터 생성 실험에 대한 실제 지식을 나타내야 한다는 이중 개념과 목표 매개변수(데이터 생성 확률 분포의 특정 특징)가 데이터로부터 배우고자 하는 것을 나타낸다는 개념을 수용합니다 [@vdl2014entering]. 이러한 방식으로 TL은 실질적인 진리를 정의하고 추론에 대한 원칙적인 표준을 설정하여 객관적인 데이터 분석 노력에 우리의 너무나 인간적인 편견(예: 사후 확신 편향, 확증 편향, 결과 편향)이 침투할 기회를 줄입니다.
 
-> "The key for effective classical [statistical] inference is to have
-> well-defined questions and an analysis plan that tests those questions."
+> "효과적인 고전적 [통계적] 추론의 핵심은 잘 정의된 질문과 해당 질문을 테스트하는 분석 계획을 갖는 것입니다."
 >
 > --- @nosek2018preregistration
 
-Inspired loosely by R.A. Fisher's influential classic _Statistical Methods for
-Research Workers_ [@fisher1946statistical], this handbook aims to provide
-practical training for students, researchers, industry professionals, and
-academicians in the sciences (broadly considered -- whether biological,
-physical, economic, or social), medicine and public health, statistics, and
-numerous other allied disciplines, equipping them with the necessary knowledge
-and skills to utilize the methodological developments of TL. The Targeted
-Learning paradigm encompasses a principled set of techniques, united by a single
-philosophy, for developing answers to queries with confidence, utilizing
-advances in causal inference, state-of-the-art non/semi-parametric statistical
-theory, and machine learning --- so that each and every data analysis is
-realistic, reflecting appropriately what is known (and unknown) about the
-process that generated the data,
-<!--via pre-specified and data-adaptive machines -- nh: idk what this means-->
-while remaining fully compatible with the guiding principles of computational
-reproducibility.
+R.A. 피셔의 영향력 있는 고전 _연구자를 위한 통계적 방법_ [@fisher1946statistical]에서 느슨하게 영감을 받은 이 핸드북은 과학(생물학, 물리학, 경제학 또는 사회학 등 광범위하게 고려됨), 의학 및 공중 보건, 통계 및 기타 수많은 관련 분야의 학생, 연구원, 산업 전문가 및 학계 인사들에게 TL의 방법론적 발전을 활용하는 데 필요한 지식과 기술을 갖추도록 실용적인 교육을 제공하는 것을 목표로 합니다. 타겟 러닝 패러다임은 인과 추론, 최첨단 비모수적/준모수적 통계 이론 및 기계 학습의 발전을 활용하여 자신 있게 질문에 대한 답을 개발하기 위한 단일 철학으로 통합된 원칙적인 기술 집합을 포함합니다. 따라서 모든 데이터 분석은 현실적이며 데이터 생성 프로세스에 대해 알려진 (그리고 알려지지 않은) 것을 적절하게 반영합니다.
+<!--사전 지정되고 데이터 적응형 머신을 통해 -- nh: 이게 무슨 뜻인지 모르겠습니다-->
+동시에 계산적 재현성의 기본 원칙과 완전히 호환됩니다.
 
-Just as the conscientious use of modern statistical methodology is necessary to
-ensure that scientific practice thrives --- robust, well-tested software plays a
-critical role in allowing practitioners to access the published results of a
-given scientific investigation. We concur with the view put forth by
-@buckheit1995wavelab that "an article...in a scientific publication is not the
-scholarship itself, it is merely advertising of the scholarship. The actual
-scholarship is the complete software development environment and the complete
-set of instructions which generated the figures," making the availability and
-adoption of robust statistical software key to enhancing the transparency that
-is an inherent (and assumed) aspect of the scientific process.
+현대 통계 방법론의 양심적인 사용이 과학적 실천의 번영을 보장하는 데 필요한 것처럼, 견고하고 잘 테스트된 소프트웨어는 실무자가 특정 과학 조사의 발표된 결과에 접근할 수 있도록 하는 데 중요한 역할을 합니다. 우리는 @buckheit1995wavelab이 제시한 견해, 즉 "과학 출판물의 논문은 그 자체가 학문이 아니라 학문에 대한 광고일 뿐이다. 실제 학문은 완전한 소프트웨어 개발 환경과 그림을 생성한 완전한 지침 세트"라는 견해에 동의하며, 견고한 통계 소프트웨어의 가용성과 채택이 과학적 프로세스의 고유한 (그리고 가정된) 측면인 투명성을 향상시키는 데 핵심이라고 생각합니다.
 
-For a statistical methodology to be readily accessible in practice, it is
-crucial that it is accompanied by user-friendly software
-[@pullenayegum2016knowledge; @stromberg2004write]. The `tlverse` software
-ecosystem, composed of a set of packages for the `R` language and environment for
-statistical computing [@R], was developed to fulfill this need for the TL
-methodological framework. Not only does this suite of software tools
-facilitate computationally reproducible and efficient analyses, it is also a
-tool for TL education. Rather than focusing on implementing a specific estimator
-or a small set of related estimators, the design paradigm of the `tlverse`
-ecosystem focuses on exposing the statistical framework of Targeted Learning
-itself: all software packages in the `tlverse` ecosystem directly model the key
-objects defined in the mathematical and theoretical framework of Targeted
-Learning. What's more, the `tlverse` software packages share a core set of
-design principles centered on extensibility, allowing for them to be used in
-conjunction with each other and used cohesively as building blocks for
-formulating sophisticated statistical analyses. For an introduction to the TL
-framework, we recommend @coyle2021targeted's [recent review
-paper](https://arxiv.org/abs/2006.07333).
+통계 방법론이 실제로 쉽게 접근 가능하려면 사용자 친화적인 소프트웨어가 수반되는 것이 중요합니다 [@pullenayegum2016knowledge; @stromberg2004write]. 통계 컴퓨팅을 위한 `R` 언어 및 환경용 패키지 세트로 구성된 `tlverse` 소프트웨어 생태계 [@R]는 TL 방법론적 프레임워크에 대한 이러한 요구를 충족시키기 위해 개발되었습니다. 이 소프트웨어 도구 모음은 계산적으로 재현 가능하고 효율적인 분석을 용이하게 할 뿐만 아니라 TL 교육을 위한 도구이기도 합니다. 특정 추정기 또는 소수의 관련 추정기를 구현하는 데 초점을 맞추는 대신, `tlverse` 생태계의 설계 패러다임은 타겟 러닝 자체의 통계적 프레임워크를 노출하는 데 중점을 둡니다. `tlverse` 생태계의 모든 소프트웨어 패키지는 타겟 러닝의 수학적 및 이론적 프레임워크에 정의된 주요 객체를 직접 모델링합니다. 더욱이 `tlverse` 소프트웨어 패키지는 확장성에 중점을 둔 핵심 설계 원칙 집합을 공유하므로 서로 함께 사용하고 정교한 통계 분석을 공식화하기 위한 구성 요소로 응집력 있게 사용할 수 있습니다. TL 프레임워크에 대한 소개는 @coyle2021targeted의 [최근 검토 논문](https://arxiv.org/abs/2006.07333)을 권장합니다.
 
-In this handbook, the reader will embark on a journey through the `tlverse`
-ecosystem. Guided by `R` programming exercises, case studies, and
-intuition-building explanations, readers will learn to use this toolbox for
-applying the TL statistical methodology, which will translate to real-world
-causal analyses. Some preliminaries are required prior to this learning endeavor
--- for this, we provide a list of [recommended learning resources](#learn).
+이 핸드북에서 독자는 `tlverse` 생태계를 통한 여정을 시작하게 됩니다. `R` 프로그래밍 연습, 사례 연구 및 직관을 구축하는 설명을 통해 독자는 TL 통계 방법론을 적용하기 위한 이 도구 상자를 사용하는 방법을 배우게 되며, 이는 실제 인과 분석으로 이어질 것입니다. 이 학습 노력 이전에 몇 가지 예비 지식이 필요합니다. 이를 위해 [권장 학습 자료](#learn) 목록을 제공합니다.
