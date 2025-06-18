@@ -54,39 +54,26 @@ jobs:
         run: |
           Rscript -e 'bookdown::render_book("index.Rmd", "bookdown::pdf_book")'
 
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tlverse-handbook-pdf
+          path: _handbook/tlverse-handbook.pdf
+
+      - name: Create Release and Upload PDF
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' # Only run on push to master
+        with:
+          files: _handbook/tlverse-handbook.pdf
+          # The release tag can be customized, e.g., using date or commit SHA
+          # For now, let's use a tag based on the commit SHA for uniqueness
+          tag_name: book-${{ github.sha }}
+          name: "Book Release ${{ github.sha }}"
+          body: "Automated book release including tlverse-handbook.pdf"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/upload-artifact@v4
         with:
           name: _handbook
           path: _handbook/
-
-# Need to first create an empty gh-pages branch
-# see https://pkgdown.r-lib.org/reference/deploy_site_github.html
-# and also add secrets for a GH_PAT and EMAIL to the repository
-# gh-action from https://github.com/Cecilapp/GitHub-Pages-deploy
-  checkout-and-deploy:
-    runs-on: ubuntu-latest
-    needs: bookdown
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          # Artifact name
-          name: _handbook                      # optional
-          # Destination path
-          path: _handbook                      # optional
-
-      - name: Abbreviate Git SHA
-        run: echo "GITHUB_SHA_SHORT=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
-
-      - name: Deploy to GitHub Pages
-        uses: Cecilapp/GitHub-Pages-deploy@v3
-        if: github.event_name != 'pull_request'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          email: ${{ secrets.EMAIL }}      # must be a GitHub-verified email
-          build_dir: _handbook/            # "_site/" by default
-          commit_message: Update book via ${{ env.GITHUB_SHA_SHORT }}
