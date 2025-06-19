@@ -12,6 +12,7 @@ jobs:
   bookdown:
     name: build-bookdown
     runs-on: ubuntu-latest
+    timeout-minutes: 60 # Relaxed timeout to 60 minutes (default is often 360, but explicitly setting can prevent unexpected issues)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,9 +21,10 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt update
+          # Add build-essential to ensure core C/C++ development tools and headers are present
           sudo apt install -y curl libcurl4-doc libcurl4-openssl-dev \
             libharfbuzz-dev libfribidi-dev libmagick++-dev libpoppler-cpp-dev \
-            texlive-extra-utils ghostscript
+            texlive-extra-utils ghostscript build-essential
 
       - name: Install pandoc
         uses: r-lib/actions/setup-pandoc@v2
@@ -33,7 +35,6 @@ jobs:
       - name: Install R
         uses: r-lib/actions/setup-r@v2
         with:
-          # Use the R version specified in renv.lock
           r-version: '4.4.0' # Changed to match renv.lock
 
       - name: Install R dependencies via renv
@@ -63,11 +64,9 @@ jobs:
 
       - name: Create Release and Upload PDF
         uses: softprops/action-gh-release@v1
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master' # Only run on push to master
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' # Changed 'master' to 'main'
         with:
           files: _handbook/tlverse-handbook.pdf
-          # The release tag can be customized, e.g., using date or commit SHA
-          # For now, let's use a tag based on the commit SHA for uniqueness
           tag_name: book-${{ github.sha }}
           name: "Book Release ${{ github.sha }}"
           body: "Automated book release including tlverse-handbook.pdf"
@@ -77,4 +76,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: _handbook
-          path: _handbook/
+          path: _handbook/.
