@@ -1,5 +1,11 @@
 _book/*
 _bookdown_files/*
+_quarto*
+/_site/
+*.pdf
+release_pdf/
+book.pdf
+
 .Rproj.user
 .Rhistory
 .DS_Store
