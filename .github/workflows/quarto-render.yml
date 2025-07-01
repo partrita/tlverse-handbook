@@ -14,8 +14,6 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        # No specific Quarto version is pinned; the action will use the latest.
-        # Removed the 'with:' block entirely as it was empty or only contained comments.
 
       - name: Install R
         uses: r-lib/actions/setup-r@v2
