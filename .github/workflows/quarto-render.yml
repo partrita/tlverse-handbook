@@ -1,0 +1,61 @@
+name: Render Quarto Project and Release PDF
+
+on:
+  push:
+    branches:
+      - main  # Or your default branch
+
+jobs:
+  render-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          # Specify Quarto version if needed, otherwise latest is used
+          # version: "1.2.3"
+
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.2.0' # Specify your R version
+
+      - name: Install R Dependencies
+        run: |
+          Rscript -e "install.packages('renv')"
+          Rscript -e "renv::restore()"
+
+      - name: Render Quarto Project to PDF
+        run: quarto render qmd_files --to pdf --output-dir ./release_pdf
+        # This assumes all qmd files in qmd_files should be rendered.
+        # If you have a main project file (e.g., index.qmd that includes others),
+        # you might change this to:
+        # quarto render qmd_files/index.qmd --to pdf --output book.pdf
+        # And then adjust the release asset name accordingly.
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload PDF to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release_pdf # Path to the directory containing PDFs
+          asset_name: tlverse-handbook-${{ github.run_number }}.pdf # Adjust name as needed
+          # If rendering a single file, e.g., book.pdf:
+          # asset_path: ./book.pdf
+          # asset_name: tlverse-handbook-${{ github.run_number }}.pdf
+          asset_content_type: application/pdf
