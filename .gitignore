@@ -1,6 +1,6 @@
 _book/*
 _bookdown_files/*
-_quarto*
+_quarto/
 /_site/
 *.pdf
 release_pdf/
@@ -12,8 +12,8 @@ book.pdf
 *.rds
 *.knit.md
 *.utf8.md
-index.md
-*-*.md
+/index.md
+/*-*.md
 .idx/
 
 # Created by https://www.toptal.com/developers/gitignore/api/r,windows,linux,macos
@@ -120,7 +120,8 @@ rsconnect/
 
 ### R.Bookdown Stack ###
 # R package: bookdown caching files
-/*_files/
+_book/*_files/
+_handbook/*_files/
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -148,4 +149,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/r,windows,linux,macos
+# End of https://www.toptal.com/developers/gitignore/api/r,windows,linux,macos# pixi environments
+.pixi/*
+!.pixi/config.toml

@@ -1,0 +1,50 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "'tlverse'와 함께하는 R에서의 타겟 러닝"
+  author: "Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard"
+  date: "2026-02-21"
+  language: ko
+  chapters:
+    - qmd_files/index.qmd
+    - qmd_files/01-intro.qmd
+    - qmd_files/02-tlverse.qmd
+    - qmd_files/03-data.qmd
+    - qmd_files/04-roadmap.qmd
+    - qmd_files/05-origami.qmd
+    - qmd_files/06-sl3.qmd
+    - qmd_files/07-tmle3.qmd
+    - qmd_files/08-tmle3mopttx.qmd
+    - qmd_files/09-tmle3shift.qmd
+    - qmd_files/10-tmle3mediate.qmd
+    # - qmd_files/11-tmle3survival.qmd
+    - qmd_files/references.qmd
+
+bibliography: [book.bib, packages.bib]
+
+knitr:
+  opts_chunk:
+    comment: ""
+    collapse: true
+    cache: false
+    out.width: "80%"
+    fig.align: "center"
+    fig.width: 6
+    fig.asp: 0.618
+    message: false
+    warning: false
+    echo: true
+
+format:
+  html:
+    theme: cosmo
+    css: css/style.css
+    toc: true
+    code-fold: true
+  pdf:
+    documentclass: scrreprt
+    include-in-header:
+      - text: |
+          \usepackage{krantz}
