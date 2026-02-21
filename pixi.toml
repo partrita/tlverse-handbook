@@ -173,4 +173,4 @@ r-doby = ">=4.7.1,<5"
 [tasks]
 preview = { cmd = "quarto preview mybook", depends-on = ["setup-r"] }
 render = { cmd = "quarto render mybook", depends-on = ["setup-r"] }
-setup-r = """Rscript -e "options(repos = c(CRAN = 'https://cloud.r-project.org')); if (!requireNamespace('pak', quietly = TRUE)) install.packages('pak'); pak::pkg_install(c('nhejazi/haldensify@master', 'tlverse/hal9001@master', 'tlverse/sl3@master', 'tlverse/tmle3@master', 'tlverse/tmle3mediate@master', 'tlverse/tmle3mopttx@master', 'tlverse/tmle3shift@master', 'tlverse/delayed@master', 'nhejazi/medshift@master', 'earth', 'txshift'), upgrade = FALSE)" """
+setup-r = """Rscript -e "options(repos = c(CRAN = 'https://cloud.r-project.org')); if (!requireNamespace('pak', quietly = TRUE)) install.packages('pak'); pak::pkg_install(c('nhejazi/haldensify@master', 'tlverse/hal9001@master', 'tlverse/sl3@master', 'tlverse/tmle3@master', 'tlverse/tmle3mediate@master', 'tlverse/tmle3mopttx@master', 'tlverse/tmle3shift@master', 'tlverse/delayed@master', 'nhejazi/medshift@master', 'earth', 'txshift', 'lspline', 'latex2exp'), upgrade = FALSE)" """
