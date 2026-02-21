@@ -27,6 +27,8 @@ jobs:
         shell: bash
         run: |
           pixi run setup-r
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Render Quarto Project to PDF
         shell: bash

@@ -140,4 +140,4 @@ r-lsei = ">=1.3_0,<2"
 [tasks]
 preview = { cmd = "quarto preview mybook", depends-on = ["setup-r"] }
 render = { cmd = "quarto render mybook", depends-on = ["setup-r"] }
-setup-r = """Rscript -e "Sys.setenv(GITHUB_PAT = ''); options(repos = c(CRAN = 'https://cloud.r-project.org')); remotes::install_github(c('nhejazi/haldensify@master', 'tlverse/hal9001@master', 'tlverse/sl3@master', 'tlverse/tmle3@master', 'tlverse/tmle3mediate@master', 'tlverse/tmle3mopttx@master', 'tlverse/tmle3shift@master', 'tlverse/delayed'), upgrade = 'never', dependencies = TRUE)" """
+setup-r = """Rscript -e "options(repos = c(CRAN = 'https://cloud.r-project.org')); remotes::install_github(c('nhejazi/haldensify@master', 'tlverse/hal9001@master', 'tlverse/sl3@master', 'tlverse/tmle3@master', 'tlverse/tmle3mediate@master', 'tlverse/tmle3mopttx@master', 'tlverse/tmle3shift@master', 'tlverse/delayed'), upgrade = 'never', dependencies = TRUE)" """
