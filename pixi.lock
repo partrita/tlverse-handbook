@@ -201,6 +201,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-gtable-0.3.6-r44hc72bb7e_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-hardhat-1.4.2-r44hc72bb7e_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-haven-2.5.5-r44h6d565e7_1.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/r-here-1.0.2-r44hc72bb7e_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-highr-0.11-r44hc72bb7e_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-hmisc-5.2_5-r44heaba542_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-hms-1.1.4-r44hc72bb7e_0.conda
@@ -615,6 +616,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-gtable-0.3.6-r44hc72bb7e_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-hardhat-1.4.2-r44hc72bb7e_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-haven-2.5.5-r44h82072fd_1.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/r-here-1.0.2-r44hc72bb7e_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-highr-0.11-r44hc72bb7e_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-hmisc-5.2_5-r44hae7ecd7_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/r-hms-1.1.4-r44hc72bb7e_0.conda
@@ -5182,6 +5184,16 @@ packages:
   license_family: MIT
   size: 347830
   timestamp: 1757525399100
+- conda: https://conda.anaconda.org/conda-forge/noarch/r-here-1.0.2-r44hc72bb7e_0.conda
+  sha256: 8774f748d77d805af3cb4d77fed7e14dae806c6aefc22d32c556037de9eb3e5f
+  md5: 08fb0a990c887d98702cab357a603fc2
+  depends:
+  - r-base >=4.4,<4.5.0a0
+  - r-rprojroot >=2.0.2
+  license: MIT
+  license_family: MIT
+  size: 56912
+  timestamp: 1757929877245
 - conda: https://conda.anaconda.org/conda-forge/noarch/r-highr-0.11-r44hc72bb7e_2.conda
   sha256: fade9dd156a8045aa2cd0577fdad67ade4eda4df24b38b60e689693793b591c4
   md5: 1d27ac83e555dcd74a3f51961bccd5e8
