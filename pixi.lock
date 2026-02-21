@@ -111,6 +111,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-backports-1.5.0-r44h54b55ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-base-4.4.3-h835929b_7.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-base64enc-0.1_6-r44h54b55ab_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/r-bbmisc-1.13.1-r44h54b55ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-biglm-0.9_3-r44heaba542_3.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-bit-4.6.0-r44h54b55ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/r-bit64-4.6.0_1-r44h54b55ab_1.conda
@@ -533,6 +534,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-backports-1.5.0-r44h6168396_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-base-4.4.3-hb2e0d2d_7.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-base64enc-0.1_6-r44hbe92478_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-bbmisc-1.13.1-r44hbe92478_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-biglm-0.9_3-r44hd097873_3.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-bit-4.6.0-r44h6168396_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-bit64-4.6.0_1-r44h6168396_1.conda
@@ -3347,6 +3349,31 @@ packages:
   license_family: GPL3
   size: 48233
   timestamp: 1770028060720
+- conda: https://conda.anaconda.org/conda-forge/linux-64/r-bbmisc-1.13.1-r44h54b55ab_0.conda
+  sha256: 02f2e4b452f4c7368a0affe07753545429e1a124a83959c4328078481f5be214
+  md5: 33bebb594e4063e5f4b6641087dfb6e2
+  depends:
+  - __glibc >=2.17,<3.0.a0
+  - libgcc >=14
+  - r-base >=4.4,<4.5.0a0
+  - r-checkmate >=1.8.0
+  - r-data.table
+  license: BSD-2-Clause
+  license_family: BSD
+  size: 325157
+  timestamp: 1769159456396
+- conda: https://conda.anaconda.org/conda-forge/osx-arm64/r-bbmisc-1.13.1-r44hbe92478_0.conda
+  sha256: c3e9d5585eee33ef855926b7970b413433c8a890353acb79914384b6b9f2412c
+  md5: 567d38208b28ded206d93ffc68fc7472
+  depends:
+  - __osx >=11.0
+  - r-base >=4.4,<4.5.0a0
+  - r-checkmate >=1.8.0
+  - r-data.table
+  license: BSD-2-Clause
+  license_family: BSD
+  size: 325719
+  timestamp: 1769160085855
 - conda: https://conda.anaconda.org/conda-forge/linux-64/r-biglm-0.9_3-r44heaba542_3.conda
   sha256: ad8472abe0493f6fd43c654fa33ba3ee6c4e7150a73c143ee2c0cc2d40a570c3
   md5: ac31c6cb24a511434e2860c2642dbe1d

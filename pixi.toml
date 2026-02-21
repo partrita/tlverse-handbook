@@ -164,6 +164,7 @@ r-caret = ">=7.0_1,<8"
 r-speedglm = ">=0.3_5,<0.4"
 r-here = ">=1.0.2,<2"
 r-superlearner = ">=2.0_40,<3"
+r-bbmisc = ">=1.13.1,<2"
 
 [tasks]
 preview = { cmd = "quarto preview mybook", depends-on = ["setup-r"] }
