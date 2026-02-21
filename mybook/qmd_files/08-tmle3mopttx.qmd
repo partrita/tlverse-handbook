@@ -640,7 +640,7 @@ tmle_spec_resource <- tmle3_mopttx_blip_revere(
 )
 ```
 
-```{r mopttx_fit_tmle_auto_blip_revere_complex_resource, eval=T}
+```{r mopttx_fit_tmle_auto_blip_revere_complex_resource, eval=FALSE}
 # fit the TML estimator
 fit_resource <- tmle3(tmle_spec_resource, data, node_list, learner_list)
 fit_resource
@@ -672,7 +672,7 @@ tmle_spec_V_empty <- tmle3_mopttx_blip_revere(
 )
 ```
 
-```{r mopttx_fit_tmle_auto_blip_revere_complex_V_empty, eval=T}
+```{r mopttx_fit_tmle_auto_blip_revere_complex_V_empty, eval=FALSE}
 # fit the TML estimator
 fit_V_empty <- tmle3(tmle_spec_V_empty, data, node_list, learner_list)
 fit_V_empty
