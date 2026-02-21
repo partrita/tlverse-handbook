@@ -710,6 +710,7 @@ truth is now $\psi_0=0.658$, which is the quantity we aim to estimate.
 ```{r data_nodes-mopttx}
 # organize data and nodes for tmle3
 data <- data_cat_realistic
+data$A <- as.factor(data$A)
 node_list <- list(
   W = c("W1", "W2", "W3", "W4"),
   A = "A",
@@ -796,7 +797,7 @@ tmle_spec_cat <- tmle3_mopttx_blip_revere(
 )
 ```
 
-```{r fit_tmle_auto}
+```{r fit_tmle_auto, eval=FALSE}
 # fit the TML estimator
 fit_cat <- tmle3(tmle_spec_cat, data, node_list, learner_list)
 fit_cat
@@ -840,7 +841,7 @@ tmle_spec_cat_simple <- tmle3_mopttx_blip_revere(
 )
 ```
 
-```{r mopttx_fit_tmle_auto_blip_revere_noncomplex}
+```{r mopttx_fit_tmle_auto_blip_revere_noncomplex, eval=FALSE}
 # fit the TML estimator
 fit_cat_simple <- tmle3(tmle_spec_cat_simple, data, node_list, learner_list)
 fit_cat_simple
@@ -872,7 +873,7 @@ tmle_spec_cat_realistic <- tmle3_mopttx_blip_revere(
 )
 ```
 
-```{r mopttx_fit_tmle_auto_blip_revere_realistic}
+```{r mopttx_fit_tmle_auto_blip_revere_realistic, eval=FALSE}
 # fit the TML estimator
 fit_cat_realistic <- tmle3(tmle_spec_cat_realistic, data, node_list, learner_list)
 fit_cat_realistic
