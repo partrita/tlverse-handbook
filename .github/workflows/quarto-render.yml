@@ -16,25 +16,17 @@ jobs:
         uses: prefix-dev/setup-pixi@v0.8.1
         with:
           pixi-version: latest
+          cache: true
 
-      - name: Cache renv
-        uses: actions/cache@v3
-        with:
-          path: ~/.local/share/renv
-          key: ${{ runner.os }}-renv-${{ hashFiles('renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
-
-      - name: Install R Dependencies via renv
+      - name: Setup R Environment (GitHub Packages)
         shell: bash
         run: |
-          pixi run Rscript -e "install.packages('renv', repos = 'https://cloud.r-project.org')"
-          pixi run Rscript -e "renv::restore()"
+          pixi run setup-r
 
       - name: Render Quarto Project to PDF
         shell: bash
         run: |
-          pixi run quarto render --to pdf --output-dir ./release_pdf
+          pixi run quarto render mybook --to pdf --output-dir ./release_pdf
 
       - name: Create Release
         id: create_release
@@ -53,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release_pdf/index.pdf # Assuming index.pdf is created
+          asset_path: ./release_pdf/index.pdf
           asset_name: tlverse-handbook-${{ github.run_number }}.pdf
           asset_content_type: application/pdf

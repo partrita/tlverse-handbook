@@ -1,0 +1,50 @@
+---
+subtitle: "Causal Data Science with the tlverse Software Ecosystem"
+---
+
+```{r setup, include=FALSE}
+source("_common.R")
+```
+
+# Welcome {-}
+
+_Targeted Learning in `R`: Causal Data Science with the `tlverse` Software
+Ecosystem_ is an fully reproducible, open source, electronic handbook for
+applying Targeted Learning methodology in practice using the software stack
+provided by the [`tlverse` ecosystem](https://github.com/tlverse). This work is
+a draft phase and is publicly available to solicit input from the community. To
+view or contribute, visit the [GitHub
+repository](https://github.com/tlverse/tlverse-handbook).
+
+<!--- For HTML Only --->
+`r if (knitr::is_latex_output()) '<!--'`
+<img style="float: left; margin-right: 1%; margin-bottom: 0.01em"
+     src="img/logos/tlverse-logo.svg" width="30%" height="30%">
+<img style="float: center; margin-right: 1%; margin-bottom: 0.01em"
+     src="img/logos/Rlogo.svg" width="35%" height="35%">
+<img style="float: right; margin-right: 1%; margin-bottom: 0.01em"
+     src="img/logos/vdl-logo-transparent.svg" width="30%" height="30%">
+`r if (knitr::is_latex_output()) '-->'`
+<br><br><br><br>
+
+# Overview {-}
+
+This handbook is meant to provide a series of examples and tutorials on
+performing causal inference and machine learning using the Targeted Learning
+methodology and the [`tlverse` software ecosystem](https://github.com/tlverse).
+For more in depth background on the Targeted Learning framework, please consult
+the books ["Targeted Learning: Causal Inference for Observational and
+Experimental Data"](https://doi.org/10.1007/978-1-4419-9782-1) (van der Laan &
+Rose, 2011) and ["Targeted Learning in Data Science: Causal Inference for
+Complex Longitudinal Studies"](https://doi.org/10.1007/978-3-319-65304-4) (van
+der Laan & Rose, 2018).
+
+# License {-}
+
+&copy; 2017--2024 [Nima Hejazi](https://nimahejazi.org).
+
+The [`tlverse` handbook](https://tlverse.org/tlverse-handbook) is licensed under
+a [Creative Commons Attribution 4.0 International
+License](http://creativecommons.org/licenses/by/4.0/).
+
+[![Creative Commons License](https://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)

@@ -8,7 +8,7 @@ book:
   date: "2026-02-21"
   language: ko
   chapters:
-    - qmd_files/index.qmd
+    - index.qmd
     - qmd_files/01-intro.qmd
     - qmd_files/02-tlverse.qmd
     - qmd_files/03-data.qmd

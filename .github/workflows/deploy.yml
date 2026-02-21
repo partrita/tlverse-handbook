@@ -23,26 +23,18 @@ jobs:
           pixi-version: latest
           cache: true
 
-      - name: Cache renv
-        uses: actions/cache@v3
-        with:
-          path: ~/.local/share/renv
-          key: ${{ runner.os }}-renv-${{ hashFiles('renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
-
-      - name: Install R Dependencies via renv
+      - name: Setup R Environment (GitHub Packages)
         shell: bash
         run: |
-          # Ensure renv is installed and restore packages
-          pixi run Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv', repos = 'https://cloud.r-project.org')"
-          pixi run Rscript -e "renv::restore()"
+          # Ensure R library exists and is writable
+          pixi run Rscript -e ".libPaths()"
+          pixi run setup-r
 
       - name: Render and Publish to GitHub Pages
         shell: bash
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          pixi run quarto publish gh-pages --no-browser --no-prompt
+          pixi run quarto publish gh-pages mybook --no-browser --no-prompt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

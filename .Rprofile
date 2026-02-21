@@ -1,3 +1,2 @@
-options(renv.config.pak.enabled = TRUE)
-#options(renv.config.auto.snapshot = TRUE)
-source("renv/activate.R")
+# R profile for tlverse-handbook
+# renv lines removed in favor of pixi

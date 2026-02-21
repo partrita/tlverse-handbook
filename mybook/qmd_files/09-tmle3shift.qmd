@@ -352,7 +352,7 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 ## Interpreting the Causal Effect of a Stochastic Intervention
 
 ```{r, fig.cap="How a counterfactual outcome changes as the natural treatment distribution is shifted by a simple stochastic intervention", results = "asis", echo=FALSE, out.width = "100%"}
-knitr::include_graphics(path = "img/gif/shift_animation.gif")
+knitr::include_graphics(path = "../img/gif/shift_animation.gif")
 ```
 
 `r if (knitr::is_latex_output()) '-->'`
