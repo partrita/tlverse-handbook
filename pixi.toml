@@ -166,6 +166,7 @@ r-here = ">=1.0.2,<2"
 r-superlearner = ">=2.0_40,<3"
 r-bbmisc = ">=1.13.1,<2"
 r-rsolnp = ">=2.0.1,<3"
+r-usethis = ">=3.2.1,<4"
 
 [tasks]
 preview = { cmd = "quarto preview mybook", depends-on = ["setup-r"] }
