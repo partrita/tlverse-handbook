@@ -157,8 +157,13 @@ r-ranger = ">=0.18.0,<0.19"
 r-xgboost = ">=3.2.0,<4"
 r-gam = ">=1.22_7,<2"
 r-polspline = ">=1.1.25,<2"
+r-arm = ">=1.14_4,<2"
+r-nnls = ">=1.6,<2"
+r-e1071 = ">=1.7_17,<2"
+r-caret = ">=7.0_1,<8"
+r-speedglm = ">=0.3_5,<0.4"
 
 [tasks]
 preview = { cmd = "quarto preview mybook", depends-on = ["setup-r"] }
 render = { cmd = "quarto render mybook", depends-on = ["setup-r"] }
-setup-r = """Rscript -e "options(repos = c(CRAN = 'https://cloud.r-project.org')); if (!requireNamespace('pak', quietly = TRUE)) install.packages('pak'); pak::pkg_install(c('nhejazi/haldensify@master', 'tlverse/hal9001@master', 'tlverse/sl3@master', 'tlverse/tmle3@master', 'tlverse/tmle3mediate@master', 'tlverse/tmle3mopttx@master', 'tlverse/tmle3shift@master', 'tlverse/delayed@master', 'nhejazi/medshift@master'), upgrade = FALSE)" """
+setup-r = """Rscript -e "options(repos = c(CRAN = 'https://cloud.r-project.org')); if (!requireNamespace('pak', quietly = TRUE)) install.packages('pak'); pak::pkg_install(c('nhejazi/haldensify@master', 'tlverse/hal9001@master', 'tlverse/sl3@master', 'tlverse/tmle3@master', 'tlverse/tmle3mediate@master', 'tlverse/tmle3mopttx@master', 'tlverse/tmle3shift@master', 'tlverse/delayed@master', 'nhejazi/medshift@master', 'earth'), upgrade = FALSE)" """

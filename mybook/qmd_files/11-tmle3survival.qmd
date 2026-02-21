@@ -1,3 +1,7 @@
+
+```{r setup-common, include=FALSE}
+source("../_common.R")
+```
 # One-Step TMLE for Time-to-Event Outcomes
 
 Based on Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation

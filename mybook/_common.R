@@ -44,7 +44,8 @@ options(
   repos = structure(c(CRAN = "https://cran.rstudio.com/")),
   htmltools.dir.version = FALSE, 
   conflicts.policy = FALSE,
-  dplyr.summarise.inform = FALSE
+  dplyr.summarise.inform = FALSE,
+  future.globals.maxSize = 4000 * 1024^2
 )
 
 # overwrite options by output type

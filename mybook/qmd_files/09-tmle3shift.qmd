@@ -1,3 +1,7 @@
+
+```{r setup-common, include=FALSE}
+source("../_common.R")
+```
 # Stochastic Treatment Regimes {#shift}
 
 _Nima Hejazi_
