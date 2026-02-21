@@ -10,7 +10,7 @@ Featuring the [`tmle3mediate` `R`
 package](https://github.com/tlverse/tmle3mediate).
 
 :::: {.infobox .tlverse data-latex=""}
-:::{.center data-latex=""}
+::: {.center data-latex=""}
 **Learning Objectives**
 :::
 

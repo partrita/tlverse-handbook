@@ -42,6 +42,11 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install TinyTeX
+        shell: bash
+        run: |
+          pixi run quarto install tinytex
+
       - name: Render Quarto Project to PDF
         shell: bash
         run: |

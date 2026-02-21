@@ -7,7 +7,7 @@ source("../_common.R")
 # Learning from Data: A Roadmap {#roadmap}
 
 :::: {.infobox .tlverse data-latex=""}
-:::{.center data-latex=""}
+::: {.center data-latex=""}
 **Learning Objectives**
 :::
 

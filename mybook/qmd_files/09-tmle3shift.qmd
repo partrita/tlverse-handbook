@@ -9,7 +9,7 @@ _Nima Hejazi_
 Featuring the [`tmle3shift` `R` package](https://github.com/tlverse/tmle3shift).
 
 :::: {.infobox .tlverse data-latex=""}
-:::{.center data-latex=""}
+::: {.center data-latex=""}
 **Learning Objectives**
 :::
 
