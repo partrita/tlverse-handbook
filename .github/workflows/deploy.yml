@@ -1,4 +1,4 @@
-name: Render and Deploy to GitHub Pages
+name: Render and Deploy (Pages + PDF Release)
 
 on:
   push:
@@ -26,9 +26,12 @@ jobs:
       - name: Setup R Environment (GitHub Packages)
         shell: bash
         run: |
-          # Ensure R library exists and is writable
-          pixi run Rscript -e ".libPaths()"
           pixi run setup-r
+
+      - name: Render Quarto Project to PDF
+        shell: bash
+        run: |
+          pixi run quarto render mybook --to pdf --output-dir ./release_pdf
 
       - name: Render and Publish to GitHub Pages
         shell: bash
@@ -36,5 +39,16 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           pixi run quarto publish gh-pages mybook --no-browser --no-prompt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release and Upload PDF
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          files: ./release_pdf/index.pdf
+          body: "자동으로 렌더링된 최신 PDF 버전입니다. (v${{ github.run_number }})"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
