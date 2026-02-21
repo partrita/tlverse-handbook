@@ -611,7 +611,7 @@ alleviating concerns regarding practical positivity issues. Finally, we can inco
 source constrains by setting `resource` argument to less than 1. We explore all the
 important extensions of `tmle3mopttx` in later sections.
 
-```{r mopttx_fit_tmle_auto_blip_revere_complex}
+```{r mopttx_fit_tmle_auto_blip_revere_complex, eval=FALSE}
 # fit the TML estimator
 fit <- tmle3(tmle_spec, data, node_list, learner_list)
 fit
