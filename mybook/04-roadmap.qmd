@@ -1,14 +1,12 @@
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 # (PART) 2부: 기초
 
 # 데이터로부터 배우기: 로드맵 {#roadmap}
 
-::: {.infobox .tlverse data-latex=""}
-::: {.center data-latex=""}
-**학습 목표**
-:::
+::: {.callout-note}
+## 학습 목표
 
 1. 과학적 질문을 통계적 질문으로 변환합니다.
 2. 데이터를 생성한 과학적 실험 또는 연구에 대한 지식을 기반으로 통계 모델을 정의합니다.

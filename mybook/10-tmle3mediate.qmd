@@ -1,5 +1,5 @@
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 # 인과 매개 분석
 
@@ -7,10 +7,8 @@ _Nima Hejazi_
 
 [`tmle3mediate` `R` 패키지](https://github.com/tlverse/tmle3mediate)를 활용합니다.
 
-::: {.infobox .tlverse data-latex=""}
-::: {.center data-latex=""}
-**학습 목표**
-:::
+::: {.callout-note}
+## 학습 목표
 
 1. 치료 후 매개 변수의 존재가 인과 분석을 어떻게 복잡하게 만들 수 있는지, 그리고 이러한 복잡성을 해결하기 위해 직접 효과와 간접 효과를 어떻게 정의할 수 있는지 조사합니다.
 2. 확률적 중재의 관점에서 정의를 포함하여, 직접 인과 효과와 간접 인과 효과 사이의 본질적인 유사점과 차이점을 설명합니다.
@@ -107,19 +105,19 @@ standard longitudinal data structure"
 \end{align*}
 특히, 자연적 간접 효과(natural indirect effect, NIE)는 매개체 $Z$를 통한 치료 $A \in \{0, 1\}$가 결과 $Y$에 미치는 효과를 측정하며, 자연적 직접 효과(natural direct effect, NDE)는 *다른 모든 경로를 통한* 치료가 결과에 미치는 효과를 측정합니다. 자연적 직접 및 간접 효과의 식별에는 다음과 같은 검증 불가능한 인과적 가정이 필요합니다. 우리가 고려하는 SCM이 독립적이고 동일하게 분포된(iid) 단위만을 생성하도록 제한되어 있고, 반사실이 유도된 수치이기 때문에(잠재적 결과 프레임워크에서의 원시 수치와 반대됨) 일관성과 간섭 부재(전통적으로 SUTVA [@rubin1978bayesian; @rubin1980randomization])라는 표준 가정이 성립한다는 점에 유의하십시오. @pearl2010brief는 후자의 지점에 대해 영감을 주는 논의를 제공합니다.
 
-::: {.definition name="교환 가능성"}
-$Y(a, z) \indep (A, Z) \mid W$이며, 이는 $\E\{Y(a, z) \mid A=a, W=w, Z=z\} \equiv \E\{Y(a, z) \mid W=w\}$임을 암시합니다. 이는 매개체가 존재할 때 보이지 않는 교란 요인이 없다는 표준 가정의 특별하고 더 제한적인 사례입니다. 대응하는 무작위 배정 가정은 단순히 치료 $A$와 매개체 $Z$ 모두에 대한 합동 중재에 적용된 표준 무작위 배정 가정입니다.
+::: {.callout-note icon=false title="교환 가능성"}
+$A \indep Y(a, m) \mid W$ 및 $M \indep Y(a, m) \mid (A, W)$입니다.
 :::
 
-::: {.definition name="치료 양의 조건"}
-모든 $a \in \mathcal{A}$ 및 $w \in \mathcal{W}$에 대해, 치료의 조건부 확률 $g(a \mid w)$는 작은 계수 $\xi > 0$에 의해 단위 구간의 한계로부터 떨어져 있습니다. 더 정확하게는 $\xi < g(a \mid w) < 1 - \xi$입니다. 이는 [이전](#tmle3)에 논의된 정적 중재에 필요한 표준 양의 조건 가정을 따릅니다.
+::: {.callout-note icon=false title="치료 양의 조건"}
+모든 $w \in \mathcal{W}$에 대해 $g_0(a \mid w) > 0$입니다.
 :::
 
-::: {.definition name="매개체 양의 조건"}
-모든 $z \in \mathcal{Z}$, $a \in \mathcal{A}$ 및 $w \in \mathcal{W}$에 대해, 매개체의 조건부 밀도는 작은 계수 $\epsilon > 0$에 의해 0으로부터 떨어져 있어야 합니다. 구체적으로 $\epsilon < q_{0,Z}(z \mid a, w)$입니다. 본질적으로 이는 모든 합동 지지 집합(joint support) $\mathcal{Z} \times \mathcal{A} \times \mathcal{W}$ 내의 $\{z, a, w\}$에 대해 매개체의 조건부 밀도가 0보다 커야 함을 의미합니다. 즉, 치료 $A$와 기본 공변량 $W$에 의해 정의된 모든 계층에서 주어진 매개체 값을 관찰할 수 있어야 합니다. 이 가정의 덜 제한적인 형태도 가능합니다. 구체적으로, 서로 다른 치료 대조 하에서 매개체 밀도의 두 실현값에 대해 두 치료 대조 하의 매개체 밀도 비율이 유계여야 한다는 것입니다.
+::: {.callout-note icon=false title="매개체 양의 조건"}
+모든 $(a, w)$에 대해 $P(M=m \mid A=a, W=w) > 0$입니다.
 :::
 
-::: {.definition name="교차 세계 반사실적 독립성"}
+::: {.callout-note icon=false title="교차 세계 반사실적 독립성"}
 모든 $a \neq a'$ ($a, a' \in \mathcal{A}$) 및 $z \in \mathcal{Z}$에 대해, $W$가 주어졌을 때 $Y(a', z)$는 $Z(a)$와 독립이어야 합니다. 즉, 치료 대조 $a' \in \mathcal{A}$ 하의 반사실적 결과와 (대안적인 대조 $a \in \mathcal{A}$ 하의) 반사실적 매개체 값 $Z(a) \in \mathcal{Z}$가 모두 *관찰 가능*해야 합니다. "교차 세계(cross-world)"라는 용어는 두 개의 서로 다른 치료 대조 하에서 존재하는 두 개의 반사실 $Z(a)$와 $Y(a', z)$를 의미합니다. 비록 그들의 결합 분포가 잘 정의되어 있더라도, 이러한 반사실들은 결코 공동으로 실현될 수 없습니다.
 :::
 
@@ -184,13 +182,13 @@ NDE와 마찬가지로, 추정 과정에서 $q_Z(Z \mid A, W)$를 $e(A \mid Z, W
 \end{equation*}
 여기서 스칼라 $0 < \delta < \infty$는 *치료를 받을 확률의 변화*를 지정합니다. 인과 매개 분석의 맥락에서 @diaz2020causal이 설명했듯이, PIDE와 PIIE에 필요한 식별 가정은 NDE와 NIE에 필요한 가정보다 훨씬 관대합니다. 이러한 식별 가정은 다음과 같습니다. 중요한 점은, 교차 세계 반사실적 독립성 가정이 전혀 필요하지 않다는 것입니다.
 
-::: {.definition name="치료와 매개체의 조건부 교환 가능성"}
-모든 $(a, z) \in \mathcal{A} \times \mathcal{Z}W$에 대해 $\E\{Y(a, z) \mid Z, A, W\} = \E\{Y(a, z) \mid Z, W\}$라고 가정합니다. 이 가정은 @vansteelandt2012natural이 치료군 사이의 매개 효과 식별을 위해 원래 제안한 $Y(a, z) \indep (A,Z) \mid W$ 가정보다 강력하며 이에 의해 함의됩니다. @diaz2020causal은 이 가정을 도입하면서 다음과 같이 기술했습니다: "이 가정은 노출과 매개체가 무작위 배정된 무작위 실험에서 노출 전 공변량 $W$에 대해 충족될 것입니다. 따라서 인구 중재에 대한 직접 효과는 평균 치료 효과에 대한 자연적 직접 효과[@robins2010alternative]와 달리, $A$와 $Z$에 대한 중재를 통한 무작위 실험의 치료 요법 간의 대조에 대응합니다."
+::: {.callout-note icon=false title="치료와 매개체의 조건부 교환 가능성"}
+$A \indep Y \mid W$ 및 $M \indep Y \mid (A, W)$입니다.
 :::
 <!-- TODO: explain this-->
 
-::: {.definition name="치료와 매개체의 공통 지지 집합"}
-모든 $w \in \mathcal{W}$에 대해 $\text{supp}\{g_{\delta}(\cdot \mid w)\} \subseteq \text{supp}\{g(\cdot \mid w)\}$라고 가정합니다. 이 가정은 표준적이며, 중재 후의 $A$ 값이 데이터에서 지지되어야 함만을 요구합니다. 이는 자연적 직접 및 간접 효과에 필요한 치료 및 매개체 양의 조건보다 훨씬 약하며, 이는 정적이 아닌 확률적 중재를 사용한 결과입니다.
+::: {.callout-note icon=false title="치료와 매개체의 공통 지지 집합"}
+$\{m: P(M=m \mid A=a', W=w) > 0\} \subseteq \{m: P(M=m \mid A=a, W=w) > 0\}$입니다.
 :::
 <!-- TODO: explain this-->
 
@@ -414,7 +412,7 @@ washb_pie_decomp <- tmle3(
 
 ### 주요 개념 복습
 
-::: {.exercise}
+::: {.callout-tip title="연습 문제 1"}
 WASH Benefits 데이터셋을 살펴보고, 치료가 키 대비 몸무게 Z-점수(WHZ)에 미치는 효과의 잠재적 매개체 세트를 다르게 선택해 보세요. 이렇게 새로 선택한 매개체 세트(또는 단일 매개체)를 사용하여 자연적 직접 및 간접 효과를 추정해 보세요. 이러한 추정치에 대한 해석을 제공하세요.
 :::
 
@@ -422,19 +420,19 @@ WASH Benefits 데이터셋을 살펴보고, 치료가 키 대비 몸무게 Z-점
 추후 제공 예정
 :::
 
-::: {.exercise}
+::: {.callout-tip title="연습 문제 2"}
 자연적 직접 효과와 간접 효과의 가법성(additivity)이 성립하는지 평가해 보세요. 위에서 추정된 자연적 직접 및 간접 효과를 사용하여 그 합이 ATE를 복구합니까?
 :::
 
-::: {.solution}
+::: {.callout-note icon=false title="해답"}
 추후 제공 예정
 :::
 
-::: {.exercise}
+::: {.callout-tip title="연습 문제"}
 WASH Benefits 예제에서 자연적 직접 및 간접 효과의 식별에 필요한 가정이 타당한지 평가해 보세요. 특히 치료 및 매개체 양의 조건에 대한 경험적 진단 측면에서 이 평가를 수행하세요.
 :::
 
-::: {.solution}
+::: {.callout-note icon=false title="해답"}
 추후 제공 예정
 :::
 

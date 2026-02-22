@@ -1,5 +1,5 @@
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 # 교차 검증 {#origami}
 
@@ -7,9 +7,8 @@ _Ivana Malenica_
 
 Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips가 작성한 [`origami` `R` 패키지](https://github.com/tlverse/origami)를 바탕으로 합니다.
 
-`r if (knitr::is_latex_output()) '\\begin{VT1}\n\\VH{학습 목표}'`
-
-`r if (knitr::is_html_output()) '## 학습 목표'`
+::: {.callout-note}
+## 학습 목표
 
 이 장을 마치면 여러분은 다음을 할 수 있게 됩니다.
 
@@ -26,8 +25,7 @@ Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips가 작성한 [`origa
 6. 적절한 폴드(fold) 구조를 설정하고, 사용자 정의 폴드 기반 함수를 구축하며, `origami` `R` 패키지를 사용하여 제안된 함수를 교차 검증합니다.
 
 7. `origami` `R` 패키지를 사용하여 슈퍼 러너(Super Learner)가 사용할 적절한 교차 검증 구조를 설정합니다.
-
-`r if (knitr::is_latex_output()) '\\end{VT1}'`
+:::
 
 <!--
 RP:

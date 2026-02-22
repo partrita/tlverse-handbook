@@ -1,5 +1,5 @@
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 # TMLE 프레임워크 {#tmle3}
 
@@ -7,7 +7,8 @@ _Jeremy Coyle_
 
 [`tmle3` `R` 패키지](https://github.com/tlverse/tmle3)를 바탕으로 합니다.
 
-## 학습 목표 {#learn-tmle}
+::: {.callout-note}
+## 학습 목표
 
 이 장을 마치면 여러분은 다음을 할 수 있게 됩니다.
 
@@ -16,6 +17,7 @@ _Jeremy Coyle_
 3. `tmle3` "Specs" 객체 사용법을 이해합니다.
 4. 사용자 정의 타겟 파라미터 세트에 대해 `tmle3`를 적합시킵니다.
 5. 델타 방법(delta method)을 사용하여 타겟 파라미터의 변환을 추정합니다.
+:::
 
 ## 소개 {#tmle-intro}
 

@@ -1,5 +1,5 @@
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 # 예제 데이터셋
 

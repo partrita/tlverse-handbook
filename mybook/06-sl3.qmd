@@ -1,10 +1,5 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 
 
@@ -14,14 +9,8 @@ _Rachael Phillips_
 
 _Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Oleg Sofrygin_이 작성한 [`sl3` `R` 패키지](https://github.com/tlverse/sl3)를 바탕으로 합니다.
 
-### 학습 목표 
-
-<!--
-IM:
-이전 장에서 손실과 리스크의 개념을 도입했으므로, "성능 메트릭" 대신 이를 사용하는 것이 좋습니다. 
-표기법을 여러 번 바꾸는 것은 다소 혼란스러울 수 있습니다. 기본 학습자(base learner)를 정의하십시오. 
-목표 4는 스크리너 등에 대해 이야기하기 전에 나와야 하지 않을까요?
--->
+::: {.callout-note}
+## 학습 목표
 
 이 장을 마치면 여러분은 다음을 할 수 있게 됩니다.
 
@@ -35,6 +24,7 @@ IM:
 3. 관심 있는 목적 함수를 최적화하는 메타 학습자(meta-learner)를 지정합니다.
 4. 당면한 예측 문제, 실제 세계에서의 분석 용도, 통계 모델, 샘플 크기, 공변량 수 및 이산형 결과의 경우 결과 보급률 측면에서 라이브러리와 메타 학습자를 정당화합니다.
 5. 교차 검증된 리스크 추정치 표와 슈퍼 러너 계수로부터 슈퍼 러너 적합 결과를 해석합니다.
+:::
 
 
 ## 소개

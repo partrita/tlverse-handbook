@@ -1,5 +1,5 @@
-```r setup-common, include=FALSE}
-source("../_common.R")
+```{r setup-common, include=FALSE}
+source("_common.R")
 ```
 # (PART) Part 3: 고급 주제 
 
@@ -9,6 +9,7 @@ _Ivana Malenica_
 
 _Ivana Malenica, Jeremy Coyle, Mark van der Laan_이 작성한 [`tmle3mopttx` `R` 패키지](https://github.com/tlverse/tmle3mopttx)를 바탕으로 합니다.
 
+::: {.callout-note}
 ## 학습 목표
 
 1. 동적 및 최적의 동적 치료 중재를 정적 중재와 구별합니다.
@@ -20,6 +21,7 @@ _Ivana Malenica, Jeremy Coyle, Mark van der Laan_이 작성한 [`tmle3mopttx` `R
 7. 데이터에서 지원되는 중재만 고려함으로써 실제 데이터와 피험자 지식의 한계를 존중하는 "현실적인" 최적의 개별화된 치료 요법을 구성합니다.
 8. 추정된 최적의 개별화된 치료 규칙을 해석합니다.
 9. 최적의 개별화된 치료 중재 측면에서 정의된 변수 중요도를 측정합니다.
+:::
 
 ## 최적의 개별화된 중재 소개
 

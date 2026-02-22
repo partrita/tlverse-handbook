@@ -1,6 +1,5 @@
-
 ```{r setup-common, include=FALSE}
-source("../_common.R")
+source("_common.R")
 ```
 # 사건 시간 결과에 대한 1단계 TMLE
 
@@ -8,8 +7,11 @@ Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation for time
 
 Moore, K. and van der Laan, M.J. (2009) Application of time-to-event methods in the assessment of safety in clinical trials. Design and Analysis of Clinical Trials with Time-to-Event Endpoints. London: Taylor & Francis, pp. 455–482.
 
+::: {.callout-note}
 ## 학습 목표
+
 1. `tmle3`를 사용하여 반사실적 주변 생존 함수(counterfactual marginal survival functions)를 추정합니다.
+:::
 
 ## 소개
 
