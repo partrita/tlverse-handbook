@@ -16,15 +16,13 @@ a draft phase and is publicly available to solicit input from the community. To
 view or contribute, visit the [GitHub
 repository](https://github.com/tlverse/tlverse-handbook).
 
-<!--- For HTML Only --->
-`r if (knitr::is_latex_output()) '<!--'`
 <img style="float: left; margin-right: 1%; margin-bottom: 0.01em"
      src="img/logos/tlverse-logo.svg" width="30%" height="30%">
 <img style="float: center; margin-right: 1%; margin-bottom: 0.01em"
      src="img/logos/Rlogo.svg" width="35%" height="35%">
 <img style="float: right; margin-right: 1%; margin-bottom: 0.01em"
      src="img/logos/vdl-logo-transparent.svg" width="30%" height="30%">
-`r if (knitr::is_latex_output()) '-->'`
+
 <br><br><br><br>
 
 # Overview {-}

@@ -1,13 +1,11 @@
 # `tlverse` 핸드북 
 
-[![Render and Deploy to GitHub Pages](https://github.com/tlverse/tlverse-handbook/actions/workflows/deploy.yml/badge.svg)](https://github.com/tlverse/tlverse-handbook/actions/workflows/deploy.yml)
-
 Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard가 저술한 [**`R`을 활용한 타겟 러닝: 인과 데이터 과학 핸드북**](http://tlverse.org/tlverse-handbook) GitHub 리포지토리에 오신 것을 환영합니다.
 
-이 프로젝트는 이제 **Quarto**와 **Pixi**를 사용하여 관리됩니다. 기존의 `bookdown` 및 `renv` 환경은 제거되었습니다.
+이 프로젝트는 이제 **Quarto**와 **Pixi**를 사용하여 관리됩니다.
 
 ## 주요 특징
-- **Quarto**: 최신 출판 시스템을 사용하여 HTML 및 PDF 책을 렌더링합니다.
+- **Quarto**: 최신 출판 시스템을 사용하여 HTML 책을 렌더링합니다.
 - **Pixi**: R, Quarto 및 모든 시스템 의존성(OpenSSL, XML2 등)을 일관되게 관리합니다.
 - **GitHub Actions**: 푸시 시 자동으로 GitHub Pages에 배포됩니다.
 
@@ -24,15 +22,11 @@ Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, 
 
 - **미리보기**:
   ```bash
-  pixi run quarto preview
+  pixi run preview
   ```
 - **HTML 렌더링**:
   ```bash
-  pixi run quarto render
-  ```
-- **PDF 렌더링**:
-  ```bash
-  pixi run quarto render --to pdf
+  pixi run render
   ```
 
 생성된 파일은 `_book/` 디렉토리에 저장됩니다.

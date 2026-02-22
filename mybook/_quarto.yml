@@ -43,14 +43,3 @@ format:
     css: css/style.css
     toc: true
     code-fold: true
-  pdf:
-    documentclass: krantz
-    include-in-header:
-      - latex_extras/preamble.tex
-    include-before-body:
-      - latex_extras/before_body.tex
-    include-after-body:
-      - latex_extras/after_body.tex
-    toc: true
-    number-sections: true
-    colorlinks: true
