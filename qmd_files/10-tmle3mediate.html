@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Causal Mediation Analysis – 'tlverse'와 함께하는 R에서의 타겟 러닝</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../qmd_files/references.html" rel="next">
+<link href="../qmd_files/09-tmle3shift.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../qmd_files/10-tmle3mediate.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Causal Mediation Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">’tlverse’와 함께하는 R에서의 타겟 러닝</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/02-tlverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Part 1: Preliminaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/03-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Example Datasets</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/04-roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Part 2: Foundations</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/05-origami.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cross-validation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/06-sl3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Super Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/07-tmle3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The TMLE Framework</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">(PART) Part 3: Advanced Topics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/09-tmle3shift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Stochastic Treatment Regimes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/10-tmle3mediate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Causal Mediation Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../qmd_files/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#causal-mediation-analysis" id="toc-causal-mediation-analysis" class="nav-link active" data-scroll-target="#causal-mediation-analysis"><span class="header-section-number">6.1</span> Causal Mediation Analysis</a></li>
+  <li><a href="#data-structure-and-notation" id="toc-data-structure-and-notation" class="nav-link" data-scroll-target="#data-structure-and-notation"><span class="header-section-number">6.2</span> Data Structure and Notation</a></li>
+  <li><a href="#defining-the-natural-direct-and-indirect-effects" id="toc-defining-the-natural-direct-and-indirect-effects" class="nav-link" data-scroll-target="#defining-the-natural-direct-and-indirect-effects"><span class="header-section-number">6.3</span> Defining the Natural Direct and Indirect Effects</a>
+  <ul class="collapse">
+  <li><a href="#decomposing-the-average-treatment-effect" id="toc-decomposing-the-average-treatment-effect" class="nav-link" data-scroll-target="#decomposing-the-average-treatment-effect"><span class="header-section-number">6.3.1</span> Decomposing the Average Treatment Effect</a></li>
+  <li><a href="#estimating-the-natural-direct-effect" id="toc-estimating-the-natural-direct-effect" class="nav-link" data-scroll-target="#estimating-the-natural-direct-effect"><span class="header-section-number">6.3.2</span> Estimating the Natural Direct Effect</a></li>
+  <li><a href="#estimating-the-natural-indirect-effect" id="toc-estimating-the-natural-indirect-effect" class="nav-link" data-scroll-target="#estimating-the-natural-indirect-effect"><span class="header-section-number">6.3.3</span> Estimating the Natural Indirect Effect</a></li>
+  </ul></li>
+  <li><a href="#the-population-intervention-direct-and-indirect-effects" id="toc-the-population-intervention-direct-and-indirect-effects" class="nav-link" data-scroll-target="#the-population-intervention-direct-and-indirect-effects"><span class="header-section-number">6.4</span> The Population Intervention Direct and Indirect Effects</a>
+  <ul class="collapse">
+  <li><a href="#decomposing-the-population-intervention-effect" id="toc-decomposing-the-population-intervention-effect" class="nav-link" data-scroll-target="#decomposing-the-population-intervention-effect"><span class="header-section-number">6.4.1</span> Decomposing the Population Intervention Effect</a></li>
+  <li><a href="#estimating-the-effect-decomposition-term" id="toc-estimating-the-effect-decomposition-term" class="nav-link" data-scroll-target="#estimating-the-effect-decomposition-term"><span class="header-section-number">6.4.2</span> Estimating the Effect Decomposition Term</a></li>
+  </ul></li>
+  <li><a href="#evaluating-the-direct-and-indirect-effects" id="toc-evaluating-the-direct-and-indirect-effects" class="nav-link" data-scroll-target="#evaluating-the-direct-and-indirect-effects"><span class="header-section-number">6.5</span> Evaluating the Direct and Indirect Effects</a>
+  <ul class="collapse">
+  <li><a href="#targeted-estimation-of-the-natural-indirect-effect" id="toc-targeted-estimation-of-the-natural-indirect-effect" class="nav-link" data-scroll-target="#targeted-estimation-of-the-natural-indirect-effect"><span class="header-section-number">6.5.1</span> Targeted Estimation of the Natural Indirect Effect</a></li>
+  <li><a href="#targeted-estimation-of-the-natural-direct-effect" id="toc-targeted-estimation-of-the-natural-direct-effect" class="nav-link" data-scroll-target="#targeted-estimation-of-the-natural-direct-effect"><span class="header-section-number">6.5.2</span> Targeted Estimation of the Natural Direct Effect</a></li>
+  <li><a href="#targeted-estimation-of-the-population-intervention-direct-effect" id="toc-targeted-estimation-of-the-population-intervention-direct-effect" class="nav-link" data-scroll-target="#targeted-estimation-of-the-population-intervention-direct-effect"><span class="header-section-number">6.5.3</span> Targeted Estimation of the Population Intervention Direct Effect</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.6</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#review-of-key-concepts" id="toc-review-of-key-concepts" class="nav-link" data-scroll-target="#review-of-key-concepts"><span class="header-section-number">6.6.1</span> Review of Key Concepts</a></li>
+  <li><a href="#the-ideas-in-action" id="toc-the-ideas-in-action" class="nav-link" data-scroll-target="#the-ideas-in-action"><span class="header-section-number">6.6.2</span> The Ideas in Action</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Causal Mediation Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>Nima Hejazi</em></p>
+<p>Featuring the <a href="https://github.com/tlverse/tmle3mediate"><code>tmle3mediate</code> <code>R</code> package</a>.</p>
+<div class="infobox tlverse">
+<div class="center">
+<p><strong>Learning Objectives</strong></p>
+</div>
+<ol type="1">
+<li>Examine how the presence of post-treatment mediating variables can complicate a causal analysis, and how direct and indirect effects can be defined to resolve these complications.</li>
+<li>Describe the essential similarities and differences between direct and indirect causal effects, including their definition in terms of stochastic interventions.</li>
+<li>Differentiate the joint interventions required to define direct and indirect effects from the static, dynamic, and stochastic interventions that yield <em>total</em> causal effects.</li>
+<li>Describe the assumptions needed for identification of the natural direct and indirect effects, as well as the limitations of these effect definitions.</li>
+<li>Estimate the natural direct and indirect effects for a binary treatment using the <code>tmle3mediate</code> <code>R</code> package.</li>
+<li>Differentiate the population intervention direct and indirect effects of stochastic interventions from the natural direct and indirect effects, including differences in the assumptions required for their identification.</li>
+<li>Estimate the population intervention direct effect of a binary treatment using the <code>tmle3mediate</code> <code>R</code> package.</li>
+</ol>
+</div>
+<section id="causal-mediation-analysis" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="causal-mediation-analysis"><span class="header-section-number">6.1</span> Causal Mediation Analysis</h2>
+<p>In applications ranging from biology and epidemiology to economics and psychology, scientific inquires are often concerned with ascertaining the effect of a treatment on an outcome variable only through particular pathways between the two. In the presence of post-treatment intermediate variables affected by exposure (that is, <em>mediators</em>), path-specific effects allow for such complex, mechanistic relationships to be teased apart. These causal effects are of such wide interest that their definition and identification has been the object of study in statistics for nearly a century – indeed, the earliest examples of modern causal mediation analysis can be traced back to work on path analysis <span class="citation" data-cites="wright1934method">(<a href="#ref-wright1934method" role="doc-biblioref">Wright 1934</a>)</span>. In recent decades, renewed interest has resulted in the formulation of novel direct and indirect effects within both the potential outcomes and nonparametric structural equation modeling frameworks <span class="citation" data-cites="robins1986new pearl1995causal pearl2009causality spirtes2000causation dawid2000causal">(<a href="#ref-robins1986new" role="doc-biblioref">Robins 1986</a>; <a href="#ref-pearl1995causal" role="doc-biblioref">Pearl 1995</a>, <a href="#ref-pearl2009causality" role="doc-biblioref">2009</a>; <a href="#ref-spirtes2000causation" role="doc-biblioref">Spirtes et al. 2000</a>; <a href="#ref-dawid2000causal" role="doc-biblioref">Dawid 2000</a>)</span>. Generally, the indirect effect (IE) is the portion of the total effect found to work <em>through</em> mediating variables, while the direct effect (DE) encompasses <em>all other components</em> of the total effect, including both the effect of the treatment directly on the outcome <em>and</em> its effect through all paths not explicitly involving the mediators. The mechanistic knowledge conveyed by the direct and indirect effects can be used to improve understanding of both <em>why</em> and <em>how</em> treatments may be efficacious.</p>
+<p>Modern approaches to causal inference have allowed for significant advances over the methodology of traditional path analysis, overcoming significant restrictions imposed by the use of parametric modeling approaches <span class="citation" data-cites="vanderweele2015explanation">(<a href="#ref-vanderweele2015explanation" role="doc-biblioref">T. VanderWeele 2015</a>)</span>. Using distinct frameworks, <span class="citation" data-cites="robins1992identifiability">Robins and Greenland (<a href="#ref-robins1992identifiability" role="doc-biblioref">1992</a>)</span> and <span class="citation" data-cites="pearl2001direct">Pearl (<a href="#ref-pearl2001direct" role="doc-biblioref">2001</a>)</span> provided equivalent nonparametric decompositions of the average treatment effect into the <em>natural</em> direct and indirect effects. <span class="citation" data-cites="vanderweele2015explanation">T. VanderWeele (<a href="#ref-vanderweele2015explanation" role="doc-biblioref">2015</a>)</span> provides a comprehensive overview of classical causal mediation analysis. We provide an alternative perspective, focusing instead on the construction of efficient estimators of these quantities, which have appeared only recently <span class="citation" data-cites="tchetgen2012semiparametric zheng2012targeted">(<a href="#ref-tchetgen2012semiparametric" role="doc-biblioref">Tchetgen Tchetgen and Shpitser 2012</a>; <a href="#ref-zheng2012targeted" role="doc-biblioref">Zheng and van der Laan 2012</a>)</span>, as well as on more flexible direct and indirect definitions based upon stochastic interventions <span class="citation" data-cites="diaz2020causal">(<a href="#ref-diaz2020causal" role="doc-biblioref">Dı́az and Hejazi 2020</a>)</span>.</p>
+</section>
+<section id="data-structure-and-notation" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="data-structure-and-notation"><span class="header-section-number">6.2</span> Data Structure and Notation</h2>
+<p>Let us return to our familiar sample of <span class="math inline">\(n\)</span> units <span class="math inline">\(O_1, \ldots, O_n\)</span>, where we now consider a slightly more complex data structure <span class="math inline">\(O = (W, A, Z, Y)\)</span> for any given observational unit. As before, <span class="math inline">\(W\)</span> represents a vector of observed covariates, <span class="math inline">\(A\)</span> a binary or continuous treatment, and <span class="math inline">\(Y\)</span> a binary or continuous outcome; the new post-treatment variable <span class="math inline">\(Z\)</span> represents a (possibly multivariate) set of mediators. Avoiding assumptions unsupported by background scientific knowledge, we assume only that <span class="math inline">\(O \sim P_0 \in \M\)</span>, where <span class="math inline">\(\M\)</span> is the nonparametric statistical model that places no assumptions on the form of the data-generating distribution <span class="math inline">\(P_0\)</span>.</p>
+<p>As in preceding chapters, a structural causal model (SCM) <span class="citation" data-cites="pearl2009causality">(<a href="#ref-pearl2009causality" role="doc-biblioref">Pearl 2009</a>)</span> helps to formalize the definition of our counterfactual variables: <span class="math display">\[\begin{align}
+  W &amp;= f_W(U_W) \\ \nonumber
+  A &amp;= f_A(W, U_A) \\ \nonumber
+  Z &amp;= f_Z(W, A, U_Z) \\ \nonumber
+  Y &amp;= f_Y(W, A, Z, U_Y).
+  (\#eq:npsem-mediate)
+\end{align}\]</span> This set of equations constitutes a mechanistic model generating the observed data <span class="math inline">\(O\)</span>; furthermore, the SCM encodes several fundamental assumptions. Firstly, there is an implicit temporal ordering: <span class="math inline">\(W\)</span> occurs first, depending only on exogenous factors <span class="math inline">\(U_W\)</span>; <span class="math inline">\(A\)</span> happens next, based on both <span class="math inline">\(W\)</span> and exogenous factors <span class="math inline">\(U_A\)</span>; then come the mediators <span class="math inline">\(Z\)</span>, which depend on <span class="math inline">\(A\)</span>, <span class="math inline">\(W\)</span>, and another set of exogenous factors <span class="math inline">\(U_Z\)</span>; and finally appears the outcome <span class="math inline">\(Y\)</span>. We assume neither access to the set of exogenous factors <span class="math inline">\(\{U_W, U_A, U_Z, U_Y\}\)</span> nor knowledge of the forms of the deterministic generating functions <span class="math inline">\(\{f_W, f_A, f_Z, f_Y\}\)</span>. In practice, any available knowledge about the data-generating experiment should be incorporated into this model – for example, if the data from a randomized controlled trial (RCT), the form of <span class="math inline">\(f_A\)</span> may be known. The SCM corresponds to the following DAG:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="10-tmle3mediate_files/figure-html/mediation-DAG-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>By factorizing the likelihood of the data <span class="math inline">\(O\)</span>, we can express <span class="math inline">\(p_0\)</span>, the density of <span class="math inline">\(O\)</span> with respect to the product measure, when evaluated on a particular observation <span class="math inline">\(o\)</span>, in terms of several orthogonal components: <span class="math display">\[\begin{align}
+  p_0(o) = &amp;q_{0,Y}(y \mid Z = z, A = a, W = w) \\ \nonumber
+    &amp;q_{0,Z}(z \mid A = a, W = w) \\ \nonumber
+    &amp;g_{0,A}(a \mid W = w) \\ \nonumber
+    &amp;q_{0,W}(w).\\ \nonumber
+  (\#eq:likelihood-factorization-mediate)
+\end{align}\]</span> In Equation @ref(eq:likelihood-factorization-mediate), <span class="math inline">\(q_{0, Y}\)</span> is the conditional density of <span class="math inline">\(Y\)</span> given <span class="math inline">\(\{Z, A, W\}\)</span>, <span class="math inline">\(q_{0, Z}\)</span> is the conditional density of <span class="math inline">\(Z\)</span> given <span class="math inline">\(\{A, W\}\)</span>, <span class="math inline">\(g_{0, A}\)</span> is the conditional density of <span class="math inline">\(A\)</span> given <span class="math inline">\(W\)</span>, and <span class="math inline">\(q_{0, W}\)</span> is the marginal density of <span class="math inline">\(W\)</span>. For convenience and consistency of notation, we will define <span class="math inline">\(\overline{Q}_Y(Z, A, W) := \E[Y \mid Z,
+A, W]\)</span> and <span class="math inline">\(g(A \mid W) := \P(A \mid W)\)</span> (i.e., the propensity score).</p>
+<p>We have explicitly excluded potential confounders of the mediator-outcome relationship affected by exposure (i.e., variables affected by <span class="math inline">\(A\)</span> and affecting both <span class="math inline">\(Z\)</span> and <span class="math inline">\(Y\)</span>). Mediation analysis in the presence of such variables is challenging <span class="citation" data-cites="avin2005identifiability">(<a href="#ref-avin2005identifiability" role="doc-biblioref">Avin, Shpitser, and Pearl 2005</a>)</span>; thus, most efforts to develop definitions of causal direct and indirect effects explicitly assume the absence of such confounders. Without further assumptions, common mediation parameters (the natural direct and indirect effects) cannot be identified in the presence of such confounding, though <span class="citation" data-cites="tchetgen2014identification">Tchetgen Tchetgen and VanderWeele (<a href="#ref-tchetgen2014identification" role="doc-biblioref">2014</a>)</span> discuss a monotonicity assumption that may be useful when justified by available scientific knowledge about the system under study. The interested reader may wish to consult recent advances in the vast and quickly growing literature on causal mediation analysis, including <em>interventional</em> direct and indirect effects <span class="citation" data-cites="didelez2006direct vanderweele2014effect lok2016defining vansteelandt2017interventional rudolph2017robust nguyen2019clarifying">(<a href="#ref-didelez2006direct" role="doc-biblioref">Didelez, Dawid, and Geneletti 2006</a>; <a href="#ref-vanderweele2014effect" role="doc-biblioref">T. J. VanderWeele, Vansteelandt, and Robins 2014</a>; <a href="#ref-lok2016defining" role="doc-biblioref">Lok 2016</a>; <a href="#ref-vansteelandt2017interventional" role="doc-biblioref">Vansteelandt and Daniel 2017</a>; <a href="#ref-rudolph2017robust" role="doc-biblioref">Rudolph et al. 2017</a>; <a href="#ref-nguyen2019clarifying" role="doc-biblioref">Nguyen, Schmid, and Stuart 2019</a>)</span>, whose identification is robust to this complex form of post-treatment confounding. Within this thread of the literature, <span class="citation" data-cites="diaz2020nonparametric">Dı́az et al. (<a href="#ref-diaz2020nonparametric" role="doc-biblioref">2020</a>)</span> and <span class="citation" data-cites="benkeser2020nonparametric">Benkeser and Ran (<a href="#ref-benkeser2020nonparametric" role="doc-biblioref">2021</a>)</span> provide considerations of nonparametric effect decompositions and efficiency theory, while <span class="citation" data-cites="hejazi2021nonparametric">Hejazi et al. (<a href="#ref-hejazi2021nonparametric" role="doc-biblioref">2022</a>)</span> formulate a novel class of effects utilizing stochastic interventions.</p>
+<!--
+Mark notes,
+"are you saying these methods allow that Z is subject to unmeaured confounding?
+dont think so. it is all about a joint intervention on (A,Z) so yes we normally
+use A,Z is randomized conditional on W. In recent note with Phil and Nima I
+suggest a method taht appears to have someextra robustness but that is not
+scope of this chapter"
+
+Nima: "no, these approaches do not address _unmeasured_ confounding, they only
+accommodate the presence of a measured intermediate confounder, which the
+effects that we describe below cannot handle. the data structure required by
+the introduction of these measured confounders brings us one step closer to the
+standard longitudinal data structure"
+-->
+</section>
+<section id="defining-the-natural-direct-and-indirect-effects" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="defining-the-natural-direct-and-indirect-effects"><span class="header-section-number">6.3</span> Defining the Natural Direct and Indirect Effects</h2>
+<section id="decomposing-the-average-treatment-effect" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="decomposing-the-average-treatment-effect"><span class="header-section-number">6.3.1</span> Decomposing the Average Treatment Effect</h3>
+<p>The natural direct and indirect effects arise from a decomposition of the ATE: <span class="math display">\[\begin{align*}
+  \E[Y(1) - Y(0)] =
+    &amp;\underbrace{\E[Y(1, Z(0)) - Y(0, Z(0))]}_{\text{NDE}} \\ &amp;+
+    \underbrace{\E[Y(1, Z(1)) - Y(1, Z(0))]}_{\text{NIE}}.
+\end{align*}\]</span> In particular, the natural indirect effect (NIE) measures the effect of the treatment <span class="math inline">\(A \in \{0, 1\}\)</span> on the outcome <span class="math inline">\(Y\)</span> through the mediators <span class="math inline">\(Z\)</span>, while the natural direct effect (NDE) measures the effect of the treatment on the outcome <em>through all other pathways</em>. Identification of the natural direct and indirect effects requires the following non-testable causal assumptions. Note that the standard assumptions of consistency and no interference (i.e., SUTVA <span class="citation" data-cites="rubin1978bayesian rubin1980randomization">(<a href="#ref-rubin1978bayesian" role="doc-biblioref">Rubin 1978</a>, <a href="#ref-rubin1980randomization" role="doc-biblioref">1980</a>)</span>) hold owing to the fact that (1) the SCM we consider is restricted so as to give rise only to independent and identically distributed (iid) units; and (2) consistency is an implied property of the SCM, as counterfactuals are derived quantities (as opposed to primitive quantities in the potential outcomes framework); <span class="citation" data-cites="pearl2010brief">Pearl (<a href="#ref-pearl2010brief" role="doc-biblioref">2010</a>)</span> provides an illuminating discussion on this latter point.</p>
+<div class="definition" name="Exchangeability">
+<p><span class="math inline">\(Y(a, z) \indep (A, Z) \mid W\)</span>, which further implies that <span class="math inline">\(\E\{Y(a, z) \mid
+A=a, W=w, Z=z\} \equiv \E\{Y(a, z) \mid W=w\}\)</span>. This is a special, more restrictive case of the standard assumption of no unmeasured counfounding in the presence of mediators. The analogous randomization assumption is simply the standard randomization assumption applied to a joint intervention on both the treatment <span class="math inline">\(A\)</span> and mediators <span class="math inline">\(Z\)</span>.</p>
+</div>
+<!-- TODO: explain this-->
+<div class="definition" name="Treatment Positivity">
+<p>For any <span class="math inline">\(a \in \mathcal{A}\)</span> and <span class="math inline">\(w \in \mathcal{W}\)</span>, the conditional probability of treatment <span class="math inline">\(g(a \mid w)\)</span> is bounded away from the limits of the unit interval by a small factor <span class="math inline">\(\xi &gt; 0\)</span>. More precisely, <span class="math inline">\(\xi &lt; g(a \mid w) &lt; 1 - \xi\)</span>. This mirrors the standard positivity assumption required for static interventions, <a href="07-tmle3.html">discussed previously</a>.</p>
+</div>
+<!-- TODO: explain this-->
+<div class="definition" name="Mediator Positivity">
+<p>For any <span class="math inline">\(z \in \mathcal{Z}\)</span>, <span class="math inline">\(a \in \mathcal{A}\)</span>, and <span class="math inline">\(w \in \mathcal{W}\)</span>, the conditional mediator density must be bounded away from zero by a small factor <span class="math inline">\(\epsilon &gt; 0\)</span>, specifically, <span class="math inline">\(\epsilon &lt; q_{0,Z}(z \mid a, w)\)</span>. Essentially, this requires that the conditional mediator density be bounded away from zero for all <span class="math inline">\(\{z, a, w\}\)</span> in their joint support <span class="math inline">\(\mathcal{Z} \times \mathcal{A}
+\times \mathcal{W}\)</span>, which is to say that it must be possible to observe any given mediator value across all strata defined by both treatment <span class="math inline">\(A\)</span> and baseline covariates <span class="math inline">\(W\)</span>. A less restrictive form of this assumption is also possible – specifically, that the ratio of the mediator densities under both treatment contrasts be bounded for the two realizations of the mediator density under differing treatment contrasts.</p>
+</div>
+<!-- TODO: explain this-->
+<div class="definition" name="Cross-world Counterfactual Independence">
+<p>For all <span class="math inline">\(a \neq a'\)</span>, where <span class="math inline">\(a, a' \in \mathcal{A}\)</span>, and <span class="math inline">\(z \in \mathcal{Z}\)</span>, <span class="math inline">\(Y(a', z)\)</span> must be independent of <span class="math inline">\(Z(a)\)</span>, given <span class="math inline">\(W\)</span>. That is, the counterfactual outcome under the treatment contrast <span class="math inline">\(a' \in \mathcal{A}\)</span> and the counterfactual mediator value <span class="math inline">\(Z(a) \in \mathcal{Z}\)</span> (under the alternative contrast <span class="math inline">\(a \in
+\mathcal{A}\)</span>) must both be <em>observable</em>. The term “cross-world” refers to the two counterfactuals <span class="math inline">\(Z(a)\)</span> and <span class="math inline">\(Y(a', z)\)</span> existing under two differing treatment contrasts. Though their joint distribution is well-defined, these counterfactuals can never be jointly realized.</p>
+</div>
+<!-- TODO: explain this-->
+<p>While the first three assumptions may be familiar based on their analogs in simpler settings, the cross-world independence requirement is unique to identification of the natural direct and indirect effects. This assumption resolves a challenging complication to the identification of these path-specific effects, which has been termed the “recanting witness” by <span class="citation" data-cites="avin2005identifiability">Avin, Shpitser, and Pearl (<a href="#ref-avin2005identifiability" role="doc-biblioref">2005</a>)</span>, who introduce a graphical resolution equivalent to this assumption. This independence of counterfactuals indexed by distinct interventions is, in fact, a serious limitation to the scientific relevance of these effect definitions, as it results in the NDE and NIE being unidentifiable in randomized trials <span class="citation" data-cites="robins2010alternative">(<a href="#ref-robins2010alternative" role="doc-biblioref">Robins and Richardson 2010</a>)</span>, implying that corresponding scientific claims cannot be falsified through experimentation <span class="citation" data-cites="popper1934logic dawid2000causal">(<a href="#ref-popper1934logic" role="doc-biblioref">Popper 1934</a>; <a href="#ref-dawid2000causal" role="doc-biblioref">Dawid 2000</a>)</span> and, consequently, directly contradicting a foundational pillar of the scientific method.</p>
+<p>While many attempts have been made to weaken this last assumption <span class="citation" data-cites="petersen2006estimation imai2010identification vansteelandt2012imputation vansteelandt2012natural">(<a href="#ref-petersen2006estimation" role="doc-biblioref">Petersen, Sinisi, and van der Laan 2006</a>; <a href="#ref-imai2010identification" role="doc-biblioref">Imai, Keele, and Yamamoto 2010</a>; <a href="#ref-vansteelandt2012imputation" role="doc-biblioref">Vansteelandt, Bekaert, and Lange 2012</a>; <a href="#ref-vansteelandt2012natural" role="doc-biblioref">Vansteelandt and VanderWeele 2012</a>)</span>, these results either impose stringent modeling assumptions, propose alternative interpretations of the natural effects, or provide a limited degree of additional flexibility by developing conditions that may more easily be satisfied. For example, <span class="citation" data-cites="petersen2006estimation">Petersen, Sinisi, and van der Laan (<a href="#ref-petersen2006estimation" role="doc-biblioref">2006</a>)</span> weaken this assumption by requiring it only for conditional means (rather than distinct counterfactuals) and adopt a view of the natural direct effect as a weighted average of another type of direct effect, the controlled direct effect. The motivated reader may wish to further examine these details independently. We next review estimation of the NDE and NIE, which remain widely used in modern applications of causal mediation analysis.</p>
+</section>
+<section id="estimating-the-natural-direct-effect" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="estimating-the-natural-direct-effect"><span class="header-section-number">6.3.2</span> Estimating the Natural Direct Effect</h3>
+<p>The NDE is defined as <span class="math display">\[\begin{align*}
+  \psi_{\text{NDE}} =&amp;~\E[Y(1, Z(0)) - Y(0, Z(0))] \\
+  =&amp; \sum_w \sum_z
+  [\underbrace{\E(Y \mid A = 1, z, w)}_{\overline{Q}_Y(A = 1, z, w)} -
+  \underbrace{\E(Y \mid A = 0, z, w)}_{\overline{Q}_Y(A = 0, z, w)}] \\
+  &amp;\times \underbrace{p(z \mid A = 0, w)}_{q_Z(Z \mid 0, w))}
+  \underbrace{p(w)}_{q_W},
+\end{align*}\]</span> where the likelihood factors arise from a factorization of the joint likelihood: <span class="math display">\[\begin{equation*}
+  p(w, a, z, y) = \underbrace{p(y \mid w, a, z)}_{q_Y(A, W, Z)}
+  \underbrace{p(z \mid w, a)}_{q_Z(Z \mid A, W)}
+  \underbrace{p(a \mid w)}_{g(A \mid W)}
+  \underbrace{p(w)}_{q_W}.
+\end{equation*}\]</span></p>
+<p>The process of estimating the NDE begins by constructing <span class="math inline">\(\overline{Q}_{Y, n}\)</span>, an estimate of the conditional mean of the outcome, given <span class="math inline">\(Z\)</span>, <span class="math inline">\(A\)</span>, and <span class="math inline">\(W\)</span>. With an estimate of this conditional mean in hand, predictions of the quantities <span class="math inline">\(\overline{Q}_Y(Z, 1, W)\)</span> (setting <span class="math inline">\(A = 1\)</span>) and, likewise, <span class="math inline">\(\overline{Q}_Y(Z, 0, W)\)</span> (setting <span class="math inline">\(A = 0\)</span>) are readily obtained. We denote the difference of these conditional means <span class="math inline">\(\overline{Q}_{\text{diff}} =
+\overline{Q}_Y(Z, 1, W) - \overline{Q}_Y(Z, 0, W)\)</span>, which is itself only a functional parameter of the data distribution. <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span> captures differences in the conditional mean of <span class="math inline">\(Y\)</span> across contrasts of <span class="math inline">\(A\)</span>.</p>
+<p>A procedure for constructing a targeted maximum likelihood (TML) estimator of the NDE treats <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span> itself as a nuisance parameter, regressing its estimate <span class="math inline">\(\overline{Q}_{\text{diff}, n}\)</span> on baseline covariates <span class="math inline">\(W\)</span>, among observations in the control condition only (i.e., those for whom <span class="math inline">\(A = 0\)</span> is observed); the goal of this step is to remove part of the marginal impact of <span class="math inline">\(Z\)</span> on <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>, since the covariates <span class="math inline">\(W\)</span> precede the mediators <span class="math inline">\(Z\)</span> in time. Regressing this difference on <span class="math inline">\(W\)</span> among the controls recovers the expected <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>, under the setting in which all individuals are treated as falling in the control condition <span class="math inline">\(A = 0\)</span>. Any residual additive effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span> is removed during the TML estimation step using the auxiliary (or “clever”) covariate, which accounts for the mediators <span class="math inline">\(Z\)</span>. This auxiliary covariate takes the form</p>
+<p><span class="math display">\[\begin{equation*}
+  C_Y(q_Z, g)(O) = \Bigg\{\frac{\mathbb{I}(A = 1)}{g(1 \mid W)}
+  \frac{q_Z(Z \mid 0, W)}{q_Z(Z \mid 1, W)} -
+  \frac{\mathbb{I}(A = 0)}{g(0 \mid W)} \Bigg\} \ .
+\end{equation*}\]</span> Breaking this down, <span class="math inline">\(\mathbb{I}(A = 1) / g(1 \mid W)\)</span> is the inverse propensity score weight for <span class="math inline">\(A = 1\)</span> and, likewise, <span class="math inline">\(\mathbb{I}(A = 0) / g(0 \mid W)\)</span> is the inverse propensity score weight for <span class="math inline">\(A = 0\)</span>. The middle term is the ratio of the conditional densities of the mediator under the control (<span class="math inline">\(A = 0\)</span>) and treatment (<span class="math inline">\(A = 1\)</span>) conditions (n.b., recall the mediator positivity condition above).</p>
+<p>This subtle appearance of a ratio of conditional densities is concerning – tools to estimate such quantities are sparse in the statistics literature <span class="citation" data-cites="diaz2011super hejazi2020haldensify">(<a href="#ref-diaz2011super" role="doc-biblioref">Dı́az and van der Laan 2011</a>; <a href="#ref-hejazi2020haldensify" role="doc-biblioref">Hejazi, Benkeser, and van der Laan 2022</a>)</span>, unfortunately, and the problem is still more complicated (and computationally taxing) when <span class="math inline">\(Z\)</span> is high-dimensional. As only the ratio of these conditional densities is required, a convenient re-parametrization may be achieved, that is, <span class="math display">\[\begin{equation*}
+  \frac{p(A = 0 \mid Z, W)}{g(0 \mid W)}
+  \frac{g(1 \mid W)}{p(A = 1 \mid Z, W)} \ .
+\end{equation*}\]</span> Going forward, we will denote this re-parameterized conditional probability functional <span class="math inline">\(e(A \mid Z, W) := p(A \mid Z, W)\)</span>. The same re-parameterization technique has been used by <span class="citation" data-cites="zheng2012targeted">Zheng and van der Laan (<a href="#ref-zheng2012targeted" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="tchetgen2013inverse">Tchetgen Tchetgen (<a href="#ref-tchetgen2013inverse" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="diaz2020nonparametric">Dı́az et al. (<a href="#ref-diaz2020nonparametric" role="doc-biblioref">2020</a>)</span>, and <span class="citation" data-cites="hejazi2021nonparametric">Hejazi et al. (<a href="#ref-hejazi2021nonparametric" role="doc-biblioref">2022</a>)</span> in similar contexts. This reformulation is particularly useful for the fact that it reduces the estimation problem to one requiring only the estimation of conditional means, opening the door to the use of a <a href="06-sl3.html">wide range of machine learning algorithms, as discussed previously</a>.</p>
+<p>Underneath the hood, the mean outcome difference <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span> and <span class="math inline">\(e(A \mid Z, W)\)</span>, the conditional probability of <span class="math inline">\(A\)</span> given <span class="math inline">\(Z\)</span> and <span class="math inline">\(W\)</span>, are used in constructing the auxiliary covariate for TML estimation. These nuisance parameters play an important role in the bias-correcting update step of the TML estimation procedure.</p>
+</section>
+<section id="estimating-the-natural-indirect-effect" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="estimating-the-natural-indirect-effect"><span class="header-section-number">6.3.3</span> Estimating the Natural Indirect Effect</h3>
+<p>Derivation and estimation of the NIE is analogous to that of the NDE. Recall that the NIE is the effect of <span class="math inline">\(A\)</span> on <span class="math inline">\(Y\)</span> <em>only through the mediator <span class="math inline">\(Z\)</span></em>. This counterfactual quantity, which may be expressed <span class="math inline">\(\E(Y(Z(1), 1) -
+\E(Y(Z(0), 1)\)</span>, corresponds to the difference of the conditional mean of <span class="math inline">\(Y\)</span> given <span class="math inline">\(A = 1\)</span> and <span class="math inline">\(Z(1)\)</span> (the values the mediator would take under <span class="math inline">\(A = 1\)</span>) and the conditional expectation of <span class="math inline">\(Y\)</span> given <span class="math inline">\(A = 1\)</span> and <span class="math inline">\(Z(0)\)</span> (the values the mediator would take under <span class="math inline">\(A = 0\)</span>).</p>
+<p>As with the NDE, re-parameterization can be used to replace <span class="math inline">\(q_Z(Z \mid A, W)\)</span> with <span class="math inline">\(e(A \mid Z, W)\)</span> in the estimation process, avoiding estimation of a possibly multivariate conditional density. However, in this case, the mediated mean outcome difference, previously computed by regressing <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span> on <span class="math inline">\(W\)</span> among the control units (for whom <span class="math inline">\(A = 0\)</span> is observed) is instead replaced by a two-step process. First, <span class="math inline">\(\overline{Q}_Y(Z,
+1, W)\)</span>, the conditional mean of <span class="math inline">\(Y\)</span> given <span class="math inline">\(Z\)</span> and <span class="math inline">\(W\)</span> when <span class="math inline">\(A = 1\)</span>, is regressed on <span class="math inline">\(W\)</span>, among only the treated units (i.e., for whom <span class="math inline">\(A = 1\)</span> is observed). Then, the same quantity, <span class="math inline">\(\overline{Q}_Y(Z, 1, W)\)</span> is again regressed on <span class="math inline">\(W\)</span>, but this time among only the control units (i.e., for whom <span class="math inline">\(A = 0\)</span> is observed). The mean difference of these two functionals of the data distribution is a valid estimator of the NIE. It can be thought of as the additive marginal effect of treatment on the conditional mean of <span class="math inline">\(Y\)</span> given <span class="math inline">\((W, A = 1, Z)\)</span> through its effect on <span class="math inline">\(Z\)</span>. So, in the case of the NIE, while our estimand <span class="math inline">\(\psi_{\text{NIE}}\)</span> is different, the same estimation techniques useful for constructing efficient estimators of the NDE come into play.</p>
+</section>
+</section>
+<section id="the-population-intervention-direct-and-indirect-effects" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="the-population-intervention-direct-and-indirect-effects"><span class="header-section-number">6.4</span> The Population Intervention Direct and Indirect Effects</h2>
+<p>At times, the natural direct and indirect effects may prove too limiting, as these effect definitions are based on <em>static interventions</em> (i.e., setting <span class="math inline">\(A = 0\)</span> or <span class="math inline">\(A = 1\)</span>), which may be unrealistic for real-world interventions. In such cases, one may turn instead to the population intervention direct effect (PIDE) and the population intervention indirect effect (PIIE), which are based on decomposing the effect of the population intervention effect (PIE) of flexible stochastic interventions <span class="citation" data-cites="diaz2020causal">(<a href="#ref-diaz2020causal" role="doc-biblioref">Dı́az and Hejazi 2020</a>)</span>.</p>
+<p>We previously discussed stochastic interventions when considering <a href="09-tmle3shift.html">how to intervene on continuous-valued treatments</a>; however, these intervention schemes may be applied to all manner of treatment variables. A particular type of stochastic intervention well-suited to working with binary treatments is the <em>incremental propensity score intervention</em> (IPSI), first proposed by <span class="citation" data-cites="kennedy2019nonparametric">Kennedy (<a href="#ref-kennedy2019nonparametric" role="doc-biblioref">2019</a>)</span>. Such interventions do not deterministically set the treatment level of an observed unit to a fixed quantity (i.e., setting <span class="math inline">\(A = 1\)</span>), but instead <em>alter the odds of receiving the treatment</em> by a fixed amount (<span class="math inline">\(0 \leq \delta \leq \infty\)</span>) for each individual. In particular, this intervention takes the form <span class="math display">\[\begin{equation*}
+  g_{\delta}(1 \mid w) = \frac{\delta g(1 \mid w)}{\delta g(1 \mid w) + 1
+  - g(1\mid w)},
+\end{equation*}\]</span> where the scalar <span class="math inline">\(0 &lt; \delta &lt; \infty\)</span> specifies a <em>change in the odds of receiving treatment</em>. As described by <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span> in the context of causal mediation analysis, the identification assumptions required for the PIDE and the PIIE are significantly more lax than those required for the NDE and NIE. These identification assumptions include the following. Importantly, the assumption of cross-world counterfactual independence is not at all required.</p>
+<div class="definition" name="Conditional Exchangeability of Treatment and Mediators">
+<p>Assume that <span class="math inline">\(\E\{Y(a, z) \mid Z, A, W\} = \E\{Y(a, z) \mid Z,
+W\}~\forall~(a, z) \in \mathcal{A} \times \mathcal{Z}W\)</span>. This assumption is stronger than and implied by the assumption <span class="math inline">\(Y(a, z) \indep (A,Z) \mid W\)</span>, originally proposed by <span class="citation" data-cites="vansteelandt2012natural">Vansteelandt and VanderWeele (<a href="#ref-vansteelandt2012natural" role="doc-biblioref">2012</a>)</span> for identification of mediated effects among the treated. In introducing this assumption <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span> state that “This assumption would be satisfied for any pre-exposure <span class="math inline">\(W\)</span> in a randomized experiment in which exposure and mediators are randomized. Thus, the direct effect for a population intervention corresponds to contrasts between treatment regimes of a randomized experiment via interventions on <span class="math inline">\(A\)</span> and <span class="math inline">\(Z\)</span>, unlike the natural direct effect for the average treatment effect <span class="citation" data-cites="robins2010alternative">(<a href="#ref-robins2010alternative" role="doc-biblioref">Robins and Richardson 2010</a>)</span>.”</p>
+</div>
+<!-- TODO: explain this-->
+<div class="definition" name="Common Support of Treatment and Mediators">
+<p>Assume that <span class="math inline">\(\text{supp}\{g_{\delta}(\cdot \mid w)\} \subseteq
+\text{supp}\{g(\cdot \mid w)\}~\forall~w \in \mathcal{W}\)</span>. This assumption is standard and requires only that the post-intervention value of <span class="math inline">\(A\)</span> be supported in the data. Note that this is significantly weaker than the treatment and mediator positivity conditions required for the natural direct and indirect effects, and it is a direct consequence of using stochastic (rather than static) interventions.</p>
+</div>
+<!-- TODO: explain this-->
+<!--
+Mark notes,
+"where do we say that we can throw out the cross world independence assumption?
+that point has been made by use from early on Petersen, vdL natural direct
+effect models IJB paper and so on. So lets make that clear right away and now
+full data quantiy is $EY_{1,g*_Z}-EY_{0,g*_Z}$, just joint stochastic
+intervention on $A,Z$. So, now we only need randomization assumption and
+positivity assumption.  Changing $1$ and $0$ by a $g*_{A,1}$ and $g*_{A,0}$
+does not change the causal identification assumptions but only changes the
+positivity assumption. You make it sound as if we weaken the causal
+assumptions, no we don't."
+
+Nima: "I respectfully disagree -- vdL + Petersen did not actually resolve the
+cross-world independence assumption for _all_ causal parameters that arise in
+mediation analysis. in Diaz + Hejazi, we formulate an entirely different set of
+effects, which in no way whatsoever require this independence assumption. the
+results of vdL + Petersen change the interpretation of the NDE, viewing it as
+a weighted average of CDEs across different possible values of the mediators,
+which is (1) not the original definition of the effects, even if it leads to
+the same statistical functional, and (2) works around this requirement by
+replacing the static intervention on the mediators with a stochastic draw from
+a particular conditional distribution, which limits their interpretation."
+-->
+<section id="decomposing-the-population-intervention-effect" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="decomposing-the-population-intervention-effect"><span class="header-section-number">6.4.1</span> Decomposing the Population Intervention Effect</h3>
+<p>We may decompose the population intervention effect (PIE) in terms of the <em>population intervention direct effect</em> (PIDE) and the <em>population intervention indirect effect</em> (PIIE): <span class="math display">\[\begin{equation*}
+  \mathbb{E}\{Y(A_\delta)\} - \mathbb{E}Y =
+    \overbrace{\mathbb{E}\{Y(A_\delta, Z(A_\delta))
+      - Y(A_\delta, Z)\}}^{\text{PIIE}} +
+    \overbrace{\mathbb{E}\{Y(A_\delta, Z) - Y(A, Z)\}}^{\text{PIDE}}.
+\end{equation*}\]</span></p>
+<p>This decomposition of the PIE as the sum of the population intervention direct and indirect effects has an interpretation analogous to the corresponding standard decomposition of the average treatment effect. In the sequel, we will compute each of the components of the direct and indirect effects above using appropriate estimators as follows</p>
+<ul>
+<li>For <span class="math inline">\(\E\{Y(A, Z)\}\)</span>, the sample mean <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n Y_i\)</span> is consistent;</li>
+<li>for <span class="math inline">\(\E\{Y(A_{\delta}, Z)\}\)</span>, a TML estimator for the effect of a joint intervention altering the treatment mechanism but not the mediation mechanism, based on the proposal in <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span>; and,</li>
+<li>for <span class="math inline">\(\E\{Y(A_{\delta}, Z_{A_{\delta}})\}\)</span>, an efficient estimator for the effect of a joint intervention on both the treatment and mediation mechanisms, as per <span class="citation" data-cites="kennedy2019nonparametric">Kennedy (<a href="#ref-kennedy2019nonparametric" role="doc-biblioref">2019</a>)</span>.</li>
+</ul>
+</section>
+<section id="estimating-the-effect-decomposition-term" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="estimating-the-effect-decomposition-term"><span class="header-section-number">6.4.2</span> Estimating the Effect Decomposition Term</h3>
+<p>As described by <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span>, the statistical functional identifying the decomposition term that appears in both the PIDE and PIIE <span class="math inline">\(\E\{Y(A_{\delta},
+Z)\}\)</span>, which corresponds to altering the treatment mechanism while keeping the mediation mechanism fixed, is <span class="math display">\[\begin{equation*}
+  \psi_0(\delta) = \int \overline{Q}_{0,Y}(a, z, w)
+    g_{0,\delta}(a \mid w) p_0(z, w) d\nu(a, z, w),
+\end{equation*}\]</span> for which a TML estimator is available. In the case of <span class="math inline">\(A \in \{0, 1\}\)</span>, the <em>efficient influence function</em> (EIF) with respect to the nonparametric statistical model <span class="math inline">\(\mathcal{M}\)</span> is <span class="math inline">\(D_{\delta}(o) = D^Y_{\delta}(o)
++ D^A_{\delta}(o) + D^{Z,W}_{\delta}(o) - \psi(\delta)\)</span>, where the orthogonal components of the EIF are defined as follows:</p>
+<ul>
+<li><span class="math inline">\(D^Y_{\delta}(o) = \{g_{\delta}(a \mid w) / e(a \mid z, w)\} \{y -
+\overline{Q}_{Y}(z,a,w)\}\)</span>,</li>
+<li><span class="math inline">\(D^A_{\delta}(o) = \{\delta\phi(w) (a - g(1 \mid w))\} /
+\{(\delta g(1 \mid w) + g(0 \mid w))^2\}\)</span>, and where <span class="math inline">\(\phi(w) :=
+\E\{\overline{Q}_{Y}(1, Z, W) - \overline{Q}_{Y}(0, Z, W) \mid W = w\}\)</span>,</li>
+<li><span class="math inline">\(D^{Z,W}_{\delta}(o) = \int_{\mathcal{A}} \overline{Q}_{Y}(z, a, w)
+g_{\delta}(a \mid w) d\kappa(a)\)</span>.</li>
+</ul>
+<p>The TML estimator may be computed by fluctuating initial estimates of the nuisance parameters so as to solve the EIF estimating equation. The resultant TML estimator is <span class="math display">\[\begin{equation*}
+  \psi_{n}^{\star}(\delta) = \int_{\mathcal{A}} \frac{1}{n} \sum_{i=1}^n
+  \overline{Q}_{Y,n}^{\star}(Z_i, a, W_i)
+  g_{\delta, n}^{\star}(a \mid W_i) d\kappa(a),
+\end{equation*}\]</span> where <span class="math inline">\(g_{\delta,n}^{\star}(a \mid w)\)</span> and <span class="math inline">\(\overline{Q}_{Y,n}^{\star}(z,a,w)\)</span> are generated by regressions that fluctuate (or tilt) initial nuisance parameter estimates towards solutions of the score equations <span class="math inline">\(n^{-1}
+\sum_{i=1}^n D^A_{\delta}(O_i) = 0\)</span> and <span class="math inline">\(n^{-1} \sum_{i=1}^n D^Y_{\delta}(O_i)
+= 0\)</span>, respectively. This TML estimator <span class="math inline">\(\psi_{n}^{\star}(\delta)\)</span> is implemented in <code>tmle3mediate</code> package. We demonstrate the use of <code>tmle3mediate</code> to obtain <span class="math inline">\(\E\{Y(A_{\delta}, Z)\}\)</span> via its TML estimator in the following worked code examples.</p>
+</section>
+</section>
+<section id="evaluating-the-direct-and-indirect-effects" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="evaluating-the-direct-and-indirect-effects"><span class="header-section-number">6.5</span> Evaluating the Direct and Indirect Effects</h2>
+<p>We now turn to estimating the natural direct and indirect effects, as well as the population intervention direct effect, using the WASH Benefits data, introduced in earlier chapters. Let’s first load the data:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sl3)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmle3)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmle3mediate)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># download data</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> <span class="fu">fread</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/tlverse-data/master/"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wash-benefits/washb_data.csv"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># make intervention node binary and subsample</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> washb_data[<span class="fu">sample</span>(.N, <span class="dv">600</span>), ]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>washb_data[, tr <span class="sc">:</span><span class="er">=</span> <span class="fu">as.numeric</span>(tr <span class="sc">!=</span> <span class="st">"Control"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>We’ll next define the baseline covariates <span class="math inline">\(W\)</span>, treatment <span class="math inline">\(A\)</span>, mediators <span class="math inline">\(Z\)</span>, and outcome <span class="math inline">\(Y\)</span> nodes of the NPSEM via a “Node List” object:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> <span class="fu">c</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"momage"</span>, <span class="st">"momedu"</span>, <span class="st">"momheight"</span>, <span class="st">"hfiacat"</span>, <span class="st">"Nlt18"</span>, <span class="st">"Ncomp"</span>, <span class="st">"watmin"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"elec"</span>, <span class="st">"floor"</span>, <span class="st">"walls"</span>, <span class="st">"roof"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="st">"tr"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"month"</span>, <span class="st">"aged"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="st">"whz"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Here, the <code>node_list</code> encodes the parents of each node – for example, <span class="math inline">\(Z\)</span> (the mediators) have parents <span class="math inline">\(A\)</span> (the treatment) and <span class="math inline">\(W\)</span> (the baseline confounders), and <span class="math inline">\(Y\)</span> (the outcome) has parents <span class="math inline">\(Z\)</span>, <span class="math inline">\(A\)</span>, and <span class="math inline">\(W\)</span>. We’ll also handle any missingness in the data by invoking <code>process_missing</code>:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>processed <span class="ot">&lt;-</span> <span class="fu">process_missing</span>(washb_data, node_list)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> processed<span class="sc">$</span>data</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> processed<span class="sc">$</span>node_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>We’ll now construct an ensemble learner using a handful of popular machine learning algorithms:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SL learners used for continuous data (the nuisance parameter Z)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>enet_contin_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">family =</span> <span class="st">"gaussian"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>lasso_contin_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">family =</span> <span class="st">"gaussian"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fglm_contin_learner <span class="ot">&lt;-</span> Lrnr_glm_fast<span class="sc">$</span><span class="fu">new</span>(<span class="at">family =</span> <span class="fu">gaussian</span>())</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>mean_learner <span class="ot">&lt;-</span> Lrnr_mean<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>contin_learner_lib <span class="ot">&lt;-</span> Stack<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  enet_contin_learner, lasso_contin_learner, fglm_contin_learner, mean_learner</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>sl_contin_learner <span class="ot">&lt;-</span> Lrnr_sl<span class="sc">$</span><span class="fu">new</span>(<span class="at">learners =</span> contin_learner_lib)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># SL learners used for binary data (nuisance parameters G and E in this case)</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>enet_binary_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>lasso_binary_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>fglm_binary_learner <span class="ot">&lt;-</span> Lrnr_glm_fast<span class="sc">$</span><span class="fu">new</span>(<span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>binary_learner_lib <span class="ot">&lt;-</span> Stack<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  enet_binary_learner, lasso_binary_learner, fglm_binary_learner, mean_learner</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>sl_binary_learner <span class="ot">&lt;-</span> Lrnr_sl<span class="sc">$</span><span class="fu">new</span>(<span class="at">learners =</span> binary_learner_lib)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># create list for treatment and outcome mechanism regressions</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>learner_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> sl_contin_learner,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> sl_binary_learner</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="targeted-estimation-of-the-natural-indirect-effect" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="targeted-estimation-of-the-natural-indirect-effect"><span class="header-section-number">6.5.1</span> Targeted Estimation of the Natural Indirect Effect</h3>
+<p>We demonstrate calculation of the NIE below, starting by instantiating a “Spec” object that encodes exactly which learners to use for the nuisance parameters <span class="math inline">\(e(A \mid Z, W)\)</span> and <span class="math inline">\(\psi_Z\)</span>. We then pass our Spec object to the <code>tmle3</code> function, alongside the data, the node list (created above), and a learner list indicating which machine learning algorithms to use for estimating the nuisance parameters based on <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmle_spec_NIE <span class="ot">&lt;-</span> <span class="fu">tmle_NIE</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">e_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_binary_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">psi_Z_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_contin_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_iter =</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>washb_NIE <span class="ot">&lt;-</span> <span class="fu">tmle3</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  tmle_spec_NIE, washb_data, node_list, learner_list</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>washb_NIE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Based on the output, we conclude that the indirect effect of the treatment through the mediators (sex, month, aged) is 0.0.</p>
+</section>
+<section id="targeted-estimation-of-the-natural-direct-effect" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="targeted-estimation-of-the-natural-direct-effect"><span class="header-section-number">6.5.2</span> Targeted Estimation of the Natural Direct Effect</h3>
+<p>An analogous procedure applies for estimation of the NDE, only replacing the Spec object for the NIE with <code>tmle_spec_NDE</code> to define learners for the NDE nuisance parameters:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tmle_spec_NDE <span class="ot">&lt;-</span> <span class="fu">tmle_NDE</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">e_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_binary_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">psi_Z_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_contin_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_iter =</span> <span class="dv">1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>washb_NDE <span class="ot">&lt;-</span> <span class="fu">tmle3</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  tmle_spec_NDE, washb_data, node_list, learner_list</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>washb_NDE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>From this, we can draw the conclusion that the direct effect of the treatment (through all paths not involving the mediators (sex, month, aged)) is 0.0. Note that, together, the estimates of the natural direct and indirect effects approximately recover the <em>average treatment effect</em>, that is, based on these estimates of the NDE and NIE, the ATE is roughly 0.0.</p>
+</section>
+<section id="targeted-estimation-of-the-population-intervention-direct-effect" class="level3" data-number="6.5.3">
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="targeted-estimation-of-the-population-intervention-direct-effect"><span class="header-section-number">6.5.3</span> Targeted Estimation of the Population Intervention Direct Effect</h3>
+<p>As previously noted, the assumptions underlying the natural direct and indirect effects may be challenging to justify; moreover, the effect definitions themselves depend on the application of a static intervention to the treatment, sharply limiting their flexibility. When considering binary treatments, incremental propensity score shifts provide an alternative class of flexible, stochastic interventions. We’ll now consider estimating the PIDE with an IPSI that modulates the odds of receiving treatment by <span class="math inline">\(\delta = 3\)</span>. Such an intervention may be interpreted (hypothetically) as the effect of a design that encourages study participants to opt in to receiving the treatment, thus increasing their relative odds of receiving said treatment. To exemplify our approach, we postulate a motivational intervention that <em>triples the odds</em> (i.e., <span class="math inline">\(\delta = 3\)</span>) of receiving the treatment for each individual:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the IPSI multiplicative shift</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>delta_ipsi <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># instantiate tmle3 spec for stochastic mediation</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>tmle_spec_pie_decomp <span class="ot">&lt;-</span> <span class="fu">tmle_medshift</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> delta_ipsi,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">e_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_binary_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">phi_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_contin_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the TML estimate</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>washb_pie_decomp <span class="ot">&lt;-</span> <span class="fu">tmle3</span>(</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  tmle_spec_pie_decomp, washb_data, node_list, learner_list</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>washb_pie_decomp</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># get the PIDE</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>washb_pie_decomp<span class="sc">$</span>summary<span class="sc">$</span>tmle_est <span class="sc">-</span> <span class="fu">mean</span>(washb_data[, <span class="fu">get</span>(node_list<span class="sc">$</span>Y)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Recall that, based on the decomposition outlined previously, the PIDE may be denoted <span class="math inline">\(\beta_{0,\text{PIDE}}(\delta) = \psi_0(\delta) - \E Y\)</span>. Thus, a TML estimator of the PIDE, <span class="math inline">\(\beta_{n,\text{PIDE}}(\delta)\)</span> may be expressed as a composition of estimators of its constituent parameters: <span class="math display">\[\begin{equation*}
+  \beta_{n,\text{PIDE}}({\delta}) = \psi^{\star}_{n}(\delta) -
+  \frac{1}{n} \sum_{i = 1}^n Y_i.
+\end{equation*}\]</span></p>
+<!--
+Based on the above, we may construct an estimator of the PIDE using the already
+estimated decomposition term and the empirical (marginal) mean of the outcome.
+Note that this is a straightforward application of the delta method and could
+equivalently be performed using the functionality exposed in the [`tmle3`
+package](https://github.com/tlverse/tmle3).
+-->
+<!--
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+tmle_task <- tmle_spec_pie_decomp$make_tmle_task(
+  weight_behavior_complete, node_list
+)
+initial_likelihood <- tmle_spec_pie_decomp$make_initial_likelihood(
+  tmle_task, learner_list
+)
+```
+:::
+
+-->
+</section>
+</section>
+<section id="exercises" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.6</span> Exercises</h2>
+<section id="review-of-key-concepts" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="review-of-key-concepts"><span class="header-section-number">6.6.1</span> Review of Key Concepts</h3>
+<div class="exercise">
+<p>Examine the WASH Benefits dataset and choose a different set of potential mediators of the effect of the treatment on weight-for-height Z-score. Using this newly chosen set of mediators (or single mediator), estimate the natural direct and indirect effects. Provide an interpretation of these estimates.</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>Forthcoming</p>
+</div>
+<div class="exercise">
+<p>Assess whether additivity of the natural direct and indirect effects holds. Using the natural direct and indirect effects estimated above, does their sum recover the ATE?</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>Forthcoming</p>
+</div>
+<div class="exercise">
+<p>Evaluate whether the assumptions required for identification of the natural direct and indirect effects are plausible in the WASH Benefits example. In particular, position this evaluation in terms of empirical diagnostics of treatment and mediator positivity.</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>Forthcoming</p>
+</div>
+</section>
+<section id="the-ideas-in-action" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="the-ideas-in-action"><span class="header-section-number">6.6.2</span> The Ideas in Action</h3>
+<div class="exercise">
+<p>Forthcoming</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>Forthcoming</p>
+</div>
+<div class="exercise">
+<p>Forthcoming</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>Forthcoming</p>
+</div>
+<!--
+1. Incremental propensity score interventions.
+
+2. TODO
+
+3. TODO
+-->
+<!--
+## Appendix
+
+### Exercise solutions
+-->
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-avin2005identifiability" class="csl-entry" role="listitem">
+Avin, Chen, Ilya Shpitser, and Judea Pearl. 2005. <span>“Identifiability of Path-Specific Effects.”</span> In <em>IJCAI International Joint Conference on Artificial Intelligence</em>, 357–63.
+</div>
+<div id="ref-benkeser2020nonparametric" class="csl-entry" role="listitem">
+Benkeser, David, and Jialu Ran. 2021. <span>“Nonparametric Inference for Interventional Effects with Multiple Mediators.”</span> <em>Journal of Causal Inference</em>. <a href="https://doi.org/10.1515/jci-2020-0018">https://doi.org/10.1515/jci-2020-0018</a>.
+</div>
+<div id="ref-dawid2000causal" class="csl-entry" role="listitem">
+Dawid, A Philip. 2000. <span>“Causal Inference Without Counterfactuals.”</span> <em>Journal of the American Statistical Association</em> 95 (450): 407–24.
+</div>
+<div id="ref-didelez2006direct" class="csl-entry" role="listitem">
+Didelez, Vanessa, Philip Dawid, and Sara Geneletti. 2006. <span>“Direct and Indirect Effects of Sequential Treatments.”</span> In <em>Proceedings of the 22nd Annual Conference on Uncertainty in Artificial Intelligence</em>, 138–46.
+</div>
+<div id="ref-diaz2020causal" class="csl-entry" role="listitem">
+Dı́az, Iván, and Nima S Hejazi. 2020. <span>“Causal Mediation Analysis for Stochastic Interventions.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 82 (3): 661–83. <a href="https://doi.org/10.1111/rssb.12362">https://doi.org/10.1111/rssb.12362</a>.
+</div>
+<div id="ref-diaz2020nonparametric" class="csl-entry" role="listitem">
+Dı́az, Iván, Nima S Hejazi, Kara E Rudolph, and Mark J van der Laan. 2020. <span>“Non-Parametric Efficient Causal Mediation with Intermediate Confounders.”</span> <em>Biometrika</em>. <a href="https://doi.org/10.1093/biomet/asaa085">https://doi.org/10.1093/biomet/asaa085</a>.
+</div>
+<div id="ref-diaz2011super" class="csl-entry" role="listitem">
+Dı́az, Iván, and Mark J van der Laan. 2011. <span>“Super Learner Based Conditional Density Estimation with Application to Marginal Structural Models.”</span> <em>The International Journal of Biostatistics</em> 7 (1): 1–20.
+</div>
+<div id="ref-hejazi2020haldensify" class="csl-entry" role="listitem">
+Hejazi, Nima S, David C Benkeser, and Mark J van der Laan. 2022. <em><span class="nocase">haldensify</span>: Highly Adaptive Lasso Conditional Density Estimation</em>. <a href="https://github.com/nhejazi/haldensify" class="uri">https://github.com/nhejazi/haldensify</a>. <a href="https://doi.org/10.5281/zenodo.3698329">https://doi.org/10.5281/zenodo.3698329</a>.
+</div>
+<div id="ref-hejazi2021nonparametric" class="csl-entry" role="listitem">
+Hejazi, Nima S, Kara E Rudolph, Mark J van der Laan, and Iván Dı́az. 2022. <span>“Nonparametric Causal Mediation Analysis for Stochastic Interventional (in)direct Effects.”</span> <em>Biostatistics</em> (in press). <a href="https://doi.org/10.1093/biostatistics/kxac002">https://doi.org/10.1093/biostatistics/kxac002</a>.
+</div>
+<div id="ref-imai2010identification" class="csl-entry" role="listitem">
+Imai, Kosuke, Luke Keele, and Teppei Yamamoto. 2010. <span>“Identification, Inference and Sensitivity Analysis for Causal Mediation Effects.”</span> <em>Statistical Science</em>, 51–71.
+</div>
+<div id="ref-kennedy2019nonparametric" class="csl-entry" role="listitem">
+Kennedy, Edward H. 2019. <span>“Nonparametric Causal Effects Based on Incremental Propensity Score Interventions.”</span> <em>Journal of the American Statistical Association</em> 114 (526): 645–56.
+</div>
+<div id="ref-lok2016defining" class="csl-entry" role="listitem">
+Lok, Judith J. 2016. <span>“Defining and Estimating Causal Direct and Indirect Effects When Setting the Mediator to Specific Values Is Not Feasible.”</span> <em>Statistics in Medicine</em> 35 (22): 4008–20.
+</div>
+<div id="ref-nguyen2019clarifying" class="csl-entry" role="listitem">
+Nguyen, Trang Quynh, Ian Schmid, and Elizabeth A Stuart. 2019. <span>“Clarifying Causal Mediation Analysis for the Applied Researcher: Defining Effects Based on What We Want to Learn.”</span> <em>arXiv Preprint arXiv:1904.08515</em>.
+</div>
+<div id="ref-pearl1995causal" class="csl-entry" role="listitem">
+Pearl, Judea. 1995. <span>“Causal Diagrams for Empirical Research.”</span> <em>Biometrika</em> 82 (4): 669–88.
+</div>
+<div id="ref-pearl2001direct" class="csl-entry" role="listitem">
+———. 2001. <span>“Direct and Indirect Effects.”</span> <em>arXiv Preprint arXiv:1301.2300</em>.
+</div>
+<div id="ref-pearl2009causality" class="csl-entry" role="listitem">
+———. 2009. <em>Causality: Models, Reasoning, and Inference</em>. Cambridge University Press.
+</div>
+<div id="ref-pearl2010brief" class="csl-entry" role="listitem">
+———. 2010. <span>“Brief Report: On the Consistency Rule in Causal Inference: <span>‘Axiom, Definition, Assumption, or Theorem?’</span>”</span> <em>Epidemiology</em>, 872–75.
+</div>
+<div id="ref-petersen2006estimation" class="csl-entry" role="listitem">
+Petersen, Maya L, Sandra E Sinisi, and Mark J van der Laan. 2006. <span>“Estimation of Direct Causal Effects.”</span> <em>Epidemiology</em>, 276–84.
+</div>
+<div id="ref-popper1934logic" class="csl-entry" role="listitem">
+Popper, Karl. 1934. <em>The Logic of Scientific Discovery</em>. Routledge.
+</div>
+<div id="ref-robins1986new" class="csl-entry" role="listitem">
+Robins, James M. 1986. <span>“A New Approach to Causal Inference in Mortality Studies with Sustained Exposure Periods — Application to Control of the Healthy Worker Survivor Effect.”</span> <em>Mathematical Modelling</em> 7: 1393–1512.
+</div>
+<div id="ref-robins1992identifiability" class="csl-entry" role="listitem">
+Robins, James M, and Sander Greenland. 1992. <span>“Identifiability and Exchangeability for Direct and Indirect Effects.”</span> <em>Epidemiology</em>, 143–55.
+</div>
+<div id="ref-robins2010alternative" class="csl-entry" role="listitem">
+Robins, James M, and Thomas S Richardson. 2010. <span>“Alternative Graphical Causal Models and the Identification of Direct Effects.”</span> <em>Causality and Psychopathology: Finding the Determinants of Disorders and Their Cures</em>, 103–58.
+</div>
+<div id="ref-rubin1978bayesian" class="csl-entry" role="listitem">
+Rubin, Donald B. 1978. <span>“Bayesian Inference for Causal Effects: The Role of Randomization.”</span> <em>The Annals of Statistics</em>, 34–58.
+</div>
+<div id="ref-rubin1980randomization" class="csl-entry" role="listitem">
+———. 1980. <span>“Randomization Analysis of Experimental Data: The Fisher Randomization Test Comment.”</span> <em>Journal of the American Statistical Association</em> 75 (371): 591–93.
+</div>
+<div id="ref-rudolph2017robust" class="csl-entry" role="listitem">
+Rudolph, Kara E, Oleg Sofrygin, Wenjing Zheng, and Mark J van der Laan. 2017. <span>“Robust and Flexible Estimation of Stochastic Mediation Effects: A Proposed Method and Example in a Randomized Trial Setting.”</span> <em>Epidemiologic Methods</em> 7 (1).
+</div>
+<div id="ref-spirtes2000causation" class="csl-entry" role="listitem">
+Spirtes, Peter, Clark N Glymour, Richard Scheines, David Heckerman, Christopher Meek, Gregory Cooper, and Thomas Richardson. 2000. <em>Causation, Prediction, and Search</em>. MIT press.
+</div>
+<div id="ref-tchetgen2013inverse" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J. 2013. <span>“Inverse Odds Ratio-Weighted Estimation for Causal Mediation Analysis.”</span> <em>Statistics in Medicine</em> 32 (26): 4567–80.
+</div>
+<div id="ref-tchetgen2012semiparametric" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J, and Ilya Shpitser. 2012. <span>“Semiparametric Theory for Causal Mediation Analysis: Efficiency Bounds, Multiple Robustness, and Sensitivity Analysis.”</span> <em>Annals of Statistics</em> 40 (3): 1816–45. <a href="https://doi.org/10.1214/12-AOS990">https://doi.org/10.1214/12-AOS990</a>.
+</div>
+<div id="ref-tchetgen2014identification" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J, and Tyler J VanderWeele. 2014. <span>“On Identification of Natural Direct Effects When a Confounder of the Mediator Is Directly Affected by Exposure.”</span> <em>Epidemiology</em> 25 (2): 282.
+</div>
+<div id="ref-vanderweele2015explanation" class="csl-entry" role="listitem">
+VanderWeele, Tyler. 2015. <em>Explanation in Causal Inference: Methods for Mediation and Interaction</em>. Oxford University Press.
+</div>
+<div id="ref-vanderweele2014effect" class="csl-entry" role="listitem">
+VanderWeele, Tyler J, Stijn Vansteelandt, and James M Robins. 2014. <span>“Effect Decomposition in the Presence of an Exposure-Induced Mediator-Outcome Confounder.”</span> <em>Epidemiology</em> 25 (2): 300.
+</div>
+<div id="ref-vansteelandt2012imputation" class="csl-entry" role="listitem">
+Vansteelandt, Stijn, Maarten Bekaert, and Theis Lange. 2012. <span>“Imputation Strategies for the Estimation of Natural Direct and Indirect Effects.”</span> <em>Epidemiologic Methods</em> 1 (1): 131–58.
+</div>
+<div id="ref-vansteelandt2017interventional" class="csl-entry" role="listitem">
+Vansteelandt, Stijn, and Rhian M Daniel. 2017. <span>“Interventional Effects for Mediation Analysis with Multiple Mediators.”</span> <em>Epidemiology</em> 28 (2): 258.
+</div>
+<div id="ref-vansteelandt2012natural" class="csl-entry" role="listitem">
+Vansteelandt, Stijn, and Tyler J VanderWeele. 2012. <span>“Natural Direct and Indirect Effects on the Exposed: Effect Decomposition Under Weaker Assumptions.”</span> <em>Biometrics</em> 68 (4): 1019–27.
+</div>
+<div id="ref-wright1934method" class="csl-entry" role="listitem">
+Wright, Sewall. 1934. <span>“The Method of Path Coefficients.”</span> <em>The Annals of Mathematical Statistics</em> 5 (3): 161–215.
+</div>
+<div id="ref-zheng2012targeted" class="csl-entry" role="listitem">
+Zheng, Wenjing, and Mark J van der Laan. 2012. <span>“Targeted Maximum Likelihood Estimation of Natural Direct Effects.”</span> <em>International Journal of Biostatistics</em> 8 (1). <a href="https://doi.org/10.2202/1557-4679.1361">https://doi.org/10.2202/1557-4679.1361</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../qmd_files/09-tmle3shift.html" class="pagination-link" aria-label="Stochastic Treatment Regimes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Stochastic Treatment Regimes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../qmd_files/references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
