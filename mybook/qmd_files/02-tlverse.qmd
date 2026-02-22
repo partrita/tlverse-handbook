@@ -2,7 +2,7 @@
 ```{r setup-common, include=FALSE}
 source("../_common.R")
 ```
-# (PART) Part 1: Preliminaries {-}
+# (PART) Part 1: Preliminaries 
 
 # About the `tlverse` {#tlverse}
 
@@ -143,7 +143,7 @@ the `$` operator. For a more thorough introduction to `R`'s various OOP systems,
 see http://adv-r.had.co.nz/OO-essentials.html, from Hadley Wickham's _Advanced
 R_ [@wickham2014advanced].
 
-### Object Oriented Programming: `Python` and `R` {-}
+### Object Oriented Programming: `Python` and `R` 
 
 OO concepts (classes with inheritance) were baked into Python from the first
 published version (version 0.9 in 1991). In contrast, `R` gets its OO "approach"
@@ -168,7 +168,7 @@ interactive. You need to install `R` before you install RStudio.
 
 ### Windows
 
-#### If you already have `R` and RStudio installed: {-}
+#### If you already have `R` and RStudio installed: 
 
 * Open RStudio, and click on "Help" > "Check for updates". If a new version is
   available, quit RStudio, and download the latest version for RStudio.
@@ -182,7 +182,7 @@ interactive. You need to install `R` before you install RStudio.
   for more information on how to remove old versions from your system if you
   wish to do so.
 
-#### If you don't have `R` and RStudio installed: {-}
+#### If you don't have `R` and RStudio installed: 
 
 * Download `R` from
   the [CRAN website](http://cran.r-project.org/bin/windows/base/release.htm).
@@ -196,7 +196,7 @@ interactive. You need to install `R` before you install RStudio.
 
 ### macOS / Mac OS X
 
-#### If you already have `R` and RStudio installed: {-}
+#### If you already have `R` and RStudio installed: 
 
 * Open RStudio, and click on "Help" > "Check for updates". If a new version is
   available, quit RStudio, and download the latest version for RStudio.
@@ -207,7 +207,7 @@ interactive. You need to install `R` before you install RStudio.
   website](https://cran.r-project.org/bin/macosx/) and check whether a more
   recent version is available. If so, please download and install it.
 
-#### If you don't have `R` and RStudio installed: {-}
+#### If you don't have `R` and RStudio installed: 
 
 * Download `R` from
   the [CRAN website](http://cran.r-project.org/bin/macosx).

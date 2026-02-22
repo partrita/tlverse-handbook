@@ -1,0 +1,44 @@
+```{r setup-common, include=FALSE}
+source("../_common.R")
+```
+# 예제 데이터셋
+
+## 방글라데시 WASH Benefits 연구 {#wash}
+
+이 예제 데이터는 방글라데시 농촌 지역의 수질, 위생, 손 씻기 및 영양 중재가 아동 발달에 미치는 효과에 대한 연구(WASH Benefits Bangladesh)에서 가져온 것으로, 클러스터 무작위 대조 시험(cluster randomized controlled trial) 결과입니다 [@luby2018effect]. 이 연구는 방글라데시 중부의 가지푸르(Gazipur), 키쇼레간지(Kishoreganj), 마이멘싱(Mymensingh), 탕가일(Tangail) 지역의 농촌 마을에서 임신 초기 또는 중기의 임산부를 모집했으며, 클러스터당 평균 8명의 여성이 참여했습니다. 지리적으로 인접한 8개의 클러스터 그룹을 블록 무작위 배정 방식(난수 생성기 사용)을 통해 6개의 중재 그룹과 2배 규모의 대조군(중재 또는 보건 홍보 요원 방문 없음)으로 나누었습니다. 6개의 중재 그룹은 다음과 같습니다.
+
+1. 염소 소독된 식수 제공
+2. 개선된 위생 시설
+3. 비누를 이용한 손 씻기
+4. 식수, 위생, 손 씻기 결합
+5. 상담 및 지질 기반 영양 보충제 제공을 통한 영양 개선
+6. 식수, 위생, 손 씻기 및 영양 결합
+
+이 핸드북에서는 관심 결과 변수로 아동의 성장(연령 대비 신장)에 집중합니다. 참고로, 이 임상 시험은 ClinicalTrials.gov에 등록 번호 NCT01590095로 등록되었습니다.
+
+```{r load_washb_data_intro}
+library(readr)
+# readr::read_csv를 통해 데이터 로드
+dat <- read_csv(
+  paste0(
+    "https://raw.githubusercontent.com/tlverse/tlverse-data/master/",
+    "wash-benefits/washb_data.csv"
+  )
+)
+```
+학습 목적으로, 우리는 처음에 이 데이터를 큰 대상 모집단에서 추출한 독립적이고 동일하게 분포된(i.i.d.) 무작위 표본으로 취급합니다. 샘플링된 지리적 단위 내의 데이터 클러스터링을 고려할 수도 있겠지만, 설명의 명확성을 위해 이 핸드북에서는 이러한 세부 사항을 피합니다. 편향된 표본, 반복 측정 및 관련 복잡한 상황에 대한 TL 방법론의 수정 버전은 이미 마련되어 있습니다.
+
+우리는 `r ncol(dat)`개의 측정된 변수를 가지고 있으며, 그중 하나의 변수를 관심 결과 변수로 설정합니다. 이 결과 변수 $Y$는 연령 대비 체중 Z-점수(`dat`의 `whz`)입니다. 관심 치료 변수 $A$는 무작위 배정된 치료 그룹(`dat`의 `tr`)이며, 조정 세트(잠재적 기저 혼란 변수) $W$는 단순히 *그 외 모든 변수*로 구성됩니다. 결과적으로 관찰된 데이터 구조는 $i = 1, \ldots, n$에 대해 $O_i = (W_i, A_i, Y_i)$의 $n$개 i.i.d. 복사본입니다.
+
+[`skimr` 패키지](https://CRAN.R-project.org/package=skimr)를 사용하여 WASH Benefits 데이터셋에 측정된 변수들을 빠르게 요약할 수 있습니다.
+
+```{r skim_washb_data, results="asis", echo=FALSE}
+library(skimr)
+# PDF 출력을 위해 선택적으로 스파크라인 그래프 비활성화
+if (knitr::is_latex_output()) {
+  knitr::kable(skim_no_sparks(dat), format = "latex")
+} else {
+  skim(dat)
+}
+```
+관련 변수들에 대한 편리한 요약이 위에 나타나며, 각 공변량의 주변부 특성을 설명하는 스파크라인 시각화가 포함되어 있습니다. *asset* 변수들은 연구 참여자들의 사회경제적 지위를 반영한다는 점에 유의하십시오. 또한 치료 그룹의 분포가 균등하며(대조군이 2배 더 많음), 이는 물론 설계에 의한 것임을 알 수 있습니다.

@@ -11,7 +11,7 @@ by _Jeremy Coyle, Nima Hejazi, Ivana Malenica and Rachael Phillips_.
 
 `r if (knitr::is_latex_output()) '\\begin{VT1}\n\\VH{Learning Objectives}'`
 
-`r if (knitr::is_html_output()) '## Learning Objectives{-}'`
+`r if (knitr::is_html_output()) '## Learning Objectives'`
 
 By the end of this chapter you will be able to:
 
@@ -228,7 +228,7 @@ following, we describe different cross-validation schemes available in the
 `origami` package, and we go on to demonstrate their use in practical data
 analysis examples.
 
-### WASH Benefits Study Example {-}
+### WASH Benefits Study Example 
 
 In order to illustrate different cross-validation schemes, we will be using the
 WASH Benefits example dataset (detailed information can be found in 
@@ -538,7 +538,7 @@ The `origami` package also supports numerous cross-validation schemes for
 time-series data, for both single and multiple time-series
 with arbitrary time and network dependence.
 
-### `AirPassenger` Data Example {-}
+### `AirPassenger` Data Example 
 
 In order to illustrate different cross-validation schemes for time-series, we
 will be using the _AirPassenger_ data; this is a widely used, freely available

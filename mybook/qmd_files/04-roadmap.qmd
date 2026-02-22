@@ -2,7 +2,7 @@
 ```{r setup-common, include=FALSE}
 source("../_common.R")
 ```
-# (PART) Part 2: Foundations {-}
+# (PART) Part 2: Foundations 
 
 # Learning from Data: A Roadmap {#roadmap}
 
@@ -20,7 +20,7 @@ source("../_common.R")
    no unmeasured confounding, interference, positivity.
 :::
 
-## Introduction {-}
+## Introduction 
 
 The roadmap of statistical learning is concerned with the process of translating
 real-world scientific questions to mathematical formalisms
@@ -44,7 +44,7 @@ The roadmap is a six-stage process:
 5. Construct a measure of uncertainty for the estimate $\hat{\Psi}(P_n)$
 6. Make substantive conclusion
 
-### (1) Data: A random variable with a probability distribution, $O \sim P_0$ {-}
+### (1) Data: A random variable with a probability distribution, $O \sim P_0$ 
 
 The dataset we are confronted with is the collection of the results of a
 scientific (or natural) experiment. We can view the data as a _random variable_;
@@ -64,7 +64,7 @@ variable (e.g., subject ID for repeated measures data) the i.i.d. assumption
 holds, and incorporating inferential corrections for repeated or clustered
 observations, to name but a few.
 
-#### The empirical probability measure, $P_n$ {-}
+#### The empirical probability measure, $P_n$ 
 
 With $n$ i.i.d. observations in hand, we can define an empirical probability
 measure, $P_n$. The empirical probability measure is an approximation of the
@@ -80,7 +80,7 @@ In order to understand the scope for learning from a particular dataset, we next
 need to ask *"What do we know about the process that led to the data's
 generation?"* This brings us on to Step 2.
 
-### (2) Defining the statistical model $\M$ such that $P_0 \in \M$ {-}
+### (2) Defining the statistical model $\M$ such that $P_0 \in \M$ 
 
 The statistical model $\M$ is the set of all possible probability distributions
 that could describe the process by which our observed data have been generated,
@@ -177,7 +177,7 @@ it is an invaluable tool to guide communication between statisticians and
 non-statistician domain scientists. This brings us to our next step in the
 roadmap, *"What are we trying to learn from the data?"*
 
-### (3) The statistical target parameter $\Psi$ and statistical estimand $\psi_0$ {-}
+### (3) The statistical target parameter $\Psi$ and statistical estimand $\psi_0$ 
 
 The statistical target parameter, $\Psi$, is defined as a mapping from the
 statistical model, $\M$, to the parameter space. Usually, the parameter space is
@@ -218,7 +218,7 @@ $\M$ realistically and $\Psi$, we have formally defined the statistical
 estimation problem. Next comes Step 4: "_How do we learn from the data the
 approximate answer to the question of interest?_"
 
-### (4) The estimator $\hat{\Psi}$ and estimate $\psi_n$ {-}
+### (4) The estimator $\hat{\Psi}$ and estimate $\psi_n$ 
 
 To obtain a good approximation of the statistical estimand, we need an estimator
 $\hat{\Psi}$, an _a priori_-specified algorithm defined as a mapping from the set
@@ -264,7 +264,7 @@ sampling distribution of our estimator is necessary. This brings us to Step 5:
 "_How confident should we be in our statistical answer to the scientific
 question?_"
 
-### (5) A measure of uncertainty for the estimate $\psi_n$ {-}
+### (5) A measure of uncertainty for the estimate $\psi_n$ 
 
 Since the estimator $\hat{\Psi}$ is a function of the empirical distribution
 $P_n$, the estimator itself is a random variable with a sampling distribution.
@@ -315,7 +315,7 @@ part of step (6) can be pre-specified as well. This final step of the roadmap
 addresses the question, "_what is the interpretation and robustness of the
 study's findings, and what conclusions can be drawn from them?_"
 
-### (6) Make substantive conclusion {-}
+### (6) Make substantive conclusion 
 
 Making the substantive conclusion involves interpreting the study findings. It
 also provides an opportunity to ask follow-up questions that might be addressed
@@ -404,7 +404,7 @@ by directed acyclic graphs (DAGs). Both frameworks allow for the known or
 hypothesized set of relationships between variables in the system under study to
 be encoded and mathematically formalized.
 
-### The Causal Model {-}
+### The Causal Model 
 
 Throughout, we will focus on the use of DAGs and SCMs for the description of
 causal parameters.  Estimators of statistical parameters that correspond, under
@@ -519,7 +519,7 @@ the natural value of $A$ observed in the absence of the intervention), and much
 more. Each results in a different target causal parameter and entails different
 identifiability assumptions discussed below.
 
-### Identifiability {-}
+### Identifiability 
 
 Since we can never simultaneously observe $Y(0)$, the counterfactual outcome
 when $A=0$, and $Y(1)$, the counterfactual outcome when $A=1$, we cannot
@@ -592,7 +592,7 @@ functions of different components of $P_0$. We discuss several more complex
 estimands in subsequent chapters.
 
 <!--
-### Missingness {-}
+### Missingness 
 
 TODO: Ask Mark to add note about this.
 

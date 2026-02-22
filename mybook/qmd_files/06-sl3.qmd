@@ -15,7 +15,7 @@ _Rachael Phillips_
 Based on the [`sl3` `R` package](https://github.com/tlverse/sl3) by _Jeremy
 Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, and Oleg Sofrygin_.
 
-### Learning Objectives {-}
+### Learning Objectives 
 
 <!--
 IM:
@@ -94,7 +94,7 @@ Add more about sl3: how it's different from SuperLearner, supported features,
 GitHub, filing issues, support, documentation, etc.
 -->
 
-## Super Learning with `sl3`: {-}
+## Super Learning with `sl3`: 
 
 ## How to Fit the Super Learner
 In this section, the core functionality for fitting any SL with `sl3` is
@@ -107,7 +107,7 @@ Fitting any SL with `sl3` consists of the following three steps:
 2. Instantiate the SL with `Lrnr_sl`.
 3. Fit the SL to the task with `train`.
 
-#### Running example with WASH Benefits dataset {-}
+#### Running example with WASH Benefits dataset 
 
 We will use the WASH Benefits Bangladesh study as an example to guide this
 overview of `sl3`. In this study, we are interested in predicting the child
@@ -117,11 +117,11 @@ features. More information on this dataset is described in the ["Meet the
 Data"](https://tlverse.org/tlverse-handbook/data.html#wash) chapter of the
 `tlverse` handbook.
 
-#### Preliminaries {-}
+#### Preliminaries 
 
 First, we need to load the data and relevant packages into the R session.
 
-##### Load the data {-}
+##### Load the data 
 
 ```{r setup-handbook-utils-noecho, echo = FALSE}
 library(data.table)
@@ -160,7 +160,7 @@ if (knitr::is_latex_output()) {
 }
 ```
 
-##### Install `sl3` software (as needed) {-}
+##### Install `sl3` software (as needed) 
 
 <!--
 IM:
@@ -190,14 +190,14 @@ of the package (i.e., `usethis::install_github(tlverse/sl3@devel)`), re-start
 your `R` session, and then re-load the `sl3` package.
 -->
 
-##### Load `sl3` software {-}
+##### Load `sl3` software 
 
 Once `sl3` is installed, we can load it like any other `R` package:
 ```{r load-sl3}
 library(sl3)
 ```
 
-### 1. Define the prediction task with `make_sl3_Task` {-}
+### 1. Define the prediction task with `make_sl3_Task` 
 
 The `sl3_Task` object defines the prediction task of interest. Recall that 
 our task in this illustrative example is to use the WASH Benefits Bangladesh 
@@ -244,7 +244,7 @@ to dig into SL fit objects as well - to obtain predictions from an SL fit or
 candidate learners, examine an SL fit or its candidates, and summarize an SL 
 fit.
 
-### 2. Instantiate the Super Learner with `Lrnr_sl` {-}
+### 2. Instantiate the Super Learner with `Lrnr_sl` 
 
 In order to create `Lrnr_sl` we need to specify, at the minimum, a set of 
 learners for the SL to consider as candidates. This set of algorithms is 
@@ -355,7 +355,7 @@ in the following.
 sl <- Lrnr_sl$new(learners = stack, metalearner = Lrnr_nnls$new())
 ```
 
-### 3. Fit the Super Learner to the prediction task with `train` {-}
+### 3. Fit the Super Learner to the prediction task with `train` 
 
 The last step for fitting the SL to the prediction task is to call `train` and 
 supply the task. Before we call `train`, we will set a random number generator 
@@ -374,7 +374,7 @@ runtime_sl_fit
 It took `r round(as.numeric(runtime_sl_fit["elapsed"]),1)` seconds 
 (`r round(as.numeric(runtime_sl_fit["elapsed"])/60,1)` minutes) to fit the SL. 
 
-#### Summary {-}
+#### Summary 
 
 In this section, the core functionality for fitting any SL with `sl3` was
 illustrated. This consists of the following three steps:
@@ -398,7 +398,7 @@ if they open a handbook to guide them in this process.
 I remember from class a lot of students would ask about this after reading the chapter.
 -->
 
-## Additional `sl3` Topics: {-}
+## Additional `sl3` Topics: 
 
 ## Obtaining Predictions
 
@@ -526,7 +526,7 @@ if (knitr::is_latex_output()) {
 }
 ```
 
-##### `predict_fold` {-}
+##### `predict_fold` 
 Our first option to get CV predictions, `cv_preds_option1`, used the 
 `predict_fold` function to obtain validation set predictions across all folds. 
 This function only exists for learner fits that are cross-validated in `sl3`, 
@@ -550,7 +550,7 @@ We can also supply a specific integer between 1 and the number of CV folds
 to the `fold_number` argument in `predict_fold`; example of this 
 functionality is shown in the next part.  
 
-##### Cross-validated predictions by hand {-}
+##### Cross-validated predictions by hand 
 We can get the CV predictions "by hand", by tapping into each of the folds, and 
 then using the fitted candidate learners (which were trained to the training 
 set for each fold) to predict validation set outcomes (which were not seen in 
@@ -781,7 +781,7 @@ if (knitr::is_latex_output()) {
 }
 ```
 
-##### Cross-validated predictive performance by hand {-} 
+##### Cross-validated predictive performance by hand  
 Similar to how we got the CV predictions "by hand", we can also calculate the CV 
 performance/risk in a way that exposes the procedure. Specifically, this is done 
 by tapping into each of the folds, and then using the fitted candidate learners 
@@ -976,7 +976,7 @@ if (knitr::is_latex_output()) {
 }
 ```
 
-##### Revere-cross-validated predictive performance of Super Learner by hand {-}
+##### Revere-cross-validated predictive performance of Super Learner by hand 
 
 We show how to calculate the revere-CV predictive performance/risk of the SL by
 hand below, as this might be helpful for understanding revere and how it can be
@@ -1741,7 +1741,7 @@ learners coupled with various screeners.
 <!--
 #### Defining Novel Performance Metrics with `ROCR`
 -->
-## Advanced `sl3` Functionality: {-}
+## Advanced `sl3` Functionality: 
 
 ## Variable Importance Measures
 
@@ -2010,9 +2010,9 @@ haldensify_lrnr <- Lrnr_haldensify$new(
 
 -->
 
-## Exercises: {-}
+## Exercises: 
 
-### Binary outcome prediction {-}
+### Binary outcome prediction 
 
 Follow the steps below to predict the probability for myocardial infarction 
 (`mi`) using the available covariate data. We thank Dr. David Benkeser,
@@ -2056,11 +2056,11 @@ if (knitr::is_latex_output()) {
    fit object.
 
 <!--
-## Categorical outcome prediction {-}
+## Categorical outcome prediction 
 -->
 
 <!--
-## Multivariate outcome prediction {-}
+## Multivariate outcome prediction 
 -->
 
 ## Concluding Remarks

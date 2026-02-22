@@ -3,24 +3,30 @@ project:
   output-dir: _book
 
 book:
-  title: "'tlverse'와 함께하는 R에서의 타겟 러닝"
+  title: "`tlverse`와 함께하는 R에서의 타겟 러닝"
   author: "Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard"
   date: "2026-02-21"
   language: ko
   chapters:
     - index.qmd
-    - qmd_files/01-intro.qmd
-    - qmd_files/02-tlverse.qmd
-    - qmd_files/03-data.qmd
-    - qmd_files/04-roadmap.qmd
-    - qmd_files/05-origami.qmd
-    - qmd_files/06-sl3.qmd
-    - qmd_files/07-tmle3.qmd
-    - qmd_files/08-tmle3mopttx.qmd
-    - qmd_files/09-tmle3shift.qmd
-    - qmd_files/10-tmle3mediate.qmd
-    # - qmd_files/11-tmle3survival.qmd
-    - qmd_files/references.qmd
+    - part: "I. 타겟 러닝의 기초"
+      chapters:
+        - 01-intro.qmd
+        - 02-tlverse.qmd
+        - 03-data.qmd
+        - 04-roadmap.qmd
+    - part: "II. 핵심 기계 학습 엔진"
+      chapters:
+        - 05-origami.qmd
+        - 06-sl3.qmd
+    - part: "III. TMLE 프레임워크 및 응용"
+      chapters:
+        - 07-tmle3.qmd
+        - 08-tmle3mopttx.qmd
+        - 09-tmle3shift.qmd
+        - 10-tmle3mediate.qmd
+        - 11-tmle3survival.qmd
+    - references.qmd
 
 bibliography: [book.bib, packages.bib]
 
