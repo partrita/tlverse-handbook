@@ -296,10 +296,10 @@ user (you'll need a GitHub user account). Follow these two steps:
 7. Save your `.Renviron` file. The example below shows how this syntax should
    look.
 
-  ```{r renviron-example, results="asis", eval=FALSE}
+```{r renviron-example, results="asis", eval=FALSE}
   GITHUB_PAT=yourPAT
 
-  ```
+```
 
 8. Restart R. You can restart `R` via the drop-down menu on RStudio's "Session"
    tab, which is located at the top of the RStudio interface. You have to

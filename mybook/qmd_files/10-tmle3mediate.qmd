@@ -9,7 +9,7 @@ _Nima Hejazi_
 Featuring the [`tmle3mediate` `R`
 package](https://github.com/tlverse/tmle3mediate).
 
-:::: {.infobox .tlverse data-latex=""}
+::: {.infobox .tlverse data-latex=""}
 ::: {.center data-latex=""}
 **Learning Objectives**
 :::
@@ -32,7 +32,7 @@ package](https://github.com/tlverse/tmle3mediate).
    including differences in the assumptions required for their identification.
 7. Estimate the population intervention direct effect of a binary treatment
    using the `tmle3mediate` `R` package.
-::::
+:::
 
 ## Causal Mediation Analysis
 

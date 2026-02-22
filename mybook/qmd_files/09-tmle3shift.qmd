@@ -8,7 +8,7 @@ _Nima Hejazi_
 
 Featuring the [`tmle3shift` `R` package](https://github.com/tlverse/tmle3shift).
 
-:::: {.infobox .tlverse data-latex=""}
+::: {.infobox .tlverse data-latex=""}
 ::: {.center data-latex=""}
 **Learning Objectives**
 :::
@@ -28,7 +28,7 @@ Featuring the [`tmle3shift` `R` package](https://github.com/tlverse/tmle3shift).
 7. Implement, with the `tmle3shift` `R` package, modified treatment policies
    that shift individual units only to the extent supported by the observed
    data.
-::::
+:::
 
 ## Why _Stochastic_ Interventions?
 

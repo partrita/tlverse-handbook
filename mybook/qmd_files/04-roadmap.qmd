@@ -6,7 +6,7 @@ source("../_common.R")
 
 # Learning from Data: A Roadmap {#roadmap}
 
-:::: {.infobox .tlverse data-latex=""}
+::: {.infobox .tlverse data-latex=""}
 ::: {.center data-latex=""}
 **Learning Objectives**
 :::
@@ -18,7 +18,7 @@ source("../_common.R")
 4. Explain the following statistical and causal assumptions alongside their
    implications: independent and identically distributed (i.i.d.), consistency,
    no unmeasured confounding, interference, positivity.
-::::
+:::
 
 ## Introduction {-}
 
