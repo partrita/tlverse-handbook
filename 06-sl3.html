@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; 슈퍼 러닝 – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
+<title>7&nbsp; 슈퍼 러닝 – `tlverse`와 함께하는 타겟 러닝</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -185,7 +185,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
+      <a href="./"><code>tlverse</code>와 함께하는 타겟 러닝</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -386,6 +386,21 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<div style="display:none;">
+\(
+ \DeclareMathOperator{\expit}{expit}
+ \DeclareMathOperator{\logit}{logit}
+ \DeclareMathOperator*{\argmin}{\arg\!\min}
+ \newcommand{\indep}{\perp\!\!\!\perp}
+ \newcommand{\coloneqq}{\mathrel{=}}
+ \newcommand{\R}{\mathbb{R}}
+ \newcommand{\E}{\mathbb{E}}
+ \newcommand{\M}{\mathcal{M}}
+ \newcommand{\P}{\mathbb{P}}
+ \newcommand{\I}{\mathbb{I}}
+ \newcommand{\1}{\mathbbm{1}}
+\)
+</div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-roadmap.html">2부: 기초</a></li><li class="breadcrumb-item"><a href="./06-sl3.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -914,9 +929,9 @@ sl3 GitHub 저장소의 devel 브랜치에서 사용할 수 있는 새로운 sl3
 <span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>runtime_sl_fit <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> start_time <span class="co"># 종료 시간 - 시작 시간 = 실행 시간</span></span>
 <span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>runtime_sl_fit</span>
 <span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>   user  system elapsed </span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="fl">181.671</span>   <span class="fl">1.238</span> <span class="fl">169.874</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="fl">200.758</span>   <span class="fl">1.306</span> <span class="fl">188.796</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>SL을 적합시키는 데 169.9초(2.8분)가 걸렸습니다.</p>
+<p>SL을 적합시키는 데 188.8초(3.1분)가 걸렸습니다.</p>
 <section id="요약" class="level4" data-number="7.3.3.1">
 <h4 data-number="7.3.3.1" class="anchored" data-anchor-id="요약"><span class="header-section-number">7.3.3.1</span> 요약</h4>
 <p>이 섹션에서는 <code>sl3</code>로 SL을 적합시키는 핵심 기능을 설명했습니다. 이는 다음 세 단계로 구성됩니다.</p>
@@ -2153,7 +2168,7 @@ height:300px; overflow-x: scroll; width:100%; ">
 <span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>runtime_sl_fit_parallel <span class="ot">&lt;-</span> <span class="fu">proc.time</span>() <span class="sc">-</span> start_time</span>
 <span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>runtime_sl_fit_parallel</span>
 <span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>   user  system elapsed </span>
-<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">280.8</span>    <span class="fl">48.7</span>   <span class="fl">107.8</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">313.9</span>    <span class="fl">55.6</span>   <span class="fl">118.5</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <!--
 IM: 

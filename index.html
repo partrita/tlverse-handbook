@@ -9,7 +9,7 @@
 <meta name="author" content="Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard">
 <meta name="dcterms.date" content="2026-02-21">
 
-<title>tlverse와 함께하는 R에서의 타겟 러닝</title>
+<title>tlverse와 함께하는 타겟 러닝</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,7 +100,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
+      <a href="./"><code>tlverse</code>와 함께하는 타겟 러닝</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -239,10 +239,25 @@ ul.task-list li input[type="checkbox"] {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<div style="display:none;">
+\(
+ \DeclareMathOperator{\expit}{expit}
+ \DeclareMathOperator{\logit}{logit}
+ \DeclareMathOperator*{\argmin}{\arg\!\min}
+ \newcommand{\indep}{\perp\!\!\!\perp}
+ \newcommand{\coloneqq}{\mathrel{=}}
+ \newcommand{\R}{\mathbb{R}}
+ \newcommand{\E}{\mathbb{E}}
+ \newcommand{\M}{\mathcal{M}}
+ \newcommand{\P}{\mathbb{P}}
+ \newcommand{\I}{\mathbb{I}}
+ \newcommand{\1}{\mathbbm{1}}
+\)
+</div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">1부: 예비 지식</a></li><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</h1>
+<h1 class="title"><code>tlverse</code>와 함께하는 타겟 러닝</h1>
 <p class="subtitle lead"><code>tlverse</code> 소프트웨어 생태계를 활용한 인과 데이터 과학</p>
 </div>
 
@@ -274,7 +289,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="환영합니다" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 환영합니다</h1>
-<p>_<code>R</code>을 활용한 타겟 러닝: <code>tlverse</code> 소프트웨어 생태계를 이용한 인과 데이터 과학_은 <a href="https://github.com/tlverse"><code>tlverse</code> 생태계</a>에서 제공하는 소프트웨어 스택을 사용하여 타겟 러닝 방법론을 실무에 적용하기 위한 완전 재현 가능한 오픈 소스 전자 핸드북입니다. 이 저작물은 현재 초안 단계에 있으며, 커뮤니티의 의견을 수렴하기 위해 공개되어 있습니다. 내용을 확인하거나 기여하시려면 <a href="https://github.com/tlverse/tlverse-handbook">GitHub 저장소</a>를 방문해 주세요.</p>
+<p><code>R</code>을 활용한 타겟 러닝: <code>tlverse</code> 소프트웨어 생태계를 이용한 인과 데이터 과학_은 <a href="https://github.com/tlverse"><code>tlverse</code> 생태계</a>에서 제공하는 소프트웨어 스택을 사용하여 타겟 러닝 방법론을 실무에 적용하기 위한 완전 재현 가능한 오픈 소스 전자 핸드북입니다. 이 저작물은 현재 초안 단계에 있으며, 커뮤니티의 의견을 수렴하기 위해 공개되어 있습니다. 내용을 확인하거나 기여하시려면 <a href="https://github.com/tlverse/tlverse-handbook">GitHub 저장소</a>를 방문해 주세요.</p>
 <p><img style="float: left; margin-right: 1%; margin-bottom: 0.01em" src="img/logos/tlverse-logo.svg" width="30%" height="30%"> <img style="float: center; margin-right: 1%; margin-bottom: 0.01em" src="img/logos/Rlogo.svg" width="35%" height="35%"> <img style="float: right; margin-right: 1%; margin-bottom: 0.01em" src="img/logos/vdl-logo-transparent.svg" width="30%" height="30%"></p>
 <p><br><br><br><br></p>
 </section>

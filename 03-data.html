@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; 예제 데이터셋 – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
+<title>4&nbsp; 예제 데이터셋 – `tlverse`와 함께하는 타겟 러닝</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -183,7 +183,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
+      <a href="./"><code>tlverse</code>와 함께하는 타겟 러닝</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -320,6 +320,21 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<div style="display:none;">
+\(
+ \DeclareMathOperator{\expit}{expit}
+ \DeclareMathOperator{\logit}{logit}
+ \DeclareMathOperator*{\argmin}{\arg\!\min}
+ \newcommand{\indep}{\perp\!\!\!\perp}
+ \newcommand{\coloneqq}{\mathrel{=}}
+ \newcommand{\R}{\mathbb{R}}
+ \newcommand{\E}{\mathbb{E}}
+ \newcommand{\M}{\mathcal{M}}
+ \newcommand{\P}{\mathbb{P}}
+ \newcommand{\I}{\mathbb{I}}
+ \newcommand{\1}{\mathbbm{1}}
+\)
+</div>
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">1부: 예비 지식</a></li><li class="breadcrumb-item"><a href="./03-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -366,7 +381,6 @@ window.Quarto = {
 <p>우리는 28개의 측정된 변수를 가지고 있으며, 그중 하나의 변수를 관심 결과 변수로 설정합니다. 이 결과 변수 <span class="math inline">\(Y\)</span>는 연령 대비 체중 Z-점수(<code>dat</code>의 <code>whz</code>)입니다. 관심 치료 변수 <span class="math inline">\(A\)</span>는 무작위 배정된 치료 그룹(<code>dat</code>의 <code>tr</code>)이며, 조정 세트(잠재적 기저 혼란 변수) <span class="math inline">\(W\)</span>는 단순히 <em>그 외 모든 변수</em>로 구성됩니다. 결과적으로 관찰된 데이터 구조는 <span class="math inline">\(i = 1, \ldots, n\)</span>에 대해 <span class="math inline">\(O_i = (W_i, A_i, Y_i)\)</span>의 <span class="math inline">\(n\)</span>개 i.i.d. 복사본입니다.</p>
 <p><a href="https://CRAN.R-project.org/package=skimr"><code>skimr</code> 패키지</a>를 사용하여 WASH Benefits 데이터셋에 측정된 변수들을 빠르게 요약할 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
-<div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Data summary</caption>
 <tbody>
@@ -412,7 +426,6 @@ window.Quarto = {
 <p>|skim_variable | n_missing| complete_rate| min| max| empty| n_unique| whitespace| |:————-|———:|————-:|—:|—:|—–:|——–:|———-:| |tr | 0| 1| 3| 15| 0| 7| 0| |fracode | 0| 1| 2| 6| 0| 20| 0| |sex | 0| 1| 4| 6| 0| 2| 0| |momedu | 0| 1| 12| 15| 0| 3| 0| |hfiacat | 0| 1| 11| 24| 0| 4| 0|</p>
 <p><strong>Variable type: numeric</strong></p>
 <p>|skim_variable | n_missing| complete_rate| mean| sd| p0| p25| p50| p75| p100|hist | |:————–|———:|————-:|——:|—–:|——:|——:|—–:|——:|——:|:—–| |whz | 0| 1.00| -0.59| 1.03| -4.67| -1.28| -0.6| 0.08| 4.97|▁▆▇▁▁ | |month | 0| 1.00| 6.45| 3.33| 1.00| 4.00| 6.0| 9.00| 12.00|▇▇▅▇▇ | |aged | 0| 1.00| 266.32| 52.17| 42.00| 230.00| 266.0| 303.00| 460.00|▁▂▇▅▁ | |momage | 18| 1.00| 23.91| 5.24| 14.00| 20.00| 23.0| 27.00| 60.00|▇▇▁▁▁ | |momheight | 31| 0.99| 150.50| 5.23| 120.65| 147.05| 150.6| 154.06| 168.00|▁▁▆▇▁ | |Nlt18 | 0| 1.00| 1.60| 1.25| 0.00| 1.00| 1.0| 2.00| 10.00|▇▂▁▁▁ | |Ncomp | 0| 1.00| 11.04| 6.35| 2.00| 6.00| 10.0| 14.00| 52.00|▇▃▁▁▁ | |watmin | 0| 1.00| 0.95| 9.48| 0.00| 0.00| 0.0| 1.00| 600.00|▇▁▁▁▁ | |elec | 0| 1.00| 0.60| 0.49| 0.00| 0.00| 1.0| 1.00| 1.00|▆▁▁▁▇ | |floor | 0| 1.00| 0.11| 0.31| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |walls | 0| 1.00| 0.72| 0.45| 0.00| 0.00| 1.0| 1.00| 1.00|▃▁▁▁▇ | |roof | 0| 1.00| 0.99| 0.12| 0.00| 1.00| 1.0| 1.00| 1.00|▁▁▁▁▇ | |asset_wardrobe | 0| 1.00| 0.17| 0.37| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▂ | |asset_table | 0| 1.00| 0.73| 0.44| 0.00| 0.00| 1.0| 1.00| 1.00|▃▁▁▁▇ | |asset_chair | 0| 1.00| 0.73| 0.44| 0.00| 0.00| 1.0| 1.00| 1.00|▃▁▁▁▇ | |asset_khat | 0| 1.00| 0.61| 0.49| 0.00| 0.00| 1.0| 1.00| 1.00|▅▁▁▁▇ | |asset_chouki | 0| 1.00| 0.78| 0.41| 0.00| 1.00| 1.0| 1.00| 1.00|▂▁▁▁▇ | |asset_tv | 0| 1.00| 0.30| 0.46| 0.00| 0.00| 0.0| 1.00| 1.00|▇▁▁▁▃ | |asset_refrig | 0| 1.00| 0.08| 0.27| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |asset_bike | 0| 1.00| 0.32| 0.47| 0.00| 0.00| 0.0| 1.00| 1.00|▇▁▁▁▃ | |asset_moto | 0| 1.00| 0.07| 0.25| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |asset_sewmach | 0| 1.00| 0.06| 0.25| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |asset_mobile | 0| 1.00| 0.86| 0.35| 0.00| 1.00| 1.0| 1.00| 1.00|▁▁▁▁▇ |</p>
-</div>
 </div>
 <p>관련 변수들에 대한 편리한 요약이 위에 나타나며, 각 공변량의 주변부 특성을 설명하는 스파크라인 시각화가 포함되어 있습니다. <em>asset</em> 변수들은 연구 참여자들의 사회경제적 지위를 반영한다는 점에 유의하십시오. 또한 치료 그룹의 분포가 균등하며(대조군이 2배 더 많음), 이는 물론 설계에 의한 것임을 알 수 있습니다.</p>
 
