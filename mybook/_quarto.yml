@@ -8,20 +8,20 @@ book:
   date: "2026-02-21"
   language: ko
   chapters:
-    - index.qmd
-    - part: "I. 타겟 러닝의 기초"
+    - part: "1부: 예비 지식 "
       chapters:
+        - index.qmd
         - 01-intro.qmd
         - 02-tlverse.qmd
         - 03-data.qmd
-        - 04-roadmap.qmd
-    - part: "II. 핵심 기계 학습 엔진"
+    - part: "2부: 기초"
       chapters:
+        - 04-roadmap.qmd
         - 05-origami.qmd
         - 06-sl3.qmd
-    - part: "III. TMLE 프레임워크 및 응용"
-      chapters:
         - 07-tmle3.qmd
+    - part: "3부: 고급 주제 "
+      chapters:
         - 08-tmle3mopttx.qmd
         - 09-tmle3shift.qmd
         - 10-tmle3mediate.qmd
@@ -30,22 +30,22 @@ book:
 
 bibliography: [book.bib, packages.bib]
 
-knitr:
-  opts_chunk:
-    comment: ""
-    collapse: true
-    cache: false
-    out.width: "80%"
-    fig.align: "center"
-    fig.width: 6
-    fig.asp: 0.618
-    message: false
-    warning: false
-    echo: true
+# knitr:
+#   opts_chunk:
+#     comment: ""
+#     collapse: true
+#     cache: false
+#     out.width: "80%"
+#     fig.align: "center"
+#     fig.width: 6
+#     fig.asp: 0.618
+#     message: false
+#     warning: false
+#     echo: true
 
 format:
   html:
     theme: cosmo
     css: css/style.css
     toc: true
-    code-fold: true
+    # code-fold: true

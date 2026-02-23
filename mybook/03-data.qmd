@@ -32,11 +32,10 @@ dat <- read_csv(
 
 [`skimr` 패키지](https://CRAN.R-project.org/package=skimr)를 사용하여 WASH Benefits 데이터셋에 측정된 변수들을 빠르게 요약할 수 있습니다.
 
-```{r skim_washb_data, results="asis", echo=FALSE}
+```{r skim_washb_data, echo=FALSE}
 library(skimr)
-# PDF 출력을 위해 선택적으로 스파크라인 그래프 비활성화
 if (knitr::is_latex_output()) {
-  knitr::kable(skim_no_sparks(dat), format = "latex")
+  skim_no_sparks(dat)
 } else {
   skim(dat)
 }

@@ -3,9 +3,10 @@ source("_common.R")
 ```
 # 사건 시간 결과에 대한 1단계 TMLE
 
-Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation for time-to-event outcomes [published online ahead of print, 2019 Nov 15]. Biometrics. 2019;10.1111/biom.13172. doi:10.1111/biom.13172에 기반합니다.
+아래 자료에 기반해 작성되었습니다.
 
-Moore, K. and van der Laan, M.J. (2009) Application of time-to-event methods in the assessment of safety in clinical trials. Design and Analysis of Clinical Trials with Time-to-Event Endpoints. London: Taylor & Francis, pp. 455–482.
+* Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation for time-to-event outcomes [published online ahead of print, 2019 Nov 15]. Biometrics. 2019;10.1111/biom.13172. doi:10.1111/biom.13172.
+* Moore, K. and van der Laan, M.J. (2009) Application of time-to-event methods in the assessment of safety in clinical trials. Design and Analysis of Clinical Trials with Time-to-Event Endpoints. London: Taylor & Francis, pp. 455–482.
 
 ::: {.callout-note}
 ## 학습 목표

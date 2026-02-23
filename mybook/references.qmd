@@ -1,6 +1,10 @@
 ```{r setup-common, include=FALSE}
 source("_common.R")
 ```
-`r if (knitr::is_html_output()) '
-# References 
-'`
+
+::: {.content-visible when-format="html"}
+# References {.unnumbered}
+:::
+
+::: {#refs}
+:::

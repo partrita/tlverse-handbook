@@ -1,7 +1,6 @@
 ```{r setup-common, include=FALSE}
 source("_common.R")
 ```
-# (PART) 1부: 예비 지식 
 
 # `tlverse`에 대하여 {#tlverse}
 

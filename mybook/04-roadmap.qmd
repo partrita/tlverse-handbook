@@ -1,7 +1,7 @@
 ```{r setup-common, include=FALSE}
 source("_common.R")
 ```
-# (PART) 2부: 기초
+
 
 # 데이터로부터 배우기: 로드맵 {#roadmap}
 
