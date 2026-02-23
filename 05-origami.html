@@ -195,6 +195,12 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -204,12 +210,6 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
@@ -332,9 +332,9 @@ window.Quarto = {
   </ul></li>
   <li><a href="#origami의-일반적인-워크플로" id="toc-origami의-일반적인-워크플로" class="nav-link" data-scroll-target="#origami의-일반적인-워크플로"><span class="header-section-number">6.6</span> <code>origami</code>의 일반적인 워크플로</a>
   <ul class="collapse">
-  <li><a href="#폴드-정의" id="toc-폴드-정의" class="nav-link" data-scroll-target="#폴드-정의"><span class="header-section-number">6.6.1</span> (1) 폴드 정의</a></li>
-  <li><a href="#폴드-함수-정의" id="toc-폴드-함수-정의" class="nav-link" data-scroll-target="#폴드-함수-정의"><span class="header-section-number">6.6.2</span> (2) 폴드 함수 정의</a></li>
-  <li><a href="#cross_validate-적용" id="toc-cross_validate-적용" class="nav-link" data-scroll-target="#cross_validate-적용"><span class="header-section-number">6.6.3</span> (3) <code>cross_validate()</code> 적용</a></li>
+  <li><a href="#폴드-정의" id="toc-폴드-정의" class="nav-link" data-scroll-target="#폴드-정의"><span class="header-section-number">6.6.1</span> 폴드 정의</a></li>
+  <li><a href="#폴드-함수-정의" id="toc-폴드-함수-정의" class="nav-link" data-scroll-target="#폴드-함수-정의"><span class="header-section-number">6.6.2</span> 폴드 함수 정의</a></li>
+  <li><a href="#cross_validate-적용" id="toc-cross_validate-적용" class="nav-link" data-scroll-target="#cross_validate-적용"><span class="header-section-number">6.6.3</span> <code>cross_validate()</code> 적용</a></li>
   </ul></li>
   <li><a href="#교차-검증의-실제-활용" id="toc-교차-검증의-실제-활용" class="nav-link" data-scroll-target="#교차-검증의-실제-활용"><span class="header-section-number">6.7</span> 교차 검증의 실제 활용</a>
   <ul class="collapse">
@@ -1097,15 +1097,15 @@ nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트�
 <p>더 자세한 내용을 살펴보기 전에 <code>origami</code> <code>R</code> 패키지의 몇 가지 기본 기능을 검토해 보겠습니다. <code>origami</code>에서 주로 사용되는 함수는 <code>cross_validate()</code>입니다. 우선 사용자는 폴드 구조와 각 폴드에서 작동하는 함수를 정의해야 합니다(이 <code>cv_fun()</code>은 <code>origami</code> 용어로 대개 후보 학습 알고리즘이 어떻게 훈련되고 그 예측이 어떻게 검증되는지를 규정합니다).</p>
 <p><code>cross_validate()</code>에 전달되면, 이 핵심 함수는 지정된 함수(즉, <code>cv_fun()</code>)를 각 폴드에 반복적으로 적용하여 폴드별 결과를 의미 있는 방식으로 결합합니다. 나중에 실제 작동 모습을 보게 될 것입니다 — 지금은 아래에서 이 프로세스의 각 단계에 대한 구체적인 세부 사항을 제공합니다.</p>
 <section id="폴드-정의" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="폴드-정의"><span class="header-section-number">6.6.1</span> (1) 폴드 정의</h3>
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="폴드-정의"><span class="header-section-number">6.6.1</span> 폴드 정의</h3>
 <p><code>cross_validate</code>에 전달되는 <code>folds</code> 객체는 폴드들의 <code>list</code>입니다. 이러한 <code>list</code> 객체는 <code>make_folds()</code> 도우미 함수를 사용하여 생성됩니다. 각 폴드는 <code>"training"</code> 인덱스 벡터, <code>"validation"</code> 인덱스 벡터 및 <code>"fold_index"</code>(전체 폴드 <code>list</code>에서의 순서)가 포함된 <code>list</code>로 구성됩니다. <code>make_folds()</code> 함수는 이전 섹션에서 설명한 다양한 교차 검증 체계를 지원합니다. <code>make_folds()</code> 함수는 또한 (<code>strata_ids</code> 인자를 통해) 특정 변수의 수준 간 균형을 보장할 수 있으며, (<code>cluster_ids</code> 인자를 통해) 동일한 독립 단위에 대한 모든 관찰값을 함께 유지할 수도 있습니다.</p>
 </section>
 <section id="폴드-함수-정의" class="level3" data-number="6.6.2">
-<h3 data-number="6.6.2" class="anchored" data-anchor-id="폴드-함수-정의"><span class="header-section-number">6.6.2</span> (2) 폴드 함수 정의</h3>
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="폴드-함수-정의"><span class="header-section-number">6.6.2</span> 폴드 함수 정의</h3>
 <p><code>cross_validate()</code>의 <code>cv_fun</code> 인자는 각 폴드에서 어떤 연산을 수행하는 사용자 정의 함수입니다(다시 말하지만, <em>대개</em> 이는 후보 학습 알고리즘의 훈련과 주어진 훈련/검증 분할, 즉 단일 폴드에서의 평가를 지정합니다). 이 함수의 첫 번째 인자는 <code>fold</code>이며, 이는 주어진 훈련/검증 분할에서의 단위 인덱스를 지정합니다(이 첫 번째 인자는 <code>cross_validate()</code>에 의해 자동으로 <code>cv_fun()</code>에 전달되며, 이때 <code>make_folds()</code>에서 생성된 폴드 객체를 쿼리합니다). 추가 인자는 <code>cross_validate()</code>의 <code>...</code> 인자를 통해 <code>cv_fun()</code>에 전달될 수 있습니다. 이 함수 내에서 편의 함수인 <code>training()</code>, <code>validation()</code> 및 <code>fold_index()</code>를 사용하여 폴드 객체의 다양한 구성 요소를 반환할 수 있습니다. <code>training()</code> 또는 <code>validation()</code> 함수에 특정 클래스의 객체가 전달되면, 해당 객체를 합리적인 방식으로 인덱싱합니다. 예를 들어 입력 객체가 벡터라면 이 도우미 함수들은 벡터를 직접 인덱싱하지만, 입력 객체가 <code>data.frame</code> 또는 <code>matrix</code>라면 이 함수들은 자동으로 행(row)을 인덱싱합니다. 이를 통해 사용자는 데이터를 훈련 세트와 검증 세트로 쉽게 나눌 수 있습니다. 폴드 함수는 저장하고자 하는 폴드별 출력이 무엇이든 포함하는 이름이 지정된 결과 <code>list</code>를 반환해야 합니다.</p>
 </section>
 <section id="cross_validate-적용" class="level3" data-number="6.6.3">
-<h3 data-number="6.6.3" class="anchored" data-anchor-id="cross_validate-적용"><span class="header-section-number">6.6.3</span> (3) <code>cross_validate()</code> 적용</h3>
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="cross_validate-적용"><span class="header-section-number">6.6.3</span> <code>cross_validate()</code> 적용</h3>
 <p>폴드를 정의한 후 <code>cross_validate()</code> 함수를 사용하여 <code>folds</code>에 걸쳐 <code>cv_fun()</code>을 매핑할 수 있습니다. 내부적으로 이는 <code>lapply()</code> 또는 <code>future_lapply()</code>(동일한 함수의 병렬화된 변형)를 사용합니다. 이런 방식으로 <code>cross_validate()</code>는 <a href="https://Cran.R-project.org/package=future"><code>R</code>을 위한 future 병렬화 프레임워크</a> <span class="citation" data-cites="bengtsson2021unifying">(<a href="references.html#ref-bengtsson2021unifying" role="doc-biblioref">Bengtsson 2021</a>)</span>의 병렬화 체계(즉, <code>plan</code>)를 지정하여 쉽게 병렬화될 수 있습니다. <code>cross_validate()</code>의 적용은 관련 <code>cv_fun()</code>에서 지정된 사용자 정의 <code>list</code>와 일치하는 결과 리스트를 생성합니다. 위에서 언급했듯이, <code>cv_fun()</code>에 대한 각 호출은 저장하려는 각 결과 유형에 대해 이름이 지정된 슬롯이 있는 결과 <code>list</code>를 자체적으로 반환합니다. 메인 <code>cross_validate()</code> 루프는 이러한 개별 폴드별 결과 <code>list</code>들의 리스트(<code>list</code>들의 <code>list</code> 또는 “메타 리스트”)를 생성합니다. 내부적으로 이 “메타 리스트”는 <code>cv_fun()</code>에 의해 지정된 각 결과 유형당 단 하나의 슬롯만 반환되도록 (연결(concatenation)을 통해) 정리됩니다(이것 역시 각 폴드에 대한 결과들의 <code>list</code>입니다). 기본적으로 <code>combine_results()</code> 도우미 함수를 사용하여 개별 폴드별 결과 <code>list</code>들을 합리적인 방식으로 결합합니다. 결과가 어떻게 결합되는지는 첫 번째 폴드 결과의 데이터 유형을 검사하여 자동으로 결정됩니다. 이는 <code>.combine_control</code> 인자에 인자들의 <code>list</code>를 지정하여 수정할 수 있습니다.</p>
 </section>
 </section>

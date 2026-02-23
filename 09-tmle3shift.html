@@ -193,6 +193,12 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -202,12 +208,6 @@ window.Quarto = {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
@@ -401,7 +401,7 @@ window.Quarto = {
 <section id="왜-확률적-중재인가" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="왜-확률적-중재인가"><span class="header-section-number">10.1</span> 왜 <em>확률적</em> 중재인가?</h2>
 <p>확률적 치료 요법 또는 <em>확률적 중재</em>는 <em>현실적인</em> 인과 효과를 정의하기 위한 비교적 단순하면서도 매우 유연하고 표현력이 풍부한 프레임워크를 구성합니다. 이전에 논의된 중재 요법과 달리, 확률적 중재는 이분형, 순서형, 연속형 등 거의 모든 방식의 치료 변수에 적용될 수 있으며, 이 형식을 통해 풍부한 인과 효과 세트를 정의할 수 있습니다. 이 장에서는 정적 및 동적 치료 요법을 쉽게 적용할 수 없는 <em>연속형</em> 치료 변수에 적용될 수 있는 몇 가지 유형의 확률적 중재를 살펴보는 데 중점을 둡니다. 특히, 결과적으로 나타나는 인과 효과는 일반적인 회귀 조정과 유사한 해석을 갖는다는 편리한 특징이 있습니다.</p>
-<p>다음 장에서는 확률적 중재의 두 가지 대안적 사용법을 소개할 것입니다. 하나는 최근에 공식화된 이분형 치료 변수에 적용 가능한 중재 <span class="citation" data-cites="kennedy2019nonparametric">(<a href="references.html#ref-kennedy2019nonparametric" role="doc-biblioref">Kennedy 2019</a>)</span>이고, 다른 하나는 치료 후 변수 또는 매개 변수가 존재할 때의 인과 효과 정의입니다. 여기서는 <a href="https://github.com/tlverse/tmle3shift"><code>tmle3shift</code> R 패키지</a>에서 제공하는 도구에 중점을 둘 것입니다. 치료 변수의 관찰된 값을 가산적으로 이동(shift)시키는 확률적 중재의 인과 효과에 대한 타겟 최소 손실 기반 추정치를 노출합니다. 보다 구체적인 수학적 세부 사항은 <span class="citation" data-cites="diaz2012population">Dı́az and van der Laan (<a href="references.html#ref-diaz2012population" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="diaz2018stochastic">Dı́az and van der Laan (<a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="hejazi2020tmle3shift">(<a href="references.html#ref-hejazi2020tmle3shift" role="doc-biblioref"><strong>hejazi2020tmle3shift?</strong></a>)</span> 및 <span class="citation" data-cites="hejazi2021flexible에서">(<a href="references.html#ref-hejazi2021flexible에서" role="doc-biblioref"><strong>hejazi2021flexible에서?</strong></a>)</span> 확인할 수 있습니다. 인과적 매개변수의 적절한 선택 및 정의는 로드맵의 세 번째 단계에 해당하며, 우리는 확률적 중재의 가치를 평가하는 과정이 로드맵의 다른 모든 핵심 단계와 어떻게 조화를 이루는지 보여줄 것입니다.</p>
+<p>다음 장에서는 확률적 중재의 두 가지 대안적 사용법을 소개할 것입니다. 하나는 최근에 공식화된 이분형 치료 변수에 적용 가능한 중재 <span class="citation" data-cites="kennedy2019nonparametric">(<a href="references.html#ref-kennedy2019nonparametric" role="doc-biblioref">Kennedy 2019</a>)</span>이고, 다른 하나는 치료 후 변수 또는 매개 변수가 존재할 때의 인과 효과 정의입니다. 여기서는 <a href="https://github.com/tlverse/tmle3shift"><code>tmle3shift</code> R 패키지</a>에서 제공하는 도구에 중점을 둘 것입니다. 치료 변수의 관찰된 값을 가산적으로 이동(shift)시키는 확률적 중재의 인과 효과에 대한 타겟 최소 손실 기반 추정치를 노출합니다. 보다 구체적인 수학적 세부 사항은 <span class="citation" data-cites="diaz2012population">Dı́az and van der Laan (<a href="references.html#ref-diaz2012population" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="diaz2018stochastic">Dı́az and van der Laan (<a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="hejazi2020efficient">Hejazi et al. (<a href="references.html#ref-hejazi2020efficient" role="doc-biblioref">2020</a>)</span> 및 <span class="citation" data-cites="hejazi2021semiparametric">Hejazi (<a href="references.html#ref-hejazi2021semiparametric" role="doc-biblioref">2021</a>)</span> 에서 확인할 수 있습니다. 인과적 매개변수의 적절한 선택 및 정의는 로드맵의 세 번째 단계에 해당하며, 우리는 확률적 중재의 가치를 평가하는 과정이 로드맵의 다른 모든 핵심 단계와 어떻게 조화를 이루는지 보여줄 것입니다.</p>
 </section>
 <section id="데이터-및-노드-구조" class="level2" data-number="10.2">
 <h2 data-number="10.2" class="anchored" data-anchor-id="데이터-및-노드-구조"><span class="header-section-number">10.2</span> 데이터 및 노드 구조</h2>
@@ -436,8 +436,8 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 노드 리스트 구성</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">W =</span> <span class="fu">c</span>(<span class="st">"W1"</span>, <span class="st">"W2"</span>, <span class="st">"W3"</span>), <span class="at">A =</span> <span class="st">"A"</span>, <span class="at">Y =</span> <span class="st">"Y"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>중제 후의 값 <span class="math inline">\(A_{\delta}\)</span>는 그것이 임의의 (실제로 사용자 정의된) 분포에서 추출되었다는 의미에서 확률적으로 수정됩니다. 정적 중재의 익숙한 사례는 단일 값에 모든 질량을 두는 퇴화된 후보 분포를 선택함으로써 회복될 수 있습니다. <span class="citation" data-cites="stock1989nonparametric">Stock (<a href="references.html#ref-stock1989nonparametric" role="doc-biblioref">1989</a>)</span> 은 이러한 확률적 중재의 총 효과 추정을 처음 고려했습니다.</p>
-<p>후보 중제 밀도 <span class="math inline">\(g_{A_{\delta}}(A \mid W)\)</span>의 선택에 대한 제한은 거의 없지만, 실제로는 자연적(중제 전) 밀도 <span class="math inline">\(g(A \mid W)\)</span>에 대한 지식을 기반으로 선택되는 경우가 많습니다. <span class="math inline">\(g_{A_{\delta}}(A \mid W)\)</span>가 <em>조각마다 매끄럽게 가역적</em>(piecewise smooth invertible)(아래 참조)일 때 <span class="citation" data-cites="haneuse2013estimation">(<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">Haneuse and Rotnitzky 2013</a>)</span>, 중제 후 밀도 <span class="math inline">\(g_{A_{\delta}}(A \mid W)\)</span>와 관찰된 쌍 <span class="math inline">\(\{A, W\}\)</span>를 중제 후 수치 <span class="math inline">\(A_{\delta}\)</span>로 매핑하는 함수 <span class="math inline">\(d(A, W; \delta)\)</span> 사이에는 직접적인 대응 관계가 존재합니다. 이러한 경우 <span class="math inline">\(d(A, W; \delta)\)</span>에 의해 정의된 확률적 중재는 치료의 자연적 수치에 의존한다고 하며, <em>수정된 치료 정책</em>(modified treatment policy, MTP) <span class="citation" data-cites="haneuse2013estimation diaz2018stochastic hejazi2021semiparametric">(<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">Haneuse and Rotnitzky 2013</a>; <a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">Dı́az and van der Laan 2018</a>; <a href="references.html#ref-hejazi2021semiparametric" role="doc-biblioref">Hejazi 2021</a>)</span>이라고 불립니다. <span class="citation" data-cites="haneuse2013estimation과">(<a href="references.html#ref-haneuse2013estimation과" role="doc-biblioref"><strong>haneuse2013estimation과?</strong></a>)</span> <span class="citation" data-cites="young2014identification은">(<a href="references.html#ref-young2014identification은" role="doc-biblioref"><strong>young2014identification은?</strong></a>)</span> 수정된 치료 정책과 일반적인 확률적 중재 하에서의 인과 효과 해석을 대조하는 자세한 논의를 제공합니다.</p>
+<p>중재 후의 값 <span class="math inline">\(A_{\delta}\)</span>는 그것이 임의의 (실제로 사용자 정의된) 분포에서 추출되었다는 의미에서 확률적으로 수정됩니다. 정적 중재의 익숙한 사례는 단일 값에 모든 질량을 두는 퇴화된 후보 분포를 선택함으로써 회복될 수 있습니다. <span class="citation" data-cites="stock1989nonparametric">Stock (<a href="references.html#ref-stock1989nonparametric" role="doc-biblioref">1989</a>)</span> 은 이러한 확률적 중재의 총 효과 추정을 처음 고려했습니다.</p>
+<p>후보 중재 밀도 <span class="math inline">\(g_{A_{\delta}}(A \mid W)\)</span>의 선택에 대한 제한은 거의 없지만, 실제로는 자연적(중재 전) 밀도 <span class="math inline">\(g(A \mid W)\)</span>에 대한 지식을 기반으로 선택되는 경우가 많습니다. <span class="math inline">\(g_{A_{\delta}}(A \mid W)\)</span>가 <em>조각마다 매끄럽게 가역적</em>(piecewise smooth invertible)(아래 참조)일 때 <span class="citation" data-cites="haneuse2013estimation">(<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">Haneuse and Rotnitzky 2013</a>)</span>, 중재 후 밀도 <span class="math inline">\(g_{A_{\delta}}(A \mid W)\)</span>와 관찰된 쌍 <span class="math inline">\(\{A, W\}\)</span>를 중재 후 수치 <span class="math inline">\(A_{\delta}\)</span>로 매핑하는 함수 <span class="math inline">\(d(A, W; \delta)\)</span> 사이에는 직접적인 대응 관계가 존재합니다. 이러한 경우 <span class="math inline">\(d(A, W; \delta)\)</span>에 의해 정의된 확률적 중재는 치료의 자연적 수치에 의존한다고 하며, <em>수정된 치료 정책</em>(modified treatment policy, MTP) <span class="citation" data-cites="haneuse2013estimation diaz2018stochastic hejazi2021semiparametric">(<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">Haneuse and Rotnitzky 2013</a>; <a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">Dı́az and van der Laan 2018</a>; <a href="references.html#ref-hejazi2021semiparametric" role="doc-biblioref">Hejazi 2021</a>)</span> 이라고 불립니다. <span class="citation" data-cites="haneuse2013estimation">Haneuse and Rotnitzky (<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">2013</a>)</span> 과 <span class="citation" data-cites="young2014identification">Young, Hernán, and Robins (<a href="references.html#ref-young2014identification" role="doc-biblioref">2014</a>)</span> 은 수정된 치료 정책과 일반적인 확률적 중재 하에서의 인과 효과 해석을 대조하는 자세한 논의를 제공합니다.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="조각마다 매끄러운 가역성">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -461,8 +461,8 @@ Essentially, for a given $d(A,W; \delta)$ to exhibit this property, the
     a &amp; \text{if } a + \delta &gt; u(w),
   \end{cases}
   (\#eq:shift)
-\end{equation}\]</span> 여기서 <span class="math inline">\(\delta \in \mathbb{R}\)</span>은 공변량 계층 <span class="math inline">\(W = w\)</span>의 문맥에서 관찰된 <span class="math inline">\(A = a\)</span>가 이동되어야 하는 정도를 정의하며, <span class="math inline">\(l(w)\)</span>와 <span class="math inline">\(u(w)\)</span>는 계층 <span class="math inline">\(W = w\)</span>에서의 치료 <span class="math inline">\(A\)</span>의 최소 및 최대값입니다. 예를 들어, <span class="math inline">\(A\)</span>가 (연속형인) 영양 보충제 복용량(예: 비타민 알약 수)을 나타내고 <span class="math inline">\(W = w\)</span> 조건 하의 <span class="math inline">\(A\)</span> 분포의 지지 집합(support)이 구간 <span class="math inline">\((l(w), u(w))\)</span>에 있다고 가정해 보십시오. 즉, 공변량 계층 <span class="math inline">\(W = w\)</span>인 개인의 최소 알약 복용량은 <span class="math inline">\(l(w)\)</span>이고, 최대는 <span class="math inline">\(u(w)\)</span>입니다. 이러한 확률적 중재는 클리닉 정책이 개인의 기본 특성 <span class="math inline">\(W\)</span>에 기반하여 평소 권장되는 양(<span class="math inline">\(A\)</span>)보다 <span class="math inline">\(\delta\)</span>만큼 더 많은 알약을 섭취하도록(<span class="math inline">\(A \delta\)</span>) 권장하는 결과로 해석될 수 있습니다. 이러한 부류의 확률적 중재는 <span class="citation" data-cites="diaz2012population">Dı́az and van der Laan (<a href="references.html#ref-diaz2012population" role="doc-biblioref">2012</a>)</span> 에 의해 도입되었으며 <span class="citation" data-cites="haneuse2013estimation">Haneuse and Rotnitzky (<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="diaz2018stochastic">Dı́az and van der Laan (<a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="hejazi2020efficient">Hejazi et al. (<a href="references.html#ref-hejazi2020efficient" role="doc-biblioref">2020</a>)</span> 및 <span class="citation" data-cites="hejazi2021semiparametric에서">(<a href="references.html#ref-hejazi2021semiparametric에서" role="doc-biblioref"><strong>hejazi2021semiparametric에서?</strong></a>)</span> 추가로 논의되었습니다. 이 부류의 중재는 <span class="citation" data-cites="diaz2012population">Dı́az and van der Laan (<a href="references.html#ref-diaz2012population" role="doc-biblioref">2012</a>)</span> 에 따라 무작위 추출 <span class="math inline">\(\P_{A_{\delta}}(g_{0, A})(A = a \mid W) = g_{0,A}(a - \delta(W) \mid W)\)</span>를 고려함으로써 일반적인 확률적 중재로 표현될 수 있습니다.</p>
-<p>중제의 인과 효과를 평가하기 위해, 우리는 확률적으로 수정된 중제 분포 하에서의 결과의 반사실적 평균을 관심 매개변수로 고려합니다. 타겟 인과 추정치는 반사실적 결과 변수 <span class="math inline">\(Y_{A_{\delta}}\)</span>의 평균인 <span class="math inline">\(\psi_{0, \delta} \coloneqq \E_{P_0^{A_{\delta}}}\{Y_{A_{\delta}}\}\)</span>입니다. <span class="citation" data-cites="diaz2018stochastic">Dı́az and van der Laan (<a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">2018</a>)</span> 은 <span class="math inline">\(\psi_{0, \delta}\)</span>가 <span class="math inline">\(O\)</span> 분포의 함수(functional)로 식별될 수 있음을 보여주었습니다: <span class="math display">\[\begin{align}
+\end{equation}\]</span> 여기서 <span class="math inline">\(\delta \in \mathbb{R}\)</span>은 공변량 계층 <span class="math inline">\(W = w\)</span>의 문맥에서 관찰된 <span class="math inline">\(A = a\)</span>가 이동되어야 하는 정도를 정의하며, <span class="math inline">\(l(w)\)</span>와 <span class="math inline">\(u(w)\)</span>는 계층 <span class="math inline">\(W = w\)</span>에서의 치료 <span class="math inline">\(A\)</span>의 최소 및 최대값입니다. 예를 들어, <span class="math inline">\(A\)</span>가 (연속형인) 영양 보충제 복용량(예: 비타민 알약 수)을 나타내고 <span class="math inline">\(W = w\)</span> 조건 하의 <span class="math inline">\(A\)</span> 분포의 지지 집합(support)이 구간 <span class="math inline">\((l(w), u(w))\)</span>에 있다고 가정해 보십시오. 즉, 공변량 계층 <span class="math inline">\(W = w\)</span>인 개인의 최소 알약 복용량은 <span class="math inline">\(l(w)\)</span>이고, 최대는 <span class="math inline">\(u(w)\)</span>입니다. 이러한 확률적 중재는 클리닉 정책이 개인의 기본 특성 <span class="math inline">\(W\)</span>에 기반하여 평소 권장되는 양(<span class="math inline">\(A\)</span>)보다 <span class="math inline">\(\delta\)</span>만큼 더 많은 알약을 섭취하도록(<span class="math inline">\(A \delta\)</span>) 권장하는 결과로 해석될 수 있습니다. 이러한 부류의 확률적 중재는 <span class="citation" data-cites="diaz2012population">Dı́az and van der Laan (<a href="references.html#ref-diaz2012population" role="doc-biblioref">2012</a>)</span> 에 의해 도입되었으며 <span class="citation" data-cites="haneuse2013estimation">Haneuse and Rotnitzky (<a href="references.html#ref-haneuse2013estimation" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="diaz2018stochastic">Dı́az and van der Laan (<a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="hejazi2020efficient">Hejazi et al. (<a href="references.html#ref-hejazi2020efficient" role="doc-biblioref">2020</a>)</span> 및 <span class="citation" data-cites="hejazi2021semiparametric">Hejazi (<a href="references.html#ref-hejazi2021semiparametric" role="doc-biblioref">2021</a>)</span> 에서 추가로 논의되었습니다. 이 부류의 중재는 <span class="citation" data-cites="diaz2012population">Dı́az and van der Laan (<a href="references.html#ref-diaz2012population" role="doc-biblioref">2012</a>)</span> 에 따라 무작위 추출 <span class="math inline">\(\P_{A_{\delta}}(g_{0, A})(A = a \mid W) = g_{0,A}(a - \delta(W) \mid W)\)</span>를 고려함으로써 일반적인 확률적 중재로 표현될 수 있습니다.</p>
+<p>중재의 인과 효과를 평가하기 위해, 우리는 확률적으로 수정된 중재 분포 하에서의 결과의 반사실적 평균을 관심 매개변수로 고려합니다. 타겟 인과 추정치는 반사실적 결과 변수 <span class="math inline">\(Y_{A_{\delta}}\)</span>의 평균인 <span class="math inline">\(\psi_{0, \delta} \coloneqq \E_{P_0^{A_{\delta}}}\{Y_{A_{\delta}}\}\)</span>입니다. <span class="citation" data-cites="diaz2018stochastic">Dı́az and van der Laan (<a href="references.html#ref-diaz2018stochastic" role="doc-biblioref">2018</a>)</span> 은 <span class="math inline">\(\psi_{0, \delta}\)</span>가 <span class="math inline">\(O\)</span> 분포의 함수(functional)로 식별될 수 있음을 보여주었습니다: <span class="math display">\[\begin{align}
   \psi_{0,\delta} = \int_{\mathcal{W}} \int_{\mathcal{A}} &amp; \E_{P_0}
    \{Y \mid A = d(a, w), W = w\} \nonumber \\ &amp;q_{0, A}(a \mid W = w)
    q_{0, W}(w) d\mu(a)d\nu(w).
@@ -727,7 +727,7 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
       0, \text{otherwise} \\
     \end{cases},
   (\#eq:shift-bounded-simple)
-\end{equation}\]</span> 이는 중제 후 밀도 <span class="math inline">\(g(a - \delta \mid w)\)</span>와 자연적 치료 밀도 <span class="math inline">\(g(a \mid w)\)</span>의 비율 <span class="math inline">\(C(\delta)\)</span>가 경계 <span class="math inline">\(M\)</span>을 초과하지 않을 때 자연적 치료 값 <span class="math inline">\(A = a\)</span>를 <span class="math inline">\(\delta\)</span>만큼 이동시키는 중재에 해당합니다. <span class="math inline">\(C(\delta)\)</span>가 경계 <span class="math inline">\(M\)</span>을 초과할 경우, 확률적 중재는 해당 단위를 치료 수정에서 제외하여 자연적 치료 값 <span class="math inline">\(A = a\)</span>로 남겨둡니다.</p>
+\end{equation}\]</span> 이는 중재 후 밀도 <span class="math inline">\(g(a - \delta \mid w)\)</span>와 자연적 치료 밀도 <span class="math inline">\(g(a \mid w)\)</span>의 비율 <span class="math inline">\(C(\delta)\)</span>가 경계 <span class="math inline">\(M\)</span>을 초과하지 않을 때 자연적 치료 값 <span class="math inline">\(A = a\)</span>를 <span class="math inline">\(\delta\)</span>만큼 이동시키는 중재에 해당합니다. <span class="math inline">\(C(\delta)\)</span>가 경계 <span class="math inline">\(M\)</span>을 초과할 경우, 확률적 중재는 해당 단위를 치료 수정에서 제외하여 자연적 치료 값 <span class="math inline">\(A = a\)</span>로 남겨둡니다.</p>
 <section id="tmle3_spec을-통한-vimshift-초기화" class="level3" data-number="10.6.1">
 <h3 data-number="10.6.1" class="anchored" data-anchor-id="tmle3_spec을-통한-vimshift-초기화"><span class="header-section-number">10.6.1</span> <code>tmle3_Spec</code>을 통한 <code>vimshift</code> 초기화</h3>
 <p>시작하기 위해 단순히 <code>tmle_shift</code>를 호출하여 관심 있는 매개변수의 TMLE 사양(<code>tlverse</code> 명명법으로 <code>tmle3_Spec</code>이라고 함)을 초기화합니다. <code>tmle3_Spec</code> 객체를 초기화할 때 <code>shift_grid = seq(-1, 1, by = 1)</code> 인수를 지정하여 치료 <span class="math inline">\(A\)</span>의 척도에서 이동 격자 <span class="math inline">\(\delta \in \{-1, 0, 1\}\)</span>에 대해 반사실적 평균 결과를 평가하는 데 관심이 있음을 알립니다 (참고: 이 예제에서도 이동 값을 임의로 선택했습니다).</p>
@@ -868,7 +868,6 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>washb_tmle_fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
-<hr>
 </section>
 </section>
 <section id="연습-문제" class="level2" data-number="10.7">
@@ -888,19 +887,7 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 <p>슈퍼 러너를 위한 알고리즘 <code>sl3</code> 라이브러리를 단순하고 해석 가능한 라이브러리로 설정하고, 이 새로운 라이브러리를 사용하여 이동 <span class="math inline">\(\delta = 0\)</span>일 때 어머니의 출산 당시 나이(<code>momage</code>)의 반사실적 평균을 추정해 보세요. 이 반사실적 평균은 관찰된 데이터 측면에서 무엇과 같습니까?</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>해답
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>추후 제공 예정</p>
-</div>
-</div>
+<p>:::</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 2">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -914,19 +901,7 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 <p>이동 매개변수 <span class="math inline">\(\delta\)</span>의 격자 값(예: <span class="math inline">\(\{-1, 0, +1\}\)</span>)을 사용하여 앞의 질문에서 선택한 변수에 대해 분석을 반복하고, 한계 구조 모델(MSM)을 사용하여 이 이동 시퀀스에 대한 경향을 요약해 보세요.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>해답
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>추후 제공 예정</p>
-</div>
-</div>
+<p>:::</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 3">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -940,19 +915,7 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 <p>동일한 이동 격자를 사용하되, 이번에는 한계 구조 모델의 매개변수를 직접 타겟팅하여 앞의 분석을 반복해 보세요. 결과를 해석해 보세요. 즉, 한계 구조 모델의 기울기는 선택한 이동 시퀀스 전반의 경향에 대해 무엇을 말해줍니까?</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>해답
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>추후 제공 예정</p>
-</div>
-</div>
+<p>:::</p>
 </section>
 <section id="주요-개념-복습" class="level3" data-number="10.7.2">
 <h3 data-number="10.7.2" class="anchored" data-anchor-id="주요-개념-복습"><span class="header-section-number">10.7.2</span> 주요 개념 복습</h3>
@@ -969,19 +932,6 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 <p>확률적 중재의 인과 효과를 해석할 수 있는 두 가지 (동등한) 방법에 대해 설명해 보세요.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>해답
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>추후 제공 예정</p>
-</div>
-</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 5">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -995,19 +945,6 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 <p>여러 이동 격자 <span class="math inline">\(\{ \delta_1, \ldots, \delta_k \}\)</span>에 걸친 추정치와 경향을 요약하는 한계 구조 모델 매개변수가 제공하는 정보가 우리의 발견에 대한 해석을 어떻게 풍부하게 할 수 있을까요?</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>해답
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>추후 제공 예정</p>
-</div>
-</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 6">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1019,19 +956,6 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 </div>
 <div class="callout-body-container callout-body">
 <p>한계 구조 모델의 매개변수를 직접 타겟팅할 때의 장점은 무엇입니까?</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>해답
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>추후 제공 예정</p>
 </div>
 </div>
 <!--
@@ -1132,6 +1056,9 @@ Stock, James H. 1989. <span>“Nonparametric Policy Analysis.”</span> <em>Jour
 </div>
 <div id="ref-vdl2011targeted" class="csl-entry" role="listitem">
 van der Laan, Mark J, and Sherri Rose. 2011. <em>Targeted Learning: Causal Inference for Observational and Experimental Data</em>. Springer Science &amp; Business Media.
+</div>
+<div id="ref-young2014identification" class="csl-entry" role="listitem">
+Young, Jessica G, Miguel A Hernán, and James M Robins. 2014. <span>“Identification, Estimation and Approximation of Risk Under Interventions That Depend on the Natural Value of Treatment Using Observational Data.”</span> <em>Epidemiologic Methods</em> 3 (1): 1–19.
 </div>
 </div>
 </section>
