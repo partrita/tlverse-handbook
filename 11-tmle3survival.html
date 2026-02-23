@@ -168,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./11-tmle3survival.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-tmle3mopttx.html">3부: 고급 주제</a></li><li class="breadcrumb-item"><a href="./11-tmle3survival.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -193,21 +193,21 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">I. 타겟 러닝의 기초</span></a>
+ <span class="menu-text">1부: 예비 지식</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
@@ -217,7 +217,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-tlverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(PART) 1부: 예비 지식</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><code>tlverse</code>에 대하여</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -226,23 +226,23 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04-roadmap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">II. 핵심 기계 학습 엔진</span></a>
+ <span class="menu-text">2부: 기초</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">데이터로부터 배우기: 로드맵</span></span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05-origami.html" class="sidebar-item-text sidebar-link">
@@ -255,12 +255,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-tmle3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">III. TMLE 프레임워크 및 응용</span></a>
+ <span class="menu-text">3부: 고급 주제</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -268,14 +274,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-tmle3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">(PART) Part 3: 고급 주제</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">동적 및 최적의 개별화된 치료 요법</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -301,7 +301,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
@@ -328,7 +328,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./11-tmle3survival.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-tmle3mopttx.html">3부: 고급 주제</a></li><li class="breadcrumb-item"><a href="./11-tmle3survival.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></h1>
 </div>
@@ -347,8 +347,11 @@ window.Quarto = {
 </header>
 
 
-<p>Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation for time-to-event outcomes [published online ahead of print, 2019 Nov 15]. Biometrics. 2019;10.1111/biom.13172. doi:10.1111/biom.13172에 기반합니다.</p>
-<p>Moore, K. and van der Laan, M.J. (2009) Application of time-to-event methods in the assessment of safety in clinical trials. Design and Analysis of Clinical Trials with Time-to-Event Endpoints. London: Taylor &amp; Francis, pp.&nbsp;455–482.</p>
+<p>아래 자료에 기반해 작성되었습니다.</p>
+<ul>
+<li>Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation for time-to-event outcomes [published online ahead of print, 2019 Nov 15]. Biometrics. 2019;10.1111/biom.13172. doi:10.1111/biom.13172.</li>
+<li>Moore, K. and van der Laan, M.J. (2009) Application of time-to-event methods in the assessment of safety in clinical trials. Design and Analysis of Clinical Trials with Time-to-Event Endpoints. London: Taylor &amp; Francis, pp.&nbsp;455–482.</li>
+</ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -366,7 +369,7 @@ window.Quarto = {
 </div>
 <section id="소개" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="소개"><span class="header-section-number">12.1</span> 소개</h2>
-<p>추정 절차의 첫 번째 단계는 실패(failure)의 조건부 생존 함수, 중도절단(censoring)의 조건부 생존 함수 및 성향 점수의 초기 추정입니다. 이 초기 추정에는 이전 섹션에서 설명한 대로 슈퍼 러너 <span class="citation" data-cites="vdl2007super">(<a href="#ref-vdl2007super" role="doc-biblioref">van der Laan, Polley, and Hubbard 2007</a>)</span>를 사용합니다.</p>
+<p>추정 절차의 첫 번째 단계는 실패(failure)의 조건부 생존 함수, 중도절단(censoring)의 조건부 생존 함수 및 성향 점수의 초기 추정입니다. 이 초기 추정에는 이전 섹션에서 설명한 대로 슈퍼 러너 <span class="citation" data-cites="vdl2007super">(<a href="references.html#ref-vdl2007super" role="doc-biblioref">van der Laan, Polley, and Hubbard 2007</a>)</span>를 사용합니다.</p>
 <p>표적 매개변수를 평가하는 데 필요한 데이터 생성 분포의 관련 부분에 대한 초기 추정치를 확보하면, 1단계(one-step) TMLE를 구축할 준비가 된 것입니다.</p>
 </section>
 <section id="예제" class="level2" data-number="12.2">
@@ -375,15 +378,10 @@ window.Quarto = {
 <section id="데이터-로드" class="level3" data-number="12.2.1">
 <h3 data-number="12.2.1" class="anchored" data-anchor-id="데이터-로드"><span class="header-section-number">12.2.1</span> 데이터 로드</h3>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmle3)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sl3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vet_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/deming2019-workshop/"</span>,</span>
@@ -402,7 +400,6 @@ window.Quarto = {
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">4</span>   <span class="dv">0</span> squamous    <span class="dv">7</span>      <span class="dv">1</span>    <span class="dv">60</span>        <span class="dv">9</span>  <span class="dv">63</span>    <span class="dv">10</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">5</span>   <span class="dv">0</span> squamous    <span class="dv">6</span>      <span class="dv">1</span>    <span class="dv">70</span>       <span class="dv">11</span>  <span class="dv">65</span>    <span class="dv">10</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">6</span>   <span class="dv">0</span> squamous    <span class="dv">1</span>      <span class="dv">1</span>    <span class="dv">20</span>        <span class="dv">5</span>  <span class="dv">49</span>     <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 <p><code>vet_data</code>의 변수들은 다음과 같습니다: * <code>trt</code>: 치료 유형 (0 = 표준, 1 = 테스트) * <code>celltype</code>: 종양의 조직학적 유형 * <code>time</code>: 사망 또는 중도절단까지의 시간 (일 단위) * <code>status</code>: 중도절단 여부 * <code>karno</code>: 연구 시작 당시의 전반적인 환자 상태를 설명하는 Karnofsky 수행 지수 (100 = 양호) * <code>diagtime</code>: 진단으로부터 무작위 배정까지의 개월 수 * <code>age</code>: 환자 나이 * <code>prior</code>: 이전 치료 경험 (0 = 아니오, 10 = 예)</p>
 </section>
@@ -412,8 +409,6 @@ window.Quarto = {
 <p>[_{N}(t|A, W)=P(N(t)=1|N(t-1)=0, A_c(t-1)=0, A, W)]</p>
 <p>여기서 <span class="math inline">\(N(t)=I(\widetilde{T}\le t, \Delta = 1), A_c(t)=I(\widetilde{T}\le t, \Delta = 0)\)</span>입니다. 우리는 <code>survival_spec</code>의 <code>transform_data</code> 함수를 호출하여 원본 데이터를 필요한 롱 포맷(long format)으로 변환할 것입니다. <code>node_list</code>에 <code>W</code>(공변량), <code>A</code>(치료/중재), <code>T_tilde</code>(사건 시간 벡터), <code>Delta</code>(중도절단 표시자 벡터) 및 행 ID를 지정해야 합니다.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>var_types <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">T_tilde =</span> Variable_Type<span class="sc">$</span><span class="fu">new</span>(<span class="st">"continuous"</span>),</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">t =</span> Variable_Type<span class="sc">$</span><span class="fu">new</span>(<span class="st">"continuous"</span>),</span>
@@ -432,39 +427,30 @@ window.Quarto = {
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>long_data_tuple <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">transform_data</span>(vet_data, node_list)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> long_data_tuple<span class="sc">$</span>long_data</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>long_node_list <span class="ot">&lt;-</span> long_data_tuple<span class="sc">$</span>long_node_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 </section>
 <section id="초기-추정치-확보" class="level3" data-number="12.2.3">
 <h3 data-number="12.2.3" class="anchored" data-anchor-id="초기-추정치-확보"><span class="header-section-number">12.2.3</span> 초기 추정치 확보</h3>
 <p>5장에서 설명한 대로 학습기와 <code>tmle_task</code>를 정의합니다.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lrnr_mean <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_mean)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lrnr_glm <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_glm)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lrnr_gam <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_gam)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sl_A <span class="ot">&lt;-</span> Lrnr_sl<span class="sc">$</span><span class="fu">new</span>(<span class="at">learners =</span> <span class="fu">list</span>(lrnr_mean, lrnr_glm, lrnr_gam))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>learner_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> sl_A, <span class="at">N =</span> sl_A, <span class="at">A_c =</span> sl_A)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmle_task <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">make_tmle_task</span>(df_long, long_node_list)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>initial_likelihood <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">make_initial_likelihood</span>(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  tmle_task,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  learner_list</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 </section>
 <section id="초기-조건부-생존-추정치의-tmle-조정-수행" class="level3" data-number="12.2.4">
 <h3 data-number="12.2.4" class="anchored" data-anchor-id="초기-조건부-생존-추정치의-tmle-조정-수행"><span class="header-section-number">12.2.4</span> 초기 조건부 생존 추정치의 TMLE 조정 수행</h3>
 <p>업데이터를 위해 <code>tmle3_Update_survival</code> 객체를 생성합니다. <code>fit_method</code>를 <code>l2</code>로 설정하면 로지스틱 릿지 회귀(logistic ridge regression)를 사용하여 1단계 TMLE를 실행하게 됩니다.</p>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>up <span class="ot">&lt;-</span> tmle3_Update_survival<span class="sc">$</span><span class="fu">new</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="fl">3e1</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cvtmle =</span> <span class="cn">TRUE</span>,</span>
@@ -483,11 +469,8 @@ window.Quarto = {
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  tmle_task, targeted_likelihood, tmle_params,</span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  targeted_likelihood<span class="sc">$</span>updater</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 <div class="cell" data-layout-align="center">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tmle_fit_manual)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>A tmle3_Fit that took <span class="dv">30</span> <span class="fu">step</span>(s)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        type               param init_est tmle_est      se     lower   upper</span>
@@ -596,11 +579,10 @@ window.Quarto = {
 <span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="dv">49</span><span class="sc">:</span>        <span class="fl">0.002672</span>         <span class="sc">-</span><span class="fl">0.113431</span>           <span class="fl">0.11877</span></span>
 <span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span><span class="sc">:</span>        <span class="fl">0.002425</span>         <span class="sc">-</span><span class="fl">0.024419</span>           <span class="fl">0.02927</span></span>
 <span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>    psi_transformed lower_transformed upper_transformed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-vdl2007super" class="csl-entry" role="listitem">
 van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. <span>“<span>Super Learner</span>.”</span> <em>Statistical Applications in Genetics and Molecular Biology</em> 6 (1).
 </div>
@@ -1017,7 +999,7 @@ van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. <span>“<span>Su
   </div>
   <div class="nav-page nav-page-next">
       <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
