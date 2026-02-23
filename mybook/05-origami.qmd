@@ -64,7 +64,7 @@ RP:
 
 이 장에서는 임의의 알고리즘이 데이터 샘플로부터 그것이 발생한 타겟 모집단으로 어떻게 확장되는지 평가하기 위한 필수 도구인 **교차 검증**에 집중합니다. 교차 검증은 현대 통계학의 모든 측면에서 널리 적용되어 왔으며, 아마도 통계적 기계 학습에서 가장 두드러지게 나타날 것입니다. 교차 검증 절차는 대표본에서, 즉 점근적으로 알고리즘 선택에 최적인 것으로 입증되었습니다. 특히 교차 검증된 알고리즘은 추정치가 예측 변수와 결과 변수의 결합 분포로부터 얻은 독립적인 표본에 적용될 때 참 리스크를 추정합니다.
 
-모델 선택에 사용될 때 교차 검증은 강력한 최적성 속성을 갖습니다. 점근적 최적성 결과에 따르면 교차 검증 선택기는 참인 미지의 데이터 생성 분포에 자유롭게 접근할 수 있는 가상의 절차인 최적의 오라클(oracle) 선택기만큼 (리스크 측면에서) 점근적으로 잘 수행됩니다. 이론적 결과에 대한 자세한 내용은 @vdl2003unified, @vdl2004asymptotic, @dudoit2005asymptotics 및 @vaart2006oracle을 참조하십시오.
+모델 선택에 사용될 때 교차 검증은 강력한 최적성 속성을 갖습니다. 점근적 최적성 결과에 따르면 교차 검증 선택기는 참인 미지의 데이터 생성 분포에 자유롭게 접근할 수 있는 가상의 절차인 최적의 오라클(oracle) 선택기만큼 (리스크 측면에서) 점근적으로 잘 수행됩니다. 이론적 결과에 대한 자세한 내용은 @vdl2003unified, @vdl2004asymptotic, @dudoit2005asymptotics 및 @vaart2006oracle 을 참조하십시오.
 
 `origami` 패키지는 교차 검증을 위한 일련의 도구를 제공합니다. 다음에서는 `origami`에서 즉시 사용할 수 있는 다양한 유형의 교차 검증 체계를 설명하고, `origami` 패키지의 일반적인 구조를 소개하며, 다양한 응용 환경에서 이러한 절차의 사용을 시연합니다.
 
@@ -297,7 +297,7 @@ t <- length(AP)
 다음으로, 처음에 시작했던 원래의 15개를 포함하여 더 긴 데이터 스트림인 25개 시점에서 학습 알고리즘을 훈련시킵니다. 그런 다음 (시간적) 거리로 10개 시점 앞선 위치에서 성능을 평가합니다.
 
 ```{r, fig.cap="롤링 오리진 CV", results="asis", echo=FALSE}
-knitr::include_graphics(path = "../img/png/rolling_origin.png")
+knitr::include_graphics(path = "img/png/rolling_origin.png")
 ```
 
 아래에서 `folds_rolling_origin(n, first_window, validation_size, gap, batch)` 함수를 사용하여 `origami`로 롤링 오리진 교차 검증 체계의 사용법을 보여줍니다. `folds_rolling_origin(n, first_window, validation_size, gap, batch)`을 설정하려면 다음이 필요합니다.
@@ -330,7 +330,7 @@ nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트�
 아래 그림은 세 개의 시계열 폴드를 사용한 롤링 윈도우 교차 검증을 묘사합니다. 첫 번째 창 크기는 15개 시점이며, 여기서 먼저 후보 학습 알고리즘을 훈련시킵니다. 이전 그림에서와 같이 훈련 세트와 검증 세트 사이에 크기 5개 시점의 간격을 두고 10개 시점에서 성능을 평가합니다. 그러나 다음 폴드에서는 오리진(기점)에서 더 멀어진 시점(여기서는 10개 시점)에서 학습 알고리즘을 훈련시킵니다. 새로운 폴드에서의 훈련 세트 크기는 첫 번째 폴드와 동일함(둘 다 15개 시점 포함)에 유의하십시오. 이 설정은 롤링 오리진 교차 검증 체계와 달리 시간이 지남에 따라(그리고 폴드 전체에 걸쳐) 훈련 세트를 비교 가능하게 유지합니다. 그런 다음 미래의 10개 시점에서 후보 학습 알고리즘의 성능을 평가합니다.
 
 ```{r, fig.cap="롤링 윈도우 CV", results="asis", echo=FALSE}
-knitr::include_graphics(path = "../img/png/rolling_window.png")
+knitr::include_graphics(path = "img/png/rolling_window.png")
 ```
 
 아래에서 `folds_rolling_window(n, window_size, validation_size, gap, batch)` 함수를 사용하여 `origami`로 롤링 윈도우 교차 검증 체계의 사용법을 시연합니다. `folds_rolling_window(n, window_size, validation_size, gap, batch)`를 설정하려면 다음 인자를 지정해야 합니다.
@@ -361,7 +361,7 @@ nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트�
 샘플 의존성을 고려한 롤링 오리진 교차 검증 체계의 변형은 롤링 오리진-$V$-폴드(rolling-origin-$V$-fold) 교차 검증 체계입니다. 정통 롤링 오리진 체계와 달리, 이 하이브리드 체계 하에서는 훈련 세트와 검증 세트의 샘플 단위가 동일하지 _않으며_, 이 체계는 시계열 설정 내에 $V$-폴드 교차 검증을 통합함으로써 이를 달성합니다. 여기서 학습 알고리즘의 예측은 훈련 단계에서 제외된 시계열 관찰 단위의 미래 시점에서 평가되어, 시간 경과에 따른 의존성뿐만 아니라 관찰 단위 간의 잠재적 의존성도 수용합니다. `origami`와 함께 롤링 오리진-$V$-폴드 교차 검증 체계를 사용하려면 `folds_vfold_rolling_origin_pooled(n, t, id, time, V, first_window, validation_size, gap, batch)` 함수를 호출하면 됩니다. 아래 그림에서는 두 개의 시계열(롤링 오리진) 교차 검증 폴드와 함께 $V=2$ 폴드를 보여줍니다.
 
 ```{r, fig.cap="롤링 오리진 V-폴드 CV", results="asis", echo=FALSE}
-knitr::include_graphics(path = "../img/png/rolling_origin_v_fold.png")
+knitr::include_graphics(path = "img/png/rolling_origin_v_fold.png")
 ```
 
 #### $V$-폴드가 결합된 롤링 윈도우
@@ -369,7 +369,7 @@ knitr::include_graphics(path = "../img/png/rolling_origin_v_fold.png")
 위에서 설명한 체계와 마찬가지로 롤링 윈도우 방식도 롤링 오리진 방식과 마찬가지로 $V$-폴드 분할 구성 요소를 통합함으로써 임의의 샘플 수준 의존성을 갖는 다중 시계열을 지원하도록 확장될 수 있습니다. 이 롤링 윈도우-$V$-폴드 교차 검증 체계는 `origami`에서 `folds_vfold_rolling_window_pooled(n, t, id, time, V, window_size, validation_size, gap, batch)` 함수를 통해 사용될 수 있습니다. 아래 그림은 $V=2$ 폴드와 두 개의 시계열(롤링 윈도우) 교차 검증 폴드를 보여줍니다.
 
 ```{r, fig.cap="롤링 윈도우 V-폴드 CV", results="asis", echo=FALSE}
-knitr::include_graphics(path = "../img/png/rolling_window_v_fold.png")
+knitr::include_graphics(path = "img/png/rolling_window_v_fold.png")
 ```
 
 ## `origami`의 일반적인 워크플로

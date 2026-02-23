@@ -65,7 +65,7 @@ setnames(data, c("W1", "W2", "W3", "A", "Y"))
 # 노드 리스트 구성
 node_list <- list(W = c("W1", "W2", "W3"), A = "A", Y = "Y")
 ```
-중제 후의 값 $A_{\delta}$는 그것이 임의의 (실제로 사용자 정의된) 분포에서 추출되었다는 의미에서 확률적으로 수정됩니다. 정적 중재의 익숙한 사례는 단일 값에 모든 질량을 두는 퇴화된 후보 분포를 선택함으로써 회복될 수 있습니다. @stock1989nonparametric은 이러한 확률적 중재의 총 효과 추정을 처음 고려했습니다.
+중제 후의 값 $A_{\delta}$는 그것이 임의의 (실제로 사용자 정의된) 분포에서 추출되었다는 의미에서 확률적으로 수정됩니다. 정적 중재의 익숙한 사례는 단일 값에 모든 질량을 두는 퇴화된 후보 분포를 선택함으로써 회복될 수 있습니다. @stock1989nonparametric 은 이러한 확률적 중재의 총 효과 추정을 처음 고려했습니다.
 
 후보 중제 밀도 $g_{A_{\delta}}(A \mid W)$의 선택에 대한 제한은 거의 없지만, 실제로는 자연적(중제 전) 밀도 $g(A \mid W)$에 대한 지식을 기반으로 선택되는 경우가 많습니다. $g_{A_{\delta}}(A \mid W)$가 *조각마다 매끄럽게 가역적*(piecewise smooth invertible)(아래 참조)일 때 [@haneuse2013estimation], 중제 후 밀도 $g_{A_{\delta}}(A \mid W)$와 관찰된 쌍 $\{A, W\}$를 중제 후 수치 $A_{\delta}$로 매핑하는 함수 $d(A, W; \delta)$ 사이에는 직접적인 대응 관계가 존재합니다. 이러한 경우 $d(A, W; \delta)$에 의해 정의된 확률적 중재는 치료의 자연적 수치에 의존한다고 하며, *수정된 치료 정책*(modified treatment policy, MTP) [@haneuse2013estimation; @diaz2018stochastic; @hejazi2021semiparametric]이라고 불립니다. @haneuse2013estimation과 @young2014identification은 수정된 치료 정책과 일반적인 확률적 중재 하에서의 인과 효과 해석을 대조하는 자세한 논의를 제공합니다.
 
@@ -85,9 +85,9 @@ Essentially, for a given $d(A,W; \delta)$ to exhibit this property, the
   \end{cases}
   (\#eq:shift)
 \end{equation}
-여기서 $\delta \in \mathbb{R}$은 공변량 계층 $W = w$의 문맥에서 관찰된 $A = a$가 이동되어야 하는 정도를 정의하며, $l(w)$와 $u(w)$는 계층 $W = w$에서의 치료 $A$의 최소 및 최대값입니다. 예를 들어, $A$가 (연속형인) 영양 보충제 복용량(예: 비타민 알약 수)을 나타내고 $W = w$ 조건 하의 $A$ 분포의 지지 집합(support)이 구간 $(l(w), u(w))$에 있다고 가정해 보십시오. 즉, 공변량 계층 $W = w$인 개인의 최소 알약 복용량은 $l(w)$이고, 최대는 $u(w)$입니다. 이러한 확률적 중재는 클리닉 정책이 개인의 기본 특성 $W$에 기반하여 평소 권장되는 양($A$)보다 $\delta$만큼 더 많은 알약을 섭취하도록($A \delta$) 권장하는 결과로 해석될 수 있습니다. 이러한 부류의 확률적 중재는 @diaz2012population에 의해 도입되었으며 @haneuse2013estimation, @diaz2018stochastic, @hejazi2020efficient 및 @hejazi2021semiparametric에서 추가로 논의되었습니다. 이 부류의 중재는 @diaz2012population에 따라 무작위 추출 $\P_{A_{\delta}}(g_{0, A})(A = a \mid W) = g_{0,A}(a - \delta(W) \mid W)$를 고려함으로써 일반적인 확률적 중재로 표현될 수 있습니다.
+여기서 $\delta \in \mathbb{R}$은 공변량 계층 $W = w$의 문맥에서 관찰된 $A = a$가 이동되어야 하는 정도를 정의하며, $l(w)$와 $u(w)$는 계층 $W = w$에서의 치료 $A$의 최소 및 최대값입니다. 예를 들어, $A$가 (연속형인) 영양 보충제 복용량(예: 비타민 알약 수)을 나타내고 $W = w$ 조건 하의 $A$ 분포의 지지 집합(support)이 구간 $(l(w), u(w))$에 있다고 가정해 보십시오. 즉, 공변량 계층 $W = w$인 개인의 최소 알약 복용량은 $l(w)$이고, 최대는 $u(w)$입니다. 이러한 확률적 중재는 클리닉 정책이 개인의 기본 특성 $W$에 기반하여 평소 권장되는 양($A$)보다 $\delta$만큼 더 많은 알약을 섭취하도록($A \delta$) 권장하는 결과로 해석될 수 있습니다. 이러한 부류의 확률적 중재는 @diaz2012population 에 의해 도입되었으며 @haneuse2013estimation, @diaz2018stochastic, @hejazi2020efficient 및 @hejazi2021semiparametric에서 추가로 논의되었습니다. 이 부류의 중재는 @diaz2012population 에 따라 무작위 추출 $\P_{A_{\delta}}(g_{0, A})(A = a \mid W) = g_{0,A}(a - \delta(W) \mid W)$를 고려함으로써 일반적인 확률적 중재로 표현될 수 있습니다.
 
-중제의 인과 효과를 평가하기 위해, 우리는 확률적으로 수정된 중제 분포 하에서의 결과의 반사실적 평균을 관심 매개변수로 고려합니다. 타겟 인과 추정치는 반사실적 결과 변수 $Y_{A_{\delta}}$의 평균인 $\psi_{0, \delta} \coloneqq \E_{P_0^{A_{\delta}}}\{Y_{A_{\delta}}\}$입니다. @diaz2018stochastic은 $\psi_{0, \delta}$가 $O$ 분포의 함수(functional)로 식별될 수 있음을 보여주었습니다:
+중제의 인과 효과를 평가하기 위해, 우리는 확률적으로 수정된 중제 분포 하에서의 결과의 반사실적 평균을 관심 매개변수로 고려합니다. 타겟 인과 추정치는 반사실적 결과 변수 $Y_{A_{\delta}}$의 평균인 $\psi_{0, \delta} \coloneqq \E_{P_0^{A_{\delta}}}\{Y_{A_{\delta}}\}$입니다. @diaz2018stochastic 은 $\psi_{0, \delta}$가 $O$ 분포의 함수(functional)로 식별될 수 있음을 보여주었습니다:
 \begin{align}
   \psi_{0,\delta} = \int_{\mathcal{W}} \int_{\mathcal{A}} & \E_{P_0}
    \{Y \mid A = d(a, w), W = w\} \nonumber \\ &q_{0, A}(a \mid W = w)
@@ -108,7 +108,7 @@ $i = 1, \ldots, n$에 대해 $A_i \indep Y^{A_{\delta,i}}_i \mid W_i$입니다. 
 
 ## 확률적 중재의 인과 효과 추정
 
-@diaz2012population은 비모수 모델 $\M$에서 효율적인 추정량을 구축하기 위한 핵심 수치인 효율적 영향 함수(efficient influence function, EIF)를 유도하고, 대입(substitution), 역 확률 가중(inverse probability weighted), 원 스텝(one-step) 및 타겟 최소 손실 기반 추정(TML) 추정기를 포함한 이 수치의 고전적 및 효율적 추정기를 개발했습니다. 원 스텝 및 TML 추정기 모두 관심 있는 타겟 수치 $\psi_{0, \delta}$에 대해 준모수 효율적(semiparametric-efficient) 추정 및 추론을 가능하게 합니다. @diaz2018stochastic이 설명한 바와 같이, 비모수 모델 $\M$에 대한 $\psi_{0, \delta}$의 EIF는 다음과 같습니다:
+@diaz2012population 은 비모수 모델 $\M$에서 효율적인 추정량을 구축하기 위한 핵심 수치인 효율적 영향 함수(efficient influence function, EIF)를 유도하고, 대입(substitution), 역 확률 가중(inverse probability weighted), 원 스텝(one-step) 및 타겟 최소 손실 기반 추정(TML) 추정기를 포함한 이 수치의 고전적 및 효율적 추정기를 개발했습니다. 원 스텝 및 TML 추정기 모두 관심 있는 타겟 수치 $\psi_{0, \delta}$에 대해 준모수 효율적(semiparametric-efficient) 추정 및 추론을 가능하게 합니다. @diaz2018stochastic 이 설명한 바와 같이, 비모수 모델 $\M$에 대한 $\psi_{0, \delta}$의 EIF는 다음과 같습니다:
 \begin{equation}
   D(P_0)(x) = H(a, w)({y - \overline{Q}(a, w)}) +
   \overline{Q}(d(a, w), w) - \Psi(P_0),
@@ -125,7 +125,7 @@ $i = 1, \ldots, n$에 대해 $A_i \indep Y^{A_{\delta,i}}_i \mid W_i$입니다. 
   H(a,w) = \frac{g_0(a - \delta \mid w)}{g_0(a \mid w)} + 1
   (\#eq:aux-covar-simple-shift)
 \end{equation}
-효율적 영향 함수는 준모수 효율적 추정기 구축의 핵심 요소입니다. 다음으로, @diaz2018stochastic이 제시한 타겟 최소 손실 기반 추정(TML) 추정기에 중점을 둡니다:
+효율적 영향 함수는 준모수 효율적 추정기 구축의 핵심 요소입니다. 다음으로, @diaz2018stochastic 이 제시한 타겟 최소 손실 기반 추정(TML) 추정기에 중점을 둡니다:
 
 1. 데이터 적응형 회귀 기법을 사용하여 $g_0(A, W)$의 초기 추정기 $g_n$과 $\overline{Q}_0(A, W)$의 초기 추정기 $\overline{Q}_n$을 구축합니다.
 2. 각 관찰값 $i$에 대해 보조 공변량 $H(a_i,w_i)$의 추정치 $H_n(a_i, w_i)$를 계산합니다.
@@ -200,7 +200,7 @@ $$\sigma_n^2 = \frac{1}{n} \sum_{i = 1}^{n} D^2(\bar{Q}_n^{\star}, g_n)(O_i)$$
 ## 확률적 중재의 인과 효과 해석
 
 ```{r, fig.cap="단순 확률적 중재에 의해 자연적 치료 분포가 이동함에 따라 반사실적 결과가 어떻게 변하는지 보여주는 그림", results = "asis", echo=FALSE, out.width = "100%"}
-knitr::include_graphics(path = "../img/gif/shift_animation.gif")
+knitr::include_graphics(path = "img/gif/shift_animation.gif")
 ```
 
 ## 확률적 중재의 인과 효과 평가
@@ -237,7 +237,7 @@ sl_reg_lrnr <- Lrnr_sl$new(
 sl3_list_learners("density")
 ```
 
-계속 진행하기 위해 위의 학습기 중 두 가지를 선택하겠습니다. 하나는 @diaz2011super가 제시하고 @hejazi2020haldensify에 구현된 알고리즘을 기반으로 조건부 밀도 추정을 위해 고도의 적응형 올가미(Highly Adaptive Lasso)를 사용하는 `Lrnr_haldensify`이고, 다른 하나는 [`sl3` 패키지](https://github.com/tlverse/sl3)에 구현된 준모수적 위치-척도(location-scale) 조건부 밀도 추정기입니다. 이러한 각 수정된 조건부 밀도 회귀 기법의 추정치를 풀링하여 슈퍼 러너를 구축할 수 있습니다 (참고: `haldensify` 학습기 기반의 접근 방식은 계산 집약적인 특성 때문에 여기서는 슈퍼 러너에서 제외합니다).
+계속 진행하기 위해 위의 학습기 중 두 가지를 선택하겠습니다. 하나는 @diaz2011super 가 제시하고 @hejazi2020haldensify 에 구현된 알고리즘을 기반으로 조건부 밀도 추정을 위해 고도의 적응형 올가미(Highly Adaptive Lasso)를 사용하는 `Lrnr_haldensify`이고, 다른 하나는 [`sl3` 패키지](https://github.com/tlverse/sl3)에 구현된 준모수적 위치-척도(location-scale) 조건부 밀도 추정기입니다. 이러한 각 수정된 조건부 밀도 회귀 기법의 추정치를 풀링하여 슈퍼 러너를 구축할 수 있습니다 (참고: `haldensify` 학습기 기반의 접근 방식은 계산 집약적인 특성 때문에 여기서는 슈퍼 러너에서 제외합니다).
 
 ```{r sl3_lrnrs-gfit-shift}
 # (g_n)에 대한 조건부 밀도에 사용되는 학습기
@@ -382,7 +382,7 @@ tmle_fit
 
 ### 한계 구조 모델을 사용한 추정 및 추론
 
-이동 매개변수 $\delta$의 값을 미리 선택하는 것은 어려울 수 있습니다. 한 가지 해결책은 일련의 관련 확률적 중재를 정의하는 데 사용될 이러한 이동 $\delta$의 *격자*(grid)를 지정하는 것입니다 [@hejazi2020efficient]. 여러 $\delta$ 선택 하에서 반사실적 평균 $\psi_n$을 추정할 때, 이러한 추정된 수치들에 대한 단일 요약 측정치는 작동 한계 구조 모델(working MSMs)을 통해 수립될 수 있습니다. 작동 MSM을 통해 추정치 $\psi_n$을 요약하면 $\delta$ 격자를 통해 나타나는 *경향*(trend)에 대한 추론이 가능하며, 이는 작동 MSM의 기울기 매개변수 $\beta_1$에 대한 단순 가설 검정을 통해 평가될 수 있습니다. 격자 $\delta$, $\{\delta_1, \ldots, \delta_k\}$와 이에 대응하는 반사실적 평균 $\{\psi_{\delta_1}, \ldots, \psi_{\delta_k}\}$를 고려해 보십시오. 이제 $\psi(\delta) = (\psi_{\delta}: \delta)$를 $\delta$에 의해 정의된 격자 내의 반사실적 평균 격자라고 하고, $\psi_n(\delta)$를 $\psi(\delta)$의 TML 추정치라고 합시다. $\delta$의 함수로서 $\psi_n$의 변화를 요약하는 MSM은 $m_{\beta}(\psi_{\delta}) = \beta_0 + \beta_1 \delta$로 표현될 수 있습니다. 이 단순 작동 모델은 $\psi_{\delta}$의 변화를 매개변수 $(\beta_0, \beta_1)$의 함수로 요약하며, 여기서 후자는 반사실적 평균을 이 단순한 2-매개변수 작동 모델에 투영하여 얻은 직선의 기울기입니다.
+이동 매개변수 $\delta$의 값을 미리 선택하는 것은 어려울 수 있습니다. 한가지 해결책은 일련의 관련 확률적 중재를 정의하는 데 사용될 이러한 이동 $\delta$의 *격자*(grid)를 지정하는 것입니다 [@hejazi2020efficient]. 여러 $\delta$ 선택 하에서 반사실적 평균 $\psi_n$을 추정할 때, 이러한 추정된 수치들에 대한 단일 요약 측정치는 작동 한계 구조 모델(working MSMs)을 통해 수립될 수 있습니다. 작동 MSM을 통해 추정치 $\psi_n$을 요약하면 $\delta$ 격자를 통해 나타나는 *경향*(trend)에 대한 추론이 가능하며, 이는 작동 MSM의 기울기 매개변수 $\beta_1$에 대한 단순 가설 검정을 통해 평가될 수 있습니다. 격자 $\delta$, $\{\delta_1, \ldots, \delta_k\}$와 이에 대응하는 반사실적 평균 $\{\psi_{\delta_1}, \ldots, \psi_{\delta_k}\}$를 고려해 보십시오. 이제 $\psi(\delta) = (\psi_{\delta}: \delta)$를 $\delta$에 의해 정의된 격자 내의 반사실적 평균 격자라고 하고, $\psi_n(\delta)$를 $\psi(\delta)$의 TML 추정치라고 합시다. $\delta$의 함수로서 $\psi_n$의 변화를 요약하는 MSM은 $m_{\beta}(\psi_{\delta}) = \beta_0 + \beta_1 \delta$로 표현될 수 있습니다. 이 단순 작동 모델은 $\psi_{\delta}$의 변화를 매개변수 $(\beta_0, \beta_1)$의 함수로 요약하며, 여기서 후자는 반사실적 평균을 이 단순한 2-매개변수 작동 모델에 투영하여 얻은 직선의 기울기입니다.
 
 MSM $m_{\beta}(\delta)$에 대한 보다 일반적인 표현은 다음과 같으며, $\beta_0 = \text{argmin}_{\beta} \sum_{\delta}(\psi_{\delta}(P_0) - m_{\beta}(\delta))^2 h(\delta)$는 다음 추정 방정식의 해입니다:
 $$u(\beta, (\psi_{\delta}: \delta)) = \sum_{\delta}h(\delta) \left(\psi_{\delta}(P_0) - m_{\beta}(\delta) \right) \frac{d}{d\beta} m_{\beta}(\delta) = 0.$$
@@ -455,7 +455,7 @@ washb_vim_spec <- tmle_vimshift_delta(
 )
 ```
 
-분석을 실행하기 전에 생성한 `learner_list` 객체를 수정할 것입니다. 고도의 적응형 올가미(Highly Adaptive Lasso) 기반의 비파라메트릭 조건부 밀도 접근 방식[@diaz2011super; @benkeser2016hal; @coyle2020hal9001; @hejazi2020hal9001; @hejazi2020haldensify]은 현재 대규모 데이터셋을 수용할 수 없으므로, 밀도 추정 절차로는 위치-척도 조건부 밀도 추정 절차만을 사용할 것입니다.
+분석을 실행하기 전에 생성한 `learner_list` 객체를 수정할 것입니다. 고도의 적응형 올가미(Highly Adaptive Lasso) 기반의 비파라메트릭 조건부 밀도 접근 방식 [@diaz2011super; @benkeser2016hal; @coyle2020hal9001; @hejazi2020hal9001; @hejazi2020haldensify]은 현재 대규모 데이터셋을 수용할 수 없으므로, 밀도 추정 절차로는 위치-척도 조건부 밀도 추정 절차만을 사용할 것입니다.
 
 ```{r sl3_lrnrs_gfit_washb_shift-example}
 # HOSE 학습기를 위해 교차 검증을 활성화해야 합니다.
@@ -522,7 +522,7 @@ washb_tmle_fit
 확률적 중재의 인과 효과를 해석할 수 있는 두 가지 (동등한) 방법에 대해 설명해 보세요.
 :::
 
-::: {.solution}
+::: {.callout-note icon=false title="해답"}
 추후 제공 예정
 :::
 
@@ -530,7 +530,7 @@ washb_tmle_fit
 여러 이동 격자 $\{ \delta_1, \ldots, \delta_k \}$에 걸친 추정치와 경향을 요약하는 한계 구조 모델 매개변수가 제공하는 정보가 우리의 발견에 대한 해석을 어떻게 풍부하게 할 수 있을까요?
 :::
 
-::: {.solution}
+::: {.callout-note icon=false title="해답"}
 추후 제공 예정
 :::
 
@@ -538,7 +538,7 @@ washb_tmle_fit
 한계 구조 모델의 매개변수를 직접 타겟팅할 때의 장점은 무엇입니까?
 :::
 
-::: {.solution}
+::: {.callout-note icon=false title="해답"}
 추후 제공 예정
 :::
 

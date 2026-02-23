@@ -26,7 +26,7 @@ _Jeremy Coyle_
 [타겟 러닝을 위한 로드맵](#roadmap)으로 돌아가서, 치료 변수 $A$가 결과 $Y$에 미치는 효과를 추정하고 싶다고 가정해 봅시다. 논의한 바와 같이, 그 효과를 특성화하는 하나의 잠재적 파라미터는 평균 치료 효과(ATE)이며, 이는 $\psi_0 = \mathbb{E}_W[\mathbb{E}[Y \mid A=1,W] - \mathbb{E}[Y \mid A=0,W]]$로 정의됩니다. 또한 공변량 $W$의 분포에 대해 평균을 냈을 때 치료 $A=1$과 $A=0$ 하에서의 평균 결과 차이로 해석됩니다. 우리는 다음 예제 데이터를 사용하여 이 파라미터에 대한 몇 가지 잠재적 추정기를 설명하고 TMLE(타겟 최대 가능도 추정; 타겟 최소 손실 기반 추정) 프레임워크의 사용 동기를 부여할 것입니다.
 
 ```{r tmle_fig1, results="asis", echo = FALSE}
-knitr::include_graphics("../img/png/schematic_1_truedgd.png")
+knitr::include_graphics("img/png/schematic_1_truedgd.png")
 ```
 
 오른쪽의 작은 눈금은 각각 $A=1$과 $A=0$ 하에서의 평균 결과($W$에 대해 평균을 냄)를 나타내며, 따라서 그들의 차이가 우리가 추정하고자 하는 양입니다.
@@ -40,7 +40,7 @@ knitr::include_graphics("../img/png/schematic_1_truedgd.png")
 예제에서 결과 회귀를 추정하기 위해 `sl3`를 적용하면, 앙상블 기계 학습 예측이 데이터를 꽤 잘 적합시키는 것을 볼 수 있습니다.
 
 ```{r tmle_fig2, results="asis", echo = FALSE}
-knitr::include_graphics("../img/png/schematic_2b_sllik.png")
+knitr::include_graphics("img/png/schematic_2b_sllik.png")
 ```
 
 실선은 회귀 함수에 대한 `sl3` 추정치를 나타내며, 점선은 [아래에서 설명할](#tmle-updates) `tmle3` 업데이트를 나타냅니다.
@@ -50,7 +50,7 @@ knitr::include_graphics("../img/png/schematic_2b_sllik.png")
 우리는 예제 데이터에 대해 생성된 추정치에서 이러한 한계가 설명된 것을 볼 수 있습니다.
 
 ```{r tmle_fig3, results="asis", echo = FALSE}
-knitr::include_graphics("../img/png/schematic_3_effects.png")
+knitr::include_graphics("img/png/schematic_3_effects.png")
 ```
 
 슈퍼 러너가 GLM보다 참 파라미터 값(수직 점선으로 표시됨)을 더 정확하게 추정하는 것을 볼 수 있습니다. 그러나 여전히 TMLE보다는 덜 정확하며 유효한 추론이 불가능합니다. 반면에 TMLE는 편향이 적은 추정기와 유효한 추론을 달성합니다.
@@ -311,8 +311,7 @@ print(tmle_fit_multiparam)
 
 ## 연습 문제
 
-### `tmle3`를 사용한 ATE 추정 {#tmle3-ex1}
-
+::: {.callout-tip title="연습 문제 1: tmle3를 사용한 ATE 추정"}
 `sl3` 패키지에서 제공하는 Collaborative Perinatal Project(CPP) 데이터를 사용하여 평균 치료 효과를 추정하려면 아래 단계를 따르십시오. 이 예제를 단순화하기 위해, 이진 중재 변수 `parity01`(현재 아이 이전에 한 명 이상의 자녀가 있는지 여부를 나타내는 지표)과 이진 결과 변수 `haz01`(연령 대비 신장이 평균 이상인지 여부를 나타내는 지표)을 정의합니다.
 
 ```{r tmle-exercise-data}
@@ -326,16 +325,6 @@ cpp <- cpp %>%
     haz01 = as.numeric(haz > 0)
   )
 ```
-<!--
-우리는 이 단순화된 데이터를 사용하여 평균 치료 효과(ATE)를 추정하는 데 관심이 있습니다.
-$\Psi(P_0)=\mathbb{E}_0(\mathbb{E}_0[Y \mid A=1,W]-\mathbb{E}_0[Y \mid A=0,W])$
-
-순수하게 통계적인(비인과적) 파라미터는 W의 계층에 걸친 평균 차이의 평균으로 해석될 수 있으며, 각 가능한 w에 대해 조건부 치료 할당 확률이 양수라는 양의 조건 가정만 필요합니다: $\mathbb{P}_0(A=1 \mid W=w) > 0$ 및 $\mathbb{P}_0(A=0 \mid W=w) > 0$.
-
-이 파라미터를 인과적으로, 특히 인과적 위험 차이 $E_0Y_1-E_0Y_0$로 해석하려면, W의 계층 내에서 A가 반사실적 결과 $(Y_0,Y_1)$와 독립적이라는 무작위화 가정도 세워야 합니다. 이 가정은 원래 SCM $\mathcal{M}^F$에 포함되었을 수 있지만, 만약 측정되지 않은 혼란 변수가 있다는 것을 안다면 모델 $\mathcal{M}^{F\*}$은 이 "틀린 것으로 알려진" 무작위화 가정을 강제함으로써 더 제한적일 것입니다. 그럼에도 불구하고 이 가정은 통계 모델 $\mathcal{M}$을 바꾸지 않으며 결과적으로 추정 문제에도 영향을 미치지 않습니다. 따라서 TMLE의 바람직한 속성을 확립하는 정리들은 이 테스트 불가능한 무작위화 가정이 위반될 때에도 여전히 유효합니다.
-
-우리는 점근적으로 일관되고 점근적으로 정규 분포를 따르며 점근적으로 효율적일 뿐만 아니라 견고한 유한 표본 성능을 갖도록 맞춤화된 효율적인 대입 추정기인 타겟 최소 손실 기반 추정기(TMLE)를 구현하는 과정을 진행합니다.
--->
 
 1. 이러한 노드들의 리스트를 생성하여 변수 역할 $(W,A,Y)$을 정의합니다. $W$에 다음 기본 공변량들을 포함하십시오: `apgar1`, `apgar5`, `gagebrth`, `mage`, `meducyrs`, `sexn`. $A$와 $Y$는 모두 위에서 지정되었습니다. 데이터의 누락성(특히 노드 리스트에 지정된 열의 누락)을 처리해야 합니다. 위의 `washb_data` 예제와 같이 `process_missing` 함수를 사용하여 이를 수행할 수 있습니다.
 2. ATE를 위한 `tmle3_Spec` 객체인 `tmle_ATE()`를 정의합니다.
@@ -353,6 +342,7 @@ metalearner <- make_learner(
 5. $\overline{Q}_0$ 추정을 위한 슈퍼 러너 하나와 $g_0$ 추정을 위한 슈퍼 러너 하나를 정의합니다. 두 슈퍼 러너 모두에 대해 위의 메타 학습자를 사용하십시오.
 6. 이전 단계에서 정의된 두 슈퍼 러너의 리스트를 생성하고 이 객체를 `learner_list`라고 부릅니다. 리스트 이름은 `A`($g_0$ 추정을 위한 슈퍼 러너 정의)와 `Y`($\overline{Q}_0$ 추정을 위한 슈퍼 러너 정의)여야 합니다.
 7. (1) 2단계에서 정의한 `tmle3_Spec`, (2) 데이터, (3) 1단계에서 지정한 노드 리스트, (4) 6단계에서 정의한 $g_0$ 및 $\overline{Q}_0$ 추정을 위한 슈퍼 러너 리스트를 지정하여 `tmle3` 함수로 TMLE를 적합시킵니다. *참고*: 이전과 마찬가지로 (`cpp2 <- data.table::copy(cpp)`)와 같이 데이터의 복본을 명시적으로 만들어야 하며, 이후에는 `cpp2` 데이터를 사용하십시오.
+:::
 
 ## 요약
 
