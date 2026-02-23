@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; 사건 시간 결과에 대한 1단계 TMLE – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./10-tmle3mediate.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./11-tmle3survival.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">I. 타겟 러닝의 기초</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">서론</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-tlverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(PART) 1부: 예비 지식</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">II. 핵심 기계 학습 엔진</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-origami.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sl3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">III. TMLE 프레임워크 및 응용</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-tmle3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">(PART) Part 3: 고급 주제</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-tmle3shift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">확률적 치료 요법</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tmle3mediate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-tmle3survival.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#소개" id="toc-소개" class="nav-link active" data-scroll-target="#소개"><span class="header-section-number">12.1</span> 소개</a></li>
+  <li><a href="#예제" id="toc-예제" class="nav-link" data-scroll-target="#예제"><span class="header-section-number">12.2</span> 예제</a>
+  <ul class="collapse">
+  <li><a href="#데이터-로드" id="toc-데이터-로드" class="nav-link" data-scroll-target="#데이터-로드"><span class="header-section-number">12.2.1</span> 데이터 로드</a></li>
+  <li><a href="#우측-중도절단-생존-데이터-인수-지정" id="toc-우측-중도절단-생존-데이터-인수-지정" class="nav-link" data-scroll-target="#우측-중도절단-생존-데이터-인수-지정"><span class="header-section-number">12.2.2</span> 우측 중도절단 생존 데이터 인수 지정</a></li>
+  <li><a href="#초기-추정치-확보" id="toc-초기-추정치-확보" class="nav-link" data-scroll-target="#초기-추정치-확보"><span class="header-section-number">12.2.3</span> 초기 추정치 확보</a></li>
+  <li><a href="#초기-조건부-생존-추정치의-tmle-조정-수행" id="toc-초기-조건부-생존-추정치의-tmle-조정-수행" class="nav-link" data-scroll-target="#초기-조건부-생존-추정치의-tmle-조정-수행"><span class="header-section-number">12.2.4</span> 초기 조건부 생존 추정치의 TMLE 조정 수행</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./11-tmle3survival.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Cai W, van der Laan MJ. One-step targeted maximum likelihood estimation for time-to-event outcomes [published online ahead of print, 2019 Nov 15]. Biometrics. 2019;10.1111/biom.13172. doi:10.1111/biom.13172에 기반합니다.</p>
+<p>Moore, K. and van der Laan, M.J. (2009) Application of time-to-event methods in the assessment of safety in clinical trials. Design and Analysis of Clinical Trials with Time-to-Event Endpoints. London: Taylor &amp; Francis, pp.&nbsp;455–482.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>학습 목표
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>tmle3</code>를 사용하여 반사실적 주변 생존 함수(counterfactual marginal survival functions)를 추정합니다.</li>
+</ol>
+</div>
+</div>
+<section id="소개" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="소개"><span class="header-section-number">12.1</span> 소개</h2>
+<p>추정 절차의 첫 번째 단계는 실패(failure)의 조건부 생존 함수, 중도절단(censoring)의 조건부 생존 함수 및 성향 점수의 초기 추정입니다. 이 초기 추정에는 이전 섹션에서 설명한 대로 슈퍼 러너 <span class="citation" data-cites="vdl2007super">(<a href="#ref-vdl2007super" role="doc-biblioref">van der Laan, Polley, and Hubbard 2007</a>)</span>를 사용합니다.</p>
+<p>표적 매개변수를 평가하는 데 필요한 데이터 생성 분포의 관련 부분에 대한 초기 추정치를 확보하면, 1단계(one-step) TMLE를 구축할 준비가 된 것입니다.</p>
+</section>
+<section id="예제" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="예제"><span class="header-section-number">12.2</span> 예제</h2>
+<p><code>tmle3</code>를 사용하여 치료 특정 생존 곡선(treatment specific survival curve)을 추정하는 방법을 예제를 통해 살펴보겠습니다.</p>
+<section id="데이터-로드" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="데이터-로드"><span class="header-section-number">12.2.1</span> 데이터 로드</h3>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmle3)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sl3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vet_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/deming2019-workshop/"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"master/data/veteran.csv"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>vet_data<span class="sc">$</span>trt <span class="ot">&lt;-</span> vet_data<span class="sc">$</span>trt <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 시연을 위해 시간 단위를 줄입니다.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>vet_data<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(vet_data<span class="sc">$</span>time <span class="sc">/</span> <span class="dv">20</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>k_grid <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">max</span>(vet_data<span class="sc">$</span>time))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vet_data)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  X trt celltype time status karno diagtime age prior</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">1</span>   <span class="dv">0</span> squamous    <span class="dv">4</span>      <span class="dv">1</span>    <span class="dv">60</span>        <span class="dv">7</span>  <span class="dv">69</span>     <span class="dv">0</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">2</span>   <span class="dv">0</span> squamous   <span class="dv">21</span>      <span class="dv">1</span>    <span class="dv">70</span>        <span class="dv">5</span>  <span class="dv">64</span>    <span class="dv">10</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">3</span>   <span class="dv">0</span> squamous   <span class="dv">12</span>      <span class="dv">1</span>    <span class="dv">60</span>        <span class="dv">3</span>  <span class="dv">38</span>     <span class="dv">0</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">4</span>   <span class="dv">0</span> squamous    <span class="dv">7</span>      <span class="dv">1</span>    <span class="dv">60</span>        <span class="dv">9</span>  <span class="dv">63</span>    <span class="dv">10</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> <span class="dv">5</span>   <span class="dv">0</span> squamous    <span class="dv">6</span>      <span class="dv">1</span>    <span class="dv">70</span>       <span class="dv">11</span>  <span class="dv">65</span>    <span class="dv">10</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">6</span>   <span class="dv">0</span> squamous    <span class="dv">1</span>      <span class="dv">1</span>    <span class="dv">20</span>        <span class="dv">5</span>  <span class="dv">49</span>     <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>vet_data</code>의 변수들은 다음과 같습니다: * <code>trt</code>: 치료 유형 (0 = 표준, 1 = 테스트) * <code>celltype</code>: 종양의 조직학적 유형 * <code>time</code>: 사망 또는 중도절단까지의 시간 (일 단위) * <code>status</code>: 중도절단 여부 * <code>karno</code>: 연구 시작 당시의 전반적인 환자 상태를 설명하는 Karnofsky 수행 지수 (100 = 양호) * <code>diagtime</code>: 진단으로부터 무작위 배정까지의 개월 수 * <code>age</code>: 환자 나이 * <code>prior</code>: 이전 치료 경험 (0 = 아니오, 10 = 예)</p>
+</section>
+<section id="우측-중도절단-생존-데이터-인수-지정" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="우측-중도절단-생존-데이터-인수-지정"><span class="header-section-number">12.2.2</span> 우측 중도절단 생존 데이터 인수 지정</h3>
+<p>먼저, 생존 데이터 추정에 특화된 <code>tmle_spec</code>을 생성하기 위해 <code>tmle_survival</code> 함수를 사용합니다. 조건부 생존 함수를 추정하려면, 먼저 실패 사건의 조건부 위험(conditional hazard)을 추정한 다음 이를 조건부 생존 함수로 변환해야 합니다. 조건부 위험의 정의는 다음과 같습니다:</p>
+<p>[_{N}(t|A, W)=P(N(t)=1|N(t-1)=0, A_c(t-1)=0, A, W)]</p>
+<p>여기서 <span class="math inline">\(N(t)=I(\widetilde{T}\le t, \Delta = 1), A_c(t)=I(\widetilde{T}\le t, \Delta = 0)\)</span>입니다. 우리는 <code>survival_spec</code>의 <code>transform_data</code> 함수를 호출하여 원본 데이터를 필요한 롱 포맷(long format)으로 변환할 것입니다. <code>node_list</code>에 <code>W</code>(공변량), <code>A</code>(치료/중재), <code>T_tilde</code>(사건 시간 벡터), <code>Delta</code>(중도절단 표시자 벡터) 및 행 ID를 지정해야 합니다.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>var_types <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">T_tilde =</span> Variable_Type<span class="sc">$</span><span class="fu">new</span>(<span class="st">"continuous"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">t =</span> Variable_Type<span class="sc">$</span><span class="fu">new</span>(<span class="st">"continuous"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Delta =</span> Variable_Type<span class="sc">$</span><span class="fu">new</span>(<span class="st">"binomial"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>survival_spec <span class="ot">&lt;-</span> <span class="fu">tmle_survival</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">treatment_level =</span> <span class="dv">1</span>, <span class="at">control_level =</span> <span class="dv">0</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_times =</span> <span class="fu">intersect</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, k_grid),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable_types =</span> var_types</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> <span class="fu">c</span>(<span class="st">"celltype"</span>, <span class="st">"karno"</span>, <span class="st">"diagtime"</span>, <span class="st">"age"</span>, <span class="st">"prior"</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="st">"trt"</span>, <span class="at">T_tilde =</span> <span class="st">"time"</span>, <span class="at">Delta =</span> <span class="st">"status"</span>, <span class="at">id =</span> <span class="st">"X"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>long_data_tuple <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">transform_data</span>(vet_data, node_list)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> long_data_tuple<span class="sc">$</span>long_data</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>long_node_list <span class="ot">&lt;-</span> long_data_tuple<span class="sc">$</span>long_node_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="초기-추정치-확보" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="초기-추정치-확보"><span class="header-section-number">12.2.3</span> 초기 추정치 확보</h3>
+<p>5장에서 설명한 대로 학습기와 <code>tmle_task</code>를 정의합니다.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lrnr_mean <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_mean)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lrnr_glm <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_glm)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lrnr_gam <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_gam)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>sl_A <span class="ot">&lt;-</span> Lrnr_sl<span class="sc">$</span><span class="fu">new</span>(<span class="at">learners =</span> <span class="fu">list</span>(lrnr_mean, lrnr_glm, lrnr_gam))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>learner_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> sl_A, <span class="at">N =</span> sl_A, <span class="at">A_c =</span> sl_A)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmle_task <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">make_tmle_task</span>(df_long, long_node_list)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>initial_likelihood <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">make_initial_likelihood</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  tmle_task,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  learner_list</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="초기-조건부-생존-추정치의-tmle-조정-수행" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="초기-조건부-생존-추정치의-tmle-조정-수행"><span class="header-section-number">12.2.4</span> 초기 조건부 생존 추정치의 TMLE 조정 수행</h3>
+<p>업데이터를 위해 <code>tmle3_Update_survival</code> 객체를 생성합니다. <code>fit_method</code>를 <code>l2</code>로 설정하면 로지스틱 릿지 회귀(logistic ridge regression)를 사용하여 1단계 TMLE를 실행하게 됩니다.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>up <span class="ot">&lt;-</span> tmle3_Update_survival<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="fl">3e1</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cvtmle =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">convergence_type =</span> <span class="st">"scaled_var"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta_epsilon =</span> <span class="fl">1e-2</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit_method =</span> <span class="st">"l2"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">use_best =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>targeted_likelihood <span class="ot">&lt;-</span> Targeted_Likelihood<span class="sc">$</span><span class="fu">new</span>(initial_likelihood,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">updater =</span> up</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>tmle_params <span class="ot">&lt;-</span> survival_spec<span class="sc">$</span><span class="fu">make_params</span>(tmle_task, targeted_likelihood)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>tmle_fit_manual <span class="ot">&lt;-</span> <span class="fu">fit_tmle3</span>(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  tmle_task, targeted_likelihood, tmle_params,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  targeted_likelihood<span class="sc">$</span>updater</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tmle_fit_manual)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>A tmle3_Fit that took <span class="dv">30</span> <span class="fu">step</span>(s)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        type               param init_est tmle_est      se     lower   upper</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="sc">&lt;</span>char<span class="sc">&gt;</span>              <span class="er">&lt;</span>char<span class="sc">&gt;</span>    <span class="er">&lt;</span>num<span class="sc">&gt;</span>    <span class="er">&lt;</span>num<span class="sc">&gt;</span>   <span class="er">&lt;</span>num<span class="sc">&gt;</span>     <span class="er">&lt;</span>num<span class="sc">&gt;</span>   <span class="er">&lt;</span>num<span class="sc">&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">1</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.786297</span> <span class="fl">0.788327</span> <span class="fl">0.04836</span>  <span class="fl">0.693535</span> <span class="fl">0.88312</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">2</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.632930</span> <span class="fl">0.632883</span> <span class="fl">0.05724</span>  <span class="fl">0.520699</span> <span class="fl">0.74507</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">3</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.519067</span> <span class="fl">0.515114</span> <span class="fl">0.05726</span>  <span class="fl">0.402878</span> <span class="fl">0.62735</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">4</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.432063</span> <span class="fl">0.429012</span> <span class="fl">0.05620</span>  <span class="fl">0.318858</span> <span class="fl">0.53917</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">5</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.363953</span> <span class="fl">0.360762</span> <span class="fl">0.05445</span>  <span class="fl">0.254045</span> <span class="fl">0.46748</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">6</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.309546</span> <span class="fl">0.308864</span> <span class="fl">0.05378</span>  <span class="fl">0.203460</span> <span class="fl">0.41427</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">7</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.265348</span> <span class="fl">0.268487</span> <span class="fl">0.05140</span>  <span class="fl">0.167735</span> <span class="fl">0.36924</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">8</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.228938</span> <span class="fl">0.236337</span> <span class="fl">0.05104</span>  <span class="fl">0.136294</span> <span class="fl">0.33638</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span><span class="sc">:</span> survival  E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">9</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.198595</span> <span class="fl">0.208493</span> <span class="fl">0.05015</span>  <span class="fl">0.110204</span> <span class="fl">0.30678</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">10</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.173061</span> <span class="fl">0.183451</span> <span class="fl">0.04917</span>  <span class="fl">0.087075</span> <span class="fl">0.27983</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">11</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.151400</span> <span class="fl">0.160196</span> <span class="fl">0.04936</span>  <span class="fl">0.063452</span> <span class="fl">0.25694</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">12</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.132899</span> <span class="fl">0.140361</span> <span class="fl">0.04829</span>  <span class="fl">0.045714</span> <span class="fl">0.23501</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">13</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.117003</span> <span class="fl">0.123345</span> <span class="fl">0.04619</span>  <span class="fl">0.032815</span> <span class="fl">0.21387</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">14</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.103277</span> <span class="fl">0.108677</span> <span class="fl">0.04642</span>  <span class="fl">0.017689</span> <span class="fl">0.19966</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">15</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.091373</span> <span class="fl">0.095978</span> <span class="fl">0.04618</span>  <span class="fl">0.005472</span> <span class="fl">0.18648</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">16</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.081009</span> <span class="fl">0.084942</span> <span class="fl">0.04685</span> <span class="sc">-</span><span class="fl">0.006890</span> <span class="fl">0.17677</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">17</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.071956</span> <span class="fl">0.075320</span> <span class="fl">0.04491</span> <span class="sc">-</span><span class="fl">0.012697</span> <span class="fl">0.16334</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">18</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.064023</span> <span class="fl">0.066906</span> <span class="fl">0.04330</span> <span class="sc">-</span><span class="fl">0.017967</span> <span class="fl">0.15178</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="dv">19</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">19</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.057054</span> <span class="fl">0.059528</span> <span class="fl">0.04021</span> <span class="sc">-</span><span class="fl">0.019279</span> <span class="fl">0.13834</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">20</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.050915</span> <span class="fl">0.053043</span> <span class="fl">0.03857</span> <span class="sc">-</span><span class="fl">0.022557</span> <span class="fl">0.12864</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">21</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.045497</span> <span class="fl">0.047330</span> <span class="fl">0.03913</span> <span class="sc">-</span><span class="fl">0.029360</span> <span class="fl">0.12402</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">22</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.040704</span> <span class="fl">0.042286</span> <span class="fl">0.03981</span> <span class="sc">-</span><span class="fl">0.035742</span> <span class="fl">0.12031</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="dv">23</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">23</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.036456</span> <span class="fl">0.037825</span> <span class="fl">0.04060</span> <span class="sc">-</span><span class="fl">0.041749</span> <span class="fl">0.11740</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">24</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.032685</span> <span class="fl">0.033873</span> <span class="fl">0.03847</span> <span class="sc">-</span><span class="fl">0.041524</span> <span class="fl">0.10927</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="dv">25</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">25</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.029331</span> <span class="fl">0.030366</span> <span class="fl">0.03917</span> <span class="sc">-</span><span class="fl">0.046405</span> <span class="fl">0.10714</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="dv">26</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">26</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.026345</span> <span class="fl">0.027248</span> <span class="fl">0.03995</span> <span class="sc">-</span><span class="fl">0.051060</span> <span class="fl">0.10556</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">27</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.023682</span> <span class="fl">0.024474</span> <span class="fl">0.04081</span> <span class="sc">-</span><span class="fl">0.055515</span> <span class="fl">0.10446</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="dv">28</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">28</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.021304</span> <span class="fl">0.022001</span> <span class="fl">0.04174</span> <span class="sc">-</span><span class="fl">0.059799</span> <span class="fl">0.10380</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="dv">29</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">29</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.019178</span> <span class="fl">0.019793</span> <span class="fl">0.04272</span> <span class="sc">-</span><span class="fl">0.063934</span> <span class="fl">0.10352</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="dv">30</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">30</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.017276</span> <span class="fl">0.017821</span> <span class="fl">0.03625</span> <span class="sc">-</span><span class="fl">0.053221</span> <span class="fl">0.08886</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="dv">31</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">31</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.015572</span> <span class="fl">0.016058</span> <span class="fl">0.03704</span> <span class="sc">-</span><span class="fl">0.056536</span> <span class="fl">0.08865</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="dv">32</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">32</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.014043</span> <span class="fl">0.014478</span> <span class="fl">0.03790</span> <span class="sc">-</span><span class="fl">0.059796</span> <span class="fl">0.08875</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="dv">33</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">33</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.012671</span> <span class="fl">0.013062</span> <span class="fl">0.03881</span> <span class="sc">-</span><span class="fl">0.063006</span> <span class="fl">0.08913</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="dv">34</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">34</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.011439</span> <span class="fl">0.011792</span> <span class="fl">0.03978</span> <span class="sc">-</span><span class="fl">0.066174</span> <span class="fl">0.08976</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="dv">35</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">35</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.010331</span> <span class="fl">0.010651</span> <span class="fl">0.04079</span> <span class="sc">-</span><span class="fl">0.069305</span> <span class="fl">0.09061</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="dv">36</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">36</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.009334</span> <span class="fl">0.009626</span> <span class="fl">0.04185</span> <span class="sc">-</span><span class="fl">0.072408</span> <span class="fl">0.09166</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="dv">37</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">37</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.008437</span> <span class="fl">0.008703</span> <span class="fl">0.04296</span> <span class="sc">-</span><span class="fl">0.075491</span> <span class="fl">0.09290</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">38</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.007628</span> <span class="fl">0.007873</span> <span class="fl">0.04410</span> <span class="sc">-</span><span class="fl">0.078561</span> <span class="fl">0.09431</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="dv">39</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">39</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.006900</span> <span class="fl">0.007125</span> <span class="fl">0.04528</span> <span class="sc">-</span><span class="fl">0.081626</span> <span class="fl">0.09588</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">40</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.006242</span> <span class="fl">0.006451</span> <span class="fl">0.04650</span> <span class="sc">-</span><span class="fl">0.084693</span> <span class="fl">0.09759</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="dv">41</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">41</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.005649</span> <span class="fl">0.005842</span> <span class="fl">0.04776</span> <span class="sc">-</span><span class="fl">0.087768</span> <span class="fl">0.09945</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">42</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.005113</span> <span class="fl">0.005293</span> <span class="fl">0.04906</span> <span class="sc">-</span><span class="fl">0.090860</span> <span class="fl">0.10145</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="dv">43</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">43</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.004630</span> <span class="fl">0.004797</span> <span class="fl">0.05039</span> <span class="sc">-</span><span class="fl">0.093973</span> <span class="fl">0.10357</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">44</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.004193</span> <span class="fl">0.004349</span> <span class="fl">0.05177</span> <span class="sc">-</span><span class="fl">0.097114</span> <span class="fl">0.10581</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="dv">45</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">45</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.003797</span> <span class="fl">0.003943</span> <span class="fl">0.05318</span> <span class="sc">-</span><span class="fl">0.100289</span> <span class="fl">0.10818</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="dv">46</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">46</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.003440</span> <span class="fl">0.003577</span> <span class="fl">0.05463</span> <span class="sc">-</span><span class="fl">0.103503</span> <span class="fl">0.11066</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="dv">47</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">47</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.003117</span> <span class="fl">0.003245</span> <span class="fl">0.05613</span> <span class="sc">-</span><span class="fl">0.106761</span> <span class="fl">0.11325</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="dv">48</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">48</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.002824</span> <span class="fl">0.002944</span> <span class="fl">0.05766</span> <span class="sc">-</span><span class="fl">0.110069</span> <span class="fl">0.11596</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="dv">49</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">49</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.002559</span> <span class="fl">0.002672</span> <span class="fl">0.05924</span> <span class="sc">-</span><span class="fl">0.113431</span> <span class="fl">0.11877</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span><span class="sc">:</span> survival E[<span class="fu">P</span>(T <span class="sc">&gt;</span> <span class="dv">50</span><span class="sc">|</span><span class="at">A=</span><span class="dv">1</span>, W)] <span class="fl">0.002319</span> <span class="fl">0.002425</span> <span class="fl">0.01370</span> <span class="sc">-</span><span class="fl">0.024419</span> <span class="fl">0.02927</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>        type               param init_est tmle_est      se     lower   upper</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    psi_transformed lower_transformed upper_transformed</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>              <span class="sc">&lt;</span>num<span class="sc">&gt;</span>             <span class="er">&lt;</span>num<span class="sc">&gt;</span>             <span class="er">&lt;</span>num<span class="sc">&gt;</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span><span class="sc">:</span>        <span class="fl">0.788327</span>          <span class="fl">0.693535</span>           <span class="fl">0.88312</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span><span class="sc">:</span>        <span class="fl">0.632883</span>          <span class="fl">0.520699</span>           <span class="fl">0.74507</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span><span class="sc">:</span>        <span class="fl">0.515114</span>          <span class="fl">0.402878</span>           <span class="fl">0.62735</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span><span class="sc">:</span>        <span class="fl">0.429012</span>          <span class="fl">0.318858</span>           <span class="fl">0.53917</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span><span class="sc">:</span>        <span class="fl">0.360762</span>          <span class="fl">0.254045</span>           <span class="fl">0.46748</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span><span class="sc">:</span>        <span class="fl">0.308864</span>          <span class="fl">0.203460</span>           <span class="fl">0.41427</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span><span class="sc">:</span>        <span class="fl">0.268487</span>          <span class="fl">0.167735</span>           <span class="fl">0.36924</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span><span class="sc">:</span>        <span class="fl">0.236337</span>          <span class="fl">0.136294</span>           <span class="fl">0.33638</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span><span class="sc">:</span>        <span class="fl">0.208493</span>          <span class="fl">0.110204</span>           <span class="fl">0.30678</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span><span class="sc">:</span>        <span class="fl">0.183451</span>          <span class="fl">0.087075</span>           <span class="fl">0.27983</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span><span class="sc">:</span>        <span class="fl">0.160196</span>          <span class="fl">0.063452</span>           <span class="fl">0.25694</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span><span class="sc">:</span>        <span class="fl">0.140361</span>          <span class="fl">0.045714</span>           <span class="fl">0.23501</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span><span class="sc">:</span>        <span class="fl">0.123345</span>          <span class="fl">0.032815</span>           <span class="fl">0.21387</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a><span class="dv">14</span><span class="sc">:</span>        <span class="fl">0.108677</span>          <span class="fl">0.017689</span>           <span class="fl">0.19966</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="dv">15</span><span class="sc">:</span>        <span class="fl">0.095978</span>          <span class="fl">0.005472</span>           <span class="fl">0.18648</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span><span class="sc">:</span>        <span class="fl">0.084942</span>         <span class="sc">-</span><span class="fl">0.006890</span>           <span class="fl">0.17677</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span><span class="sc">:</span>        <span class="fl">0.075320</span>         <span class="sc">-</span><span class="fl">0.012697</span>           <span class="fl">0.16334</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="dv">18</span><span class="sc">:</span>        <span class="fl">0.066906</span>         <span class="sc">-</span><span class="fl">0.017967</span>           <span class="fl">0.15178</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="dv">19</span><span class="sc">:</span>        <span class="fl">0.059528</span>         <span class="sc">-</span><span class="fl">0.019279</span>           <span class="fl">0.13834</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span><span class="sc">:</span>        <span class="fl">0.053043</span>         <span class="sc">-</span><span class="fl">0.022557</span>           <span class="fl">0.12864</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span><span class="sc">:</span>        <span class="fl">0.047330</span>         <span class="sc">-</span><span class="fl">0.029360</span>           <span class="fl">0.12402</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="dv">22</span><span class="sc">:</span>        <span class="fl">0.042286</span>         <span class="sc">-</span><span class="fl">0.035742</span>           <span class="fl">0.12031</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a><span class="dv">23</span><span class="sc">:</span>        <span class="fl">0.037825</span>         <span class="sc">-</span><span class="fl">0.041749</span>           <span class="fl">0.11740</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="dv">24</span><span class="sc">:</span>        <span class="fl">0.033873</span>         <span class="sc">-</span><span class="fl">0.041524</span>           <span class="fl">0.10927</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="dv">25</span><span class="sc">:</span>        <span class="fl">0.030366</span>         <span class="sc">-</span><span class="fl">0.046405</span>           <span class="fl">0.10714</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="dv">26</span><span class="sc">:</span>        <span class="fl">0.027248</span>         <span class="sc">-</span><span class="fl">0.051060</span>           <span class="fl">0.10556</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="dv">27</span><span class="sc">:</span>        <span class="fl">0.024474</span>         <span class="sc">-</span><span class="fl">0.055515</span>           <span class="fl">0.10446</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="dv">28</span><span class="sc">:</span>        <span class="fl">0.022001</span>         <span class="sc">-</span><span class="fl">0.059799</span>           <span class="fl">0.10380</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="dv">29</span><span class="sc">:</span>        <span class="fl">0.019793</span>         <span class="sc">-</span><span class="fl">0.063934</span>           <span class="fl">0.10352</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="dv">30</span><span class="sc">:</span>        <span class="fl">0.017821</span>         <span class="sc">-</span><span class="fl">0.053221</span>           <span class="fl">0.08886</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="dv">31</span><span class="sc">:</span>        <span class="fl">0.016058</span>         <span class="sc">-</span><span class="fl">0.056536</span>           <span class="fl">0.08865</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="dv">32</span><span class="sc">:</span>        <span class="fl">0.014478</span>         <span class="sc">-</span><span class="fl">0.059796</span>           <span class="fl">0.08875</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="dv">33</span><span class="sc">:</span>        <span class="fl">0.013062</span>         <span class="sc">-</span><span class="fl">0.063006</span>           <span class="fl">0.08913</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="dv">34</span><span class="sc">:</span>        <span class="fl">0.011792</span>         <span class="sc">-</span><span class="fl">0.066174</span>           <span class="fl">0.08976</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a><span class="dv">35</span><span class="sc">:</span>        <span class="fl">0.010651</span>         <span class="sc">-</span><span class="fl">0.069305</span>           <span class="fl">0.09061</span></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="dv">36</span><span class="sc">:</span>        <span class="fl">0.009626</span>         <span class="sc">-</span><span class="fl">0.072408</span>           <span class="fl">0.09166</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a><span class="dv">37</span><span class="sc">:</span>        <span class="fl">0.008703</span>         <span class="sc">-</span><span class="fl">0.075491</span>           <span class="fl">0.09290</span></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="dv">38</span><span class="sc">:</span>        <span class="fl">0.007873</span>         <span class="sc">-</span><span class="fl">0.078561</span>           <span class="fl">0.09431</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="dv">39</span><span class="sc">:</span>        <span class="fl">0.007125</span>         <span class="sc">-</span><span class="fl">0.081626</span>           <span class="fl">0.09588</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="dv">40</span><span class="sc">:</span>        <span class="fl">0.006451</span>         <span class="sc">-</span><span class="fl">0.084693</span>           <span class="fl">0.09759</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="dv">41</span><span class="sc">:</span>        <span class="fl">0.005842</span>         <span class="sc">-</span><span class="fl">0.087768</span>           <span class="fl">0.09945</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span><span class="sc">:</span>        <span class="fl">0.005293</span>         <span class="sc">-</span><span class="fl">0.090860</span>           <span class="fl">0.10145</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="dv">43</span><span class="sc">:</span>        <span class="fl">0.004797</span>         <span class="sc">-</span><span class="fl">0.093973</span>           <span class="fl">0.10357</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="dv">44</span><span class="sc">:</span>        <span class="fl">0.004349</span>         <span class="sc">-</span><span class="fl">0.097114</span>           <span class="fl">0.10581</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="dv">45</span><span class="sc">:</span>        <span class="fl">0.003943</span>         <span class="sc">-</span><span class="fl">0.100289</span>           <span class="fl">0.10818</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="dv">46</span><span class="sc">:</span>        <span class="fl">0.003577</span>         <span class="sc">-</span><span class="fl">0.103503</span>           <span class="fl">0.11066</span></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="dv">47</span><span class="sc">:</span>        <span class="fl">0.003245</span>         <span class="sc">-</span><span class="fl">0.106761</span>           <span class="fl">0.11325</span></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="dv">48</span><span class="sc">:</span>        <span class="fl">0.002944</span>         <span class="sc">-</span><span class="fl">0.110069</span>           <span class="fl">0.11596</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="dv">49</span><span class="sc">:</span>        <span class="fl">0.002672</span>         <span class="sc">-</span><span class="fl">0.113431</span>           <span class="fl">0.11877</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span><span class="sc">:</span>        <span class="fl">0.002425</span>         <span class="sc">-</span><span class="fl">0.024419</span>           <span class="fl">0.02927</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>    psi_transformed lower_transformed upper_transformed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-vdl2007super" class="csl-entry" role="listitem">
+van der Laan, Mark J, Eric C Polley, and Alan E Hubbard. 2007. <span>“<span>Super Learner</span>.”</span> <em>Statistical Applications in Genetics and Molecular Biology</em> 6 (1).
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./10-tmle3mediate.html" class="pagination-link" aria-label="인과 매개 분석">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

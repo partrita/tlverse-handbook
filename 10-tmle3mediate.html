@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; 인과 매개 분석 – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11-tmle3survival.html" rel="next">
+<link href="./09-tmle3shift.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./10-tmle3mediate.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">I. 타겟 러닝의 기초</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">서론</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-tlverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(PART) 1부: 예비 지식</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">II. 핵심 기계 학습 엔진</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-origami.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-sl3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">III. TMLE 프레임워크 및 응용</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-tmle3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">(PART) Part 3: 고급 주제</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-tmle3shift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">확률적 치료 요법</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-tmle3mediate.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-tmle3survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#인과-매개-분석" id="toc-인과-매개-분석" class="nav-link active" data-scroll-target="#인과-매개-분석"><span class="header-section-number">11.1</span> 인과 매개 분석</a></li>
+  <li><a href="#데이터-구조-및-표기법" id="toc-데이터-구조-및-표기법" class="nav-link" data-scroll-target="#데이터-구조-및-표기법"><span class="header-section-number">11.2</span> 데이터 구조 및 표기법</a></li>
+  <li><a href="#자연적-직접-및-간접-효과의-정의" id="toc-자연적-직접-및-간접-효과의-정의" class="nav-link" data-scroll-target="#자연적-직접-및-간접-효과의-정의"><span class="header-section-number">11.3</span> 자연적 직접 및 간접 효과의 정의</a>
+  <ul class="collapse">
+  <li><a href="#평균-치료-효과의-분해" id="toc-평균-치료-효과의-분해" class="nav-link" data-scroll-target="#평균-치료-효과의-분해"><span class="header-section-number">11.3.1</span> 평균 치료 효과의 분해</a></li>
+  <li><a href="#estimating-the-natural-direct-effect" id="toc-estimating-the-natural-direct-effect" class="nav-link" data-scroll-target="#estimating-the-natural-direct-effect"><span class="header-section-number">11.3.2</span> Estimating the Natural Direct Effect</a></li>
+  <li><a href="#자연적-간접-효과의-추정" id="toc-자연적-간접-효과의-추정" class="nav-link" data-scroll-target="#자연적-간접-효과의-추정"><span class="header-section-number">11.3.3</span> 자연적 간접 효과의 추정</a></li>
+  <li><a href="#인구-중재-직접-및-간접-효과" id="toc-인구-중재-직접-및-간접-효과" class="nav-link" data-scroll-target="#인구-중재-직접-및-간접-효과"><span class="header-section-number">11.3.4</span> 인구 중재 직접 및 간접 효과</a></li>
+  <li><a href="#decomposing-the-population-intervention-effect" id="toc-decomposing-the-population-intervention-effect" class="nav-link" data-scroll-target="#decomposing-the-population-intervention-effect"><span class="header-section-number">11.3.5</span> Decomposing the Population Intervention Effect</a></li>
+  <li><a href="#효과-분해-항의-추정" id="toc-효과-분해-항의-추정" class="nav-link" data-scroll-target="#효과-분해-항의-추정"><span class="header-section-number">11.3.6</span> 효과 분해 항의 추정</a></li>
+  </ul></li>
+  <li><a href="#직접-및-간접-효과의-평가" id="toc-직접-및-간접-효과의-평가" class="nav-link" data-scroll-target="#직접-및-간접-효과의-평가"><span class="header-section-number">11.4</span> 직접 및 간접 효과의 평가</a>
+  <ul class="collapse">
+  <li><a href="#자연적-간접-효과의-표적-추정" id="toc-자연적-간접-효과의-표적-추정" class="nav-link" data-scroll-target="#자연적-간접-효과의-표적-추정"><span class="header-section-number">11.4.1</span> 자연적 간접 효과의 표적 추정</a></li>
+  <li><a href="#자연적-직접-효과의-표적-추정" id="toc-자연적-직접-효과의-표적-추정" class="nav-link" data-scroll-target="#자연적-직접-효과의-표적-추정"><span class="header-section-number">11.4.2</span> 자연적 직접 효과의 표적 추정</a></li>
+  <li><a href="#인구-중재-직접-효과의-표적-추정" id="toc-인구-중재-직접-효과의-표적-추정" class="nav-link" data-scroll-target="#인구-중재-직접-효과의-표적-추정"><span class="header-section-number">11.4.3</span> 인구 중재 직접 효과의 표적 추정</a></li>
+  </ul></li>
+  <li><a href="#ipsi-곱셈-이동multiplicative-shift-설정" id="toc-ipsi-곱셈-이동multiplicative-shift-설정" class="nav-link" data-scroll-target="#ipsi-곱셈-이동multiplicative-shift-설정"><span class="header-section-number">12</span> IPSI 곱셈 이동(multiplicative shift) 설정</a></li>
+  <li><a href="#확률적-매개를-위한-tmle3-spec-인스턴스화" id="toc-확률적-매개를-위한-tmle3-spec-인스턴스화" class="nav-link" data-scroll-target="#확률적-매개를-위한-tmle3-spec-인스턴스화"><span class="header-section-number">13</span> 확률적 매개를 위한 tmle3 spec 인스턴스화</a></li>
+  <li><a href="#tml-추정치-계산" id="toc-tml-추정치-계산" class="nav-link" data-scroll-target="#tml-추정치-계산"><span class="header-section-number">14</span> TML 추정치 계산</a>
+  <ul class="collapse">
+  <li><a href="#연습-문제" id="toc-연습-문제" class="nav-link" data-scroll-target="#연습-문제"><span class="header-section-number">14.1</span> 연습 문제</a>
+  <ul class="collapse">
+  <li><a href="#주요-개념-복습" id="toc-주요-개념-복습" class="nav-link" data-scroll-target="#주요-개념-복습"><span class="header-section-number">14.1.1</span> 주요 개념 복습</a></li>
+  <li><a href="#개념의-실전-적용" id="toc-개념의-실전-적용" class="nav-link" data-scroll-target="#개념의-실전-적용"><span class="header-section-number">14.1.2</span> 개념의 실전 적용</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./10-tmle3mediate.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>Nima Hejazi</em></p>
+<p><a href="https://github.com/tlverse/tmle3mediate"><code>tmle3mediate</code> <code>R</code> 패키지</a>를 활용합니다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>학습 목표
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>치료 후 매개 변수의 존재가 인과 분석을 어떻게 복잡하게 만들 수 있는지, 그리고 이러한 복잡성을 해결하기 위해 직접 효과와 간접 효과를 어떻게 정의할 수 있는지 조사합니다.</li>
+<li>확률적 중재의 관점에서 정의를 포함하여, 직접 인과 효과와 간접 인과 효과 사이의 본질적인 유사점과 차이점을 설명합니다.</li>
+<li>직접 및 간접 효과를 정의하는 데 필요한 합동 중재(joint interventions)를 <em>총</em> 인과 효과를 산출하는 정적, 동적 및 확률적 중재와 차별화합니다.</li>
+<li>자연적 직접 및 간접 효과의 식별에 필요한 가정과 이러한 효과 정의의 한계를 설명합니다.</li>
+<li><code>tmle3mediate</code> <code>R</code> 패키지를 사용하여 이분형 치료에 대한 자연적 직접 및 간접 효과를 추정합니다.</li>
+<li>확률적 중재의 인구 중재 직접 및 간접 효과를 자연적 직접 및 간접 효과와 차별화하고, 식별에 필요한 가정의 차이점을 포함합니다.</li>
+<li><code>tmle3mediate</code> <code>R</code> 패키지를 사용하여 이분형 치료의 인구 중재 직접 효과를 추정합니다.</li>
+</ol>
+</div>
+</div>
+<section id="인과-매개-분석" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="인과-매개-분석"><span class="header-section-number">11.1</span> 인과 매개 분석</h2>
+<p>생물학 및 역학에서 경제학 및 심리학에 이르는 다양한 응용 분야에서 과학적 탐구는 종종 치료가 두 변수 사이의 특정 경로를 통해서만 결과 변수에 미치는 효과를 확인하는 것과 관련이 있습니다. 노출에 의해 영향을 받는 치료 후 중간 변수(즉, <em>매개체</em>)가 존재하는 경우, 경로 특정 효과(path-specific effects)를 통해 이러한 복잡하고 기계론적 관계를 분석할 수 있습니다. 이러한 인과 효과는 매우 광범위한 관심을 끌고 있어 그 정의와 식별은 거의 한 세기 동안 통계학의 연구 대상이 되어 왔습니다. 실제로 현대적 인과 매개 분석의 초기 사례는 경로 분석(path analysis)에 관한 연구<span class="citation" data-cites="wright1934method">(<a href="#ref-wright1934method" role="doc-biblioref">Wright 1934</a>)</span>로 거슬러 올라갈 수 있습니다. 최근 수십 년 동안 잠재적 결과(potential outcomes) 및 비파라메트릭 구조 방정식 모델링 프레임워크 모두에서 새로운 직접 및 간접 효과의 공식화에 대한 관심이 다시 높아졌습니다<span class="citation" data-cites="robins1986new pearl1995causal pearl2009causality spirtes2000causation dawid2000causal">(<a href="#ref-robins1986new" role="doc-biblioref">Robins 1986</a>; <a href="#ref-pearl1995causal" role="doc-biblioref">Pearl 1995</a>, <a href="#ref-pearl2009causality" role="doc-biblioref">2009</a>; <a href="#ref-spirtes2000causation" role="doc-biblioref">Spirtes et al. 2000</a>; <a href="#ref-dawid2000causal" role="doc-biblioref">Dawid 2000</a>)</span>. 일반적으로 간접 효과(indirect effect, IE)는 매개 변수를 <em>통해</em> 작용하는 것으로 밝혀진 총 효과의 부분인 반면, 직접 직접 효과(direct effect, DE)는 치료가 결과에 직접 미치는 효과와 매개체를 명시적으로 포함하지 않는 모든 경로를 통한 효과를 포함하여 총 효과의 <em>나머지 모든 구성 요소</em>를 아우릅니다. 직접 및 간접 효과에 의해 전달되는 기계론적 지식은 치료가 <em>왜</em> 그리고 <em>어떻게</em> 효과가 있는지에 대한 이해를 높이는 데 사용될 수 있습니다.</p>
+<p>인과 추론에 대한 현대적 접근 방식은 전통적인 경로 분석의 방법론을 크게 발전시켜 파라메트릭 모델링 접근 방식의 사용으로 인한 중대한 제한 사항을 극복할 수 있게 해주었습니다<span class="citation" data-cites="vanderweele2015explanation">(<a href="#ref-vanderweele2015explanation" role="doc-biblioref">T. VanderWeele 2015</a>)</span>. 서로 다른 프레임워크를 사용하여 <span class="citation" data-cites="robins1992identifiability">Robins and Greenland (<a href="#ref-robins1992identifiability" role="doc-biblioref">1992</a>)</span> 와 <span class="citation" data-cites="pearl2001direct">Pearl (<a href="#ref-pearl2001direct" role="doc-biblioref">2001</a>)</span> 는 평균 치료 효과를 <em>자연적</em> 직접 및 간접 효과로 비파라메트릭하게 분해하는 방법을 동일하게 제공했습니다. <span class="citation" data-cites="vanderweele2015explanation">T. VanderWeele (<a href="#ref-vanderweele2015explanation" role="doc-biblioref">2015</a>)</span> 은 고전적 인과 매개 분석에 대한 포괄적인 개요를 제공합니다. 우리는 대안적인 관점을 제공하며, 대신 최근에야 나타난 이러한 수치들의 효율적 추정기 구축<span class="citation" data-cites="tchetgen2012semiparametric zheng2012targeted">(<a href="#ref-tchetgen2012semiparametric" role="doc-biblioref">Tchetgen Tchetgen and Shpitser 2012</a>; <a href="#ref-zheng2012targeted" role="doc-biblioref">Zheng and van der Laan 2012</a>)</span>과 확률적 중재에 기반한 보다 유연한 직접 및 간접 정의<span class="citation" data-cites="diaz2020causal">(<a href="#ref-diaz2020causal" role="doc-biblioref">Dı́az and Hejazi 2020</a>)</span>에 초점을 맞춥니다.</p>
+</section>
+<section id="데이터-구조-및-표기법" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="데이터-구조-및-표기법"><span class="header-section-number">11.2</span> 데이터 구조 및 표기법</h2>
+<p>이제 각 관찰 단위에 대해 약간 더 복잡한 데이터 구조 <span class="math inline">\(O = (W, A, Z, Y)\)</span>를 고려하는 익숙한 <span class="math inline">\(n\)</span>개 단위 표본 <span class="math inline">\(O_1, \ldots, O_n\)</span>으로 돌아가 보겠습니다. 이전과 마찬가지로 <span class="math inline">\(W\)</span>는 관찰된 공변량 벡터, <span class="math inline">\(A\)</span>는 이분형 또는 연속형 치료, <span class="math inline">\(Y\)</span>는 이분형 또는 연속형 결과를 나타냅니다. 새로운 치료 후 변수 <span class="math inline">\(Z\)</span>는 (잠재적으로 다변량인) 매개체 집합을 나타냅니다. 배경 과학 지식에 의해 뒷받침되지 않는 가정을 피하기 위해, 우리는 데이터 생성 분포 <span class="math inline">\(P_0\)</span>의 형태에 어떠한 가정도 두지 않는 비파라메트릭 통계 모델 <span class="math inline">\(\M\)</span>에 대해 <span class="math inline">\(O \sim P_0 \in \M\)</span>라고 가정합니다.</p>
+<p>이전 장들에서와 같이, 구조적 인과 모델(SCM) <span class="citation" data-cites="pearl2009causality">(<a href="#ref-pearl2009causality" role="doc-biblioref">Pearl 2009</a>)</span>은 반사실적 변수의 정의를 공식화하는 데 도움이 됩니다: <span class="math display">\[\begin{align}
+  W &amp;= f_W(U_W) \\ \nonumber
+  A &amp;= f_A(W, U_A) \\ \nonumber
+  Z &amp;= f_Z(W, A, U_Z) \\ \nonumber
+  Y &amp;= f_Y(W, A, Z, U_Y).
+  (\#eq:npsem-mediate)
+\end{align}\]</span> 이 방정식 세트는 관찰된 데이터 <span class="math inline">\(O\)</span>를 생성하는 기계론적 모델을 구성하며, 나아가 SCM은 몇 가지 기본적인 가정을 인코딩합니다. 첫째, 암시적인 시간적 순서가 있습니다: <span class="math inline">\(W\)</span>가 먼저 발생하며 외생적 요인 <span class="math inline">\(U_W\)</span>에만 의존합니다. 그다음 <span class="math inline">\(A\)</span>는 <span class="math inline">\(W\)</span>와 외생적 요인 <span class="math inline">\(U_A\)</span>를 기반으로 발생합니다. 그다음 매개체 <span class="math inline">\(Z\)</span>가 오는데, 이는 <span class="math inline">\(A, W\)</span> 및 또 다른 외생적 요인 집합 <span class="math inline">\(U_Z\)</span>에 의존합니다. 마지막으로 결과 <span class="math inline">\(Y\)</span>가 나타납니다. 우리는 외생적 요인 집합 <span class="math inline">\(\{U_W, U_A, U_Z, U_Y\}\)</span>에 접근할 수 없으며 결정론적 생성 함수 <span class="math inline">\(\{f_W, f_A, f_Z, f_Y\}\)</span>의 형태도 알지 못한다고 가정합니다. 실제로는 데이터 생성 실험에 대해 사용 가능한 모든 지식이 이 모델에 통합되어야 합니다. 예를 들어, 무작위 대조 시험(RCT)의 데이터인 경우 <span class="math inline">\(f_A\)</span>의 형태가 알려져 있을 수 있습니다. SCM은 다음 DAG에 대응합니다:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="10-tmle3mediate_files/figure-html/mediation-DAG-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>데이터 <span class="math inline">\(O\)</span>의 가능성(likelihood)을 분해함으로써, 특정 관찰값 <span class="math inline">\(o\)</span>에 대해 평가된 곱 측정(product measure)에 대한 <span class="math inline">\(O\)</span>의 밀도인 <span class="math inline">\(p_0\)</span>를 몇 가지 직교 구성 요소의 항으로 표현할 수 있습니다: <span class="math display">\[\begin{align}
+  p_0(o) = &amp;q_{0,Y}(y \mid Z = z, A = a, W = w) \\ \nonumber
+    &amp;q_{0,Z}(z \mid A = a, W = w) \\ \nonumber
+    &amp;g_{0,A}(a \mid W = w) \\ \nonumber
+    &amp;q_{0,W}(w).\\ \text{}
+  (\#eq:likelihood-factorization-mediate)
+\end{align}\]</span> 식 @ref(eq:likelihood-factorization-mediate)에서 <span class="math inline">\(q_{0, Y}\)</span>는 <span class="math inline">\(\{Z, A, W\}\)</span>가 주어졌을 때 <span class="math inline">\(Y\)</span>의 조건부 밀도이고, <span class="math inline">\(q_{0, Z}\)</span>는 <span class="math inline">\(\{A, W\}\)</span>가 주어졌을 때 <span class="math inline">\(Z\)</span>의 조건부 밀도이며, <span class="math inline">\(g_{0, A}\)</span>는 <span class="math inline">\(W\)</span>가 주어졌을 때 <span class="math inline">\(A\)</span>의 조건부 밀도, <span class="math inline">\(q_{0, W}\)</span>는 <span class="math inline">\(W\)</span>의 주변 밀도입니다. 편의와 표기법의 일관성을 위해 <span class="math inline">\(\overline{Q}_Y(Z, A, W) := \E[Y \mid Z, A, W]\)</span> 및 <span class="math inline">\(g(A \mid W) := \P(A \mid W)\)</span> (즉, 성향 점수)로 정의하겠습니다.</p>
+<p>우리는 노출에 의해 영향을 받는 매개체-결과 관계의 잠재적 교란 요인(즉, <span class="math inline">\(A\)</span>에 의해 영향을 받고 <span class="math inline">\(Z\)</span>와 <span class="math inline">\(Y\)</span> 모두에 영향을 미치는 변수)을 명시적으로 제외했습니다. 이러한 변수가 존재하는 경우의 매개 분석은 매우 어렵습니다 <span class="citation" data-cites="avin2005identifiability">(<a href="#ref-avin2005identifiability" role="doc-biblioref">Avin, Shpitser, and Pearl 2005</a>)</span>. 따라서 인과적 직접 및 간접 효과의 정의를 개발하려는 대부분의 노력은 이러한 교란 요인이 없음을 명시적으로 가정합니다. 추가적인 가정이 없다면, 이러한 교란이 있는 경우 일반적인 매개 매개변수(자연적 직접 및 간접 효과)를 식별할 수 없습니다. 하지만 <span class="citation" data-cites="tchetgen2014identification">Tchetgen Tchetgen and VanderWeele (<a href="#ref-tchetgen2014identification" role="doc-biblioref">2014</a>)</span> 은 연구 중인 시스템에 대한 과학적 지식에 의해 정당화될 때 유용할 수 있는 단조성 가정을 논의합니다. 관심 있는 독자는 최근 급격히 성장하고 있는 인과 매개 분석 문헌의 성과인 <em>중재적</em>(interventional) 직접 및 간접 효과 <span class="citation" data-cites="didelez2006direct vanderweele2014effect lok2016defining vansteelandt2017interventional rudolph2017robust nguyen2019clarifying">(<a href="#ref-didelez2006direct" role="doc-biblioref">Didelez, Dawid, and Geneletti 2006</a>; <a href="#ref-vanderweele2014effect" role="doc-biblioref">T. J. VanderWeele, Vansteelandt, and Robins 2014</a>; <a href="#ref-lok2016defining" role="doc-biblioref">Lok 2016</a>; <a href="#ref-vansteelandt2017interventional" role="doc-biblioref">Vansteelandt and Daniel 2017</a>; <a href="#ref-rudolph2017robust" role="doc-biblioref">Rudolph et al. 2017</a>; <a href="#ref-nguyen2019clarifying" role="doc-biblioref">Nguyen, Schmid, and Stuart 2019</a>)</span>를 참고할 수 있습니다. 이들의 식별은 이러한 복잡한 형태의 치료 후 교란에 강건합니다. 이 흐름의 문헌 내에서 <span class="citation" data-cites="diaz2020nonparametric">Dı́az et al. (<a href="#ref-diaz2020nonparametric" role="doc-biblioref">2020</a>)</span> 및 <span class="citation" data-cites="benkeser2020nonparametric">Benkeser and Ran (<a href="#ref-benkeser2020nonparametric" role="doc-biblioref">2021</a>)</span> 은 비파라메트릭 효과 분해 및 효율성 이론에 대한 고찰을 제공하며, <span class="citation" data-cites="hejazi2021nonparametric">Hejazi et al. (<a href="#ref-hejazi2021nonparametric" role="doc-biblioref">2022</a>)</span> 은 확률적 중재를 활용하는 새로운 부류의 효과를 공식화합니다.</p>
+<!--
+Mark notes,
+"are you saying these methods allow that Z is subject to unmeaured confounding?
+dont think so. it is all about a joint intervention on (A,Z) so yes we normally
+use A,Z is randomized conditional on W. In recent note with Phil and Nima I
+suggest a method taht appears to have someextra robustness but that is not
+scope of this chapter"
+
+Nima: "no, these approaches do not address _unmeasured_ confounding, they only
+accommodate the presence of a measured intermediate confounder, which the
+effects that we describe below cannot handle. the data structure required by
+the introduction of these measured confounders brings us one step closer to the
+standard longitudinal data structure"
+-->
+</section>
+<section id="자연적-직접-및-간접-효과의-정의" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="자연적-직접-및-간접-효과의-정의"><span class="header-section-number">11.3</span> 자연적 직접 및 간접 효과의 정의</h2>
+<section id="평균-치료-효과의-분해" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="평균-치료-효과의-분해"><span class="header-section-number">11.3.1</span> 평균 치료 효과의 분해</h3>
+<p>자연적 직접 및 간접 효과는 ATE의 분해에서 발생합니다: <span class="math display">\[\begin{align*}
+  \E[Y(1) - Y(0)] =
+    &amp;\underbrace{\E[Y(1, Z(0)) - Y(0, Z(0))]}_{\text{NDE}} \\ &amp;+
+    \underbrace{\E[Y(1, Z(1)) - Y(1, Z(0))]}_{\text{NIE}}.
+\end{align*}\]</span> 특히, 자연적 간접 효과(natural indirect effect, NIE)는 매개체 <span class="math inline">\(Z\)</span>를 통한 치료 <span class="math inline">\(A \in \{0, 1\}\)</span>가 결과 <span class="math inline">\(Y\)</span>에 미치는 효과를 측정하며, 자연적 직접 효과(natural direct effect, NDE)는 <em>다른 모든 경로를 통한</em> 치료가 결과에 미치는 효과를 측정합니다. 자연적 직접 및 간접 효과의 식별에는 다음과 같은 검증 불가능한 인과적 가정이 필요합니다. 우리가 고려하는 SCM이 독립적이고 동일하게 분포된(iid) 단위만을 생성하도록 제한되어 있고, 반사실이 유도된 수치이기 때문에(잠재적 결과 프레임워크에서의 원시 수치와 반대됨) 일관성과 간섭 부재(전통적으로 SUTVA <span class="citation" data-cites="rubin1978bayesian rubin1980randomization">(<a href="#ref-rubin1978bayesian" role="doc-biblioref">Rubin 1978</a>, <a href="#ref-rubin1980randomization" role="doc-biblioref">1980</a>)</span>)라는 표준 가정이 성립한다는 점에 유의하십시오. <span class="citation" data-cites="pearl2010brief">Pearl (<a href="#ref-pearl2010brief" role="doc-biblioref">2010</a>)</span> 는 후자의 지점에 대해 영감을 주는 논의를 제공합니다.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="교환 가능성">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>교환 가능성
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(A \indep Y(a, m) \mid W\)</span> 및 <span class="math inline">\(M \indep Y(a, m) \mid (A, W)\)</span>입니다.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="치료 양의 조건">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>치료 양의 조건
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>모든 <span class="math inline">\(w \in \mathcal{W}\)</span>에 대해 <span class="math inline">\(g_0(a \mid w) &gt; 0\)</span>입니다.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="매개체 양의 조건">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>매개체 양의 조건
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>모든 <span class="math inline">\((a, w)\)</span>에 대해 <span class="math inline">\(P(M=m \mid A=a, W=w) &gt; 0\)</span>입니다.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="교차 세계 반사실적 독립성">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>교차 세계 반사실적 독립성
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>모든 <span class="math inline">\(a \neq a'\)</span> (<span class="math inline">\(a, a' \in \mathcal{A}\)</span>) 및 <span class="math inline">\(z \in \mathcal{Z}\)</span>에 대해, <span class="math inline">\(W\)</span>가 주어졌을 때 <span class="math inline">\(Y(a', z)\)</span>는 <span class="math inline">\(Z(a)\)</span>와 독립이어야 합니다. 즉, 치료 대조 <span class="math inline">\(a' \in \mathcal{A}\)</span> 하의 반사실적 결과와 (대안적인 대조 <span class="math inline">\(a \in \mathcal{A}\)</span> 하의) 반사실적 매개체 값 <span class="math inline">\(Z(a) \in \mathcal{Z}\)</span>가 모두 <em>관찰 가능</em>해야 합니다. “교차 세계(cross-world)”라는 용어는 두 개의 서로 다른 치료 대조 하에서 존재하는 두 개의 반사실 <span class="math inline">\(Z(a)\)</span>와 <span class="math inline">\(Y(a', z)\)</span>를 의미합니다. 비록 그들의 결합 분포가 잘 정의되어 있더라도, 이러한 반사실들은 결코 공동으로 실현될 수 없습니다.</p>
+</div>
+</div>
+<p>처음 세 가지 가정은 더 단순한 설정의 대응물들을 통해 익숙할 수 있지만, 교차 세계 독립성 요건은 자연적 직접 및 간접 효과의 식별에 고유한 것입니다. 이 가정은 이러한 경로 특정 효과의 식별에 있어 까다로운 복잡성을 해결하는데, <span class="citation" data-cites="avin2005identifiability">Avin, Shpitser, and Pearl (<a href="#ref-avin2005identifiability" role="doc-biblioref">2005</a>)</span> 는 이를 “위증하는 증인(recanting witness)”이라 명명하고 이 가정과 동등한 그래픽적 해결책을 도입했습니다. 서로 다른 중재에 의해 지표화된 반사실들의 이러한 독립성은 사실 이러한 효과 정의의 과학적 관련성에 대한 심각한 제한입니다. 왜냐하면 이는 무작위 시험에서도 NDE와 NIE를 식별할 수 없게 만들고 <span class="citation" data-cites="robins2010alternative">(<a href="#ref-robins2010alternative" role="doc-biblioref">Robins and Richardson 2010</a>)</span>, 대응하는 과학적 주장이 실험을 통해 허위임을 입증할 수 없음을 의미하며 <span class="citation" data-cites="popper1934logic dawid2000causal">(<a href="#ref-popper1934logic" role="doc-biblioref">Popper 1934</a>; <a href="#ref-dawid2000causal" role="doc-biblioref">Dawid 2000</a>)</span>, 결과적으로 과학적 방법의 기초적인 기둥과 직접적으로 모순되기 때문입니다.</p>
+<p>이 마지막 가정을 약화시키려는 많은 시도가 있었지만 <span class="citation" data-cites="petersen2006estimation imai2010identification vansteelandt2012imputation vansteelandt2012natural">(<a href="#ref-petersen2006estimation" role="doc-biblioref">Petersen, Sinisi, and van der Laan 2006</a>; <a href="#ref-imai2010identification" role="doc-biblioref">Imai, Keele, and Yamamoto 2010</a>; <a href="#ref-vansteelandt2012imputation" role="doc-biblioref">Vansteelandt, Bekaert, and Lange 2012</a>; <a href="#ref-vansteelandt2012natural" role="doc-biblioref">Vansteelandt and VanderWeele 2012</a>)</span>, 이러한 결과들은 엄격한 모델링 가정을 부과하거나, 자연적 효과에 대한 대안적인 해석을 제안하거나, 더 쉽게 충족될 수 있는 조건을 개발함으로써 제한된 수준의 추가적인 유연성만을 제공합니다. 예를 들어, <span class="citation" data-cites="petersen2006estimation">Petersen, Sinisi, and van der Laan (<a href="#ref-petersen2006estimation" role="doc-biblioref">2006</a>)</span> 은 이 가정이 (별개의 반사실이 아닌) 조건부 평균에 대해서만 요구되도록 약화시키고, 자연적 직접 효과를 또 다른 유형의 직접 효과인 통제된 직접 효과(controlled direct effect)의 가중 평균으로 보는 관점을 채택합니다. 의욕 있는 독자는 이러한 세부 사항을 독립적으로 더 조사해 볼 수 있습니다. 다음으로 우리는 현대의 인과 매개 분석 응용 분야에서 여전히 널리 사용되는 NDE와 NIE의 추정을 검토합니다.</p>
+</section>
+<section id="estimating-the-natural-direct-effect" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="estimating-the-natural-direct-effect"><span class="header-section-number">11.3.2</span> Estimating the Natural Direct Effect</h3>
+<p>The NDE is defined as <span class="math display">\[\begin{align*}
+  \psi_{\text{NDE}} =&amp;~\E[Y(1, Z(0)) - Y(0, Z(0))] \\
+  =&amp; \sum_w \sum_z
+  [\underbrace{\E(Y \mid A = 1, z, w)}_{\overline{Q}_Y(A = 1, z, w)} -
+  \underbrace{\E(Y \mid A = 0, z, w)}_{\overline{Q}_Y(A = 0, z, w)}] \\
+  &amp;\times \underbrace{p(z \mid A = 0, w)}_{q_Z(Z \mid 0, w))}
+  \underbrace{p(w)}_{q_W},
+\end{align*}\]</span> where the likelihood factors arise from a factorization of the joint likelihood: <span class="math display">\[\begin{equation*}
+  p(w, a, z, y) = \underbrace{p(y \mid w, a, z)}_{q_Y(A, W, Z)}
+  \underbrace{p(z \mid w, a)}_{q_Z(Z \mid A, W)}
+  \underbrace{p(a \mid w)}_{g(A \mid W)}
+  \underbrace{p(w)}_{q_W}.
+\end{equation*}\]</span></p>
+<p>NDE 추정 과정은 <span class="math inline">\(Z, A, W\)</span>가 주어졌을 때 결과의 조건부 평균에 대한 추정치인 <span class="math inline">\(\overline{Q}_{Y, n}\)</span>을 구축하는 것으로 시작됩니다. 이 조건부 평균의 추정치를 확보하면 <span class="math inline">\(\overline{Q}_Y(Z, 1, W)\)</span>(<span class="math inline">\(A = 1\)</span>로 설정) 및 <span class="math inline">\(\overline{Q}_Y(Z, 0, W)\)</span>(<span class="math inline">\(A = 0\)</span>로 설정)의 예측값을 손쉽게 얻을 수 있습니다. 우리는 이 조건부 평균들의 차이를 <span class="math inline">\(\overline{Q}_{\text{diff}} = \overline{Q}_Y(Z, 1, W) - \overline{Q}_Y(Z, 0, W)\)</span>라고 부르며, 이는 데이터 분포의 기능적 매개변수일 뿐입니다. <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>는 <span class="math inline">\(A\)</span>의 대조에 따른 <span class="math inline">\(Y\)</span>의 조건부 평균 차이를 포착합니다.</p>
+<p>NDE의 표적 최우 추정기(TML estimator)를 구축하는 절차는 <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span> 자체를 보조 변수(nuisance parameter)로 취급하여, 대조군(<span class="math inline">\(A = 0\)</span>이 관찰된 단위들) 사이에서 기본 공변량 <span class="math inline">\(W\)</span>에 대해 그 추정치 <span class="math inline">\(\overline{Q}_{\text{diff}, n}\)</span>을 회귀합니다. 이 단계의 목표는 공변량 <span class="math inline">\(W\)</span>가 시간상 매개체 <span class="math inline">\(Z\)</span>보다 앞서기 때문에 <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>에 미치는 <span class="math inline">\(Z\)</span>의 주변 영향을 일부 제거하는 것입니다. 대조군 사이에서 이 차이를 <span class="math inline">\(W\)</span>에 대해 회귀하면, 모든 개인이 대조군 상태(<span class="math inline">\(A = 0\)</span>)에 있는 설정 하에서 기대되는 <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>를 복구하게 됩니다. <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>에 대한 <span class="math inline">\(Z\)</span>의 잔차 가법적 효과는 매개체 <span class="math inline">\(Z\)</span>를 설명하는 보조(또는 “영리한(clever)”) 공변량을 사용하여 TML 추정 단계에서 제거됩니다. 이 보조 공변량은 다음과 같은 형태를 가집니다:</p>
+<p><span class="math display">\[\begin{equation*}
+  C_Y(q_Z, g)(O) = \Bigg\{\frac{\mathbb{I}(A = 1)}{g(1 \mid W)}
+  \frac{q_Z(Z \mid 0, W)}{q_Z(Z \mid 1, W)} -
+  \frac{\mathbb{I}(A = 0)}{g(0 \mid W)} \Bigg\} \ .
+\end{equation*}\]</span> 이를 분해해 보면, <span class="math inline">\(\mathbb{I}(A = 1) / g(1 \mid W)\)</span>는 <span class="math inline">\(A = 1\)</span>에 대한 역 성향 점수 가중치이고, 마찬가지로 <span class="math inline">\(\mathbb{I}(A = 0) / g(0 \mid W)\)</span>는 <span class="math inline">\(A = 0\)</span>에 대한 역 성향 점수 가중치입니다. 중간 항은 대조(<span class="math inline">\(A = 0\)</span>) 및 치료(<span class="math inline">\(A = 1\)</span>) 조건 하에서 매개체의 조건부 밀도 비율입니다(참고: 위에서 논의한 매개체 양의 조건을 기억하십시오).</p>
+<p>조건부 밀도 비율이 미묘하게 등장하는 것은 우려스러운 부분입니다. 불행히도 통계 문헌에서 이러한 수치들을 추정하는 도구는 드물며<span class="citation" data-cites="diaz2011super hejazi2020haldensify">(<a href="#ref-diaz2011super" role="doc-biblioref">Dı́az and van der Laan 2011</a>; <a href="#ref-hejazi2020haldensify" role="doc-biblioref">Hejazi, Benkeser, and van der Laan 2022</a>)</span>, <span class="math inline">\(Z\)</span>가 고차원인 경우 문제는 더욱 복잡해지고(계산 비용도 많이 듭니다) 집니다. 이러한 조건부 밀도의 비율만 필요하므로, 다음과 같이 편리한 재매개변수화(re-parametrization)를 달성할 수 있습니다: <span class="math display">\[\begin{equation*}
+  \frac{p(A = 0 \mid Z, W)}{g(0 \mid W)}
+  \frac{g(1 \mid W)}{p(A = 1 \mid Z, W)} \ .
+\end{equation*}\]</span> 앞으로 이 재매개변수화된 조건부 확률 기능어를 <span class="math inline">\(e(A \mid Z, W) := p(A \mid Z, W)\)</span>라고 표기하겠습니다. 유사한 맥락에서 <span class="citation" data-cites="zheng2012targeted">Zheng and van der Laan (<a href="#ref-zheng2012targeted" role="doc-biblioref">2012</a>)</span>, <span class="citation" data-cites="tchetgen2013inverse">Tchetgen Tchetgen (<a href="#ref-tchetgen2013inverse" role="doc-biblioref">2013</a>)</span>, <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="diaz2020nonparametric">Dı́az et al. (<a href="#ref-diaz2020nonparametric" role="doc-biblioref">2020</a>)</span> 및 <span class="citation" data-cites="hejazi2021nonparametric에">(<a href="#ref-hejazi2021nonparametric에" role="doc-biblioref"><strong>hejazi2021nonparametric에?</strong></a>)</span> 의해 동일한 재매개변수화 기법이 사용되었습니다. 이 공식화는 추정 문제를 오직 조건부 평균의 추정만 필요로 하는 문제로 축소하여, <a href="06-sl3.html">앞서 논의한 바와 같이</a> 광범위한 머신러닝 알고리즘을 사용할 수 있는 길을 열어준다는 점에서 특히 유용합니다.</p>
+<p>내부적으로는 평균 결과 차이 <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>와 <span class="math inline">\(Z, W\)</span>가 주어졌을 때 <span class="math inline">\(A\)</span>의 조건부 확률인 <span class="math inline">\(e(A \mid Z, W)\)</span>가 TML 추정을 위한 보조 공변량을 구축하는 데 사용됩니다. 이러한 보조 변수들은 TML 추정 절차의 편향 수정 업데이트 단계에서 중요한 역할을 합니다.</p>
+</section>
+<section id="자연적-간접-효과의-추정" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="자연적-간접-효과의-추정"><span class="header-section-number">11.3.3</span> 자연적 간접 효과의 추정</h3>
+<p>NIE의 도출과 추정은 NDE의 경우와 유사합니다. NIE는 <em>오직 매개체 <span class="math inline">\(Z\)</span>를 통한</em> <span class="math inline">\(A\)</span>의 <span class="math inline">\(Y\)</span>에 대한 효과임을 상기하십시오. <span class="math inline">\(\E(Y(Z(1), 1) - \E(Y(Z(0), 1)\)</span>로 표현될 수 있는 이 반사실적 수치는, <span class="math inline">\(A = 1\)</span> 및 <span class="math inline">\(Z(1)\)</span>(<span class="math inline">\(A = 1\)</span> 하에서 매개체가 취할 값)이 주어졌을 때의 <span class="math inline">\(Y\)</span>의 조건부 평균과 <span class="math inline">\(A = 1\)</span> 및 <span class="math inline">\(Z(0)\)</span>(<span class="math inline">\(A = 0\)</span> 하에서 매개체가 취할 값)이 주어졌을 때의 <span class="math inline">\(Y\)</span>의 조건부 기댓값 사이의 차이에 대응합니다.</p>
+<p>NDE와 마찬가지로, 추정 과정에서 <span class="math inline">\(q_Z(Z \mid A, W)\)</span>를 <span class="math inline">\(e(A \mid Z, W)\)</span>로 대체하기 위해 재매개변수화를 사용할 수 있으며, 이를 통해 잠재적으로 다변량인 조건부 밀도의 추정을 피할 수 있습니다. 그러나 이 경우, 이전에 대조군(<span class="math inline">\(A = 0\)</span>이 관찰된 단위들) 사이에서 <span class="math inline">\(\overline{Q}_{\text{diff}}\)</span>를 <span class="math inline">\(W\)</span>에 대해 회귀하여 계산했던 매개된 평균 결과 차이는 2단계 프로세스로 대체됩니다. 먼저, <span class="math inline">\(A = 1\)</span>일 때 <span class="math inline">\(Z, W\)</span>가 주어졌을 때 <span class="math inline">\(Y\)</span>의 조건부 평균인 <span class="math inline">\(\overline{Q}_Y(Z, 1, W)\)</span>를 치료군(<span class="math inline">\(A = 1\)</span>이 관찰된 단위들) 사이에서 <span class="math inline">\(W\)</span>에 대해 회귀합니다. 그런 다음 동일한 수치 <span class="math inline">\(\overline{Q}_Y(Z, 1, W)\)</span>를 다시 <span class="math inline">\(W\)</span>에 대해 회귀하되, 이번에는 대조군(<span class="math inline">\(A = 0\)</span>이 관찰된 단위들) 사이에서만 수행합니다. 데이터 분포의 이 두 기능어의 평균 차이가 NIE의 유효한 추정기가 됩니다. 이는 <span class="math inline">\(Z\)</span>에 미치는 효과를 통해 <span class="math inline">\((W, A = 1, Z)\)</span>가 주어졌을 때 <span class="math inline">\(Y\)</span>의 조건부 평균에 미치는 치료의 가법적 주변 효과로 생각할 수 있습니다. 따라서 NIE의 경우, 우리의 추정 대상 <span class="math inline">\(\psi_{\text{NIE}}\)</span>는 다르지만, NDE의 효율적 추정기를 구축하는 데 유용했던 동일한 추정 기법이 사용됩니다.</p>
+</section>
+<section id="인구-중재-직접-및-간접-효과" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="인구-중재-직접-및-간접-효과"><span class="header-section-number">11.3.4</span> 인구 중재 직접 및 간접 효과</h3>
+<p>때때로 자연적 직접 및 간접 효과는 너무 제한적일 수 있습니다. 이러한 효과 정의는 정적 중재(즉, <span class="math inline">\(A = 0\)</span> 또는 <span class="math inline">\(A = 1\)</span>로 설정)를 기반으로 하는데, 이는 실제 세계의 중재로는 비현실적일 수 있기 때문입니다. 이러한 경우 대신 유연한 확률적 중재의 효과를 분해하는 인구 중재 직접 효과(population intervention direct effect, PIDE)와 인구 중재 간접 효과(population intervention indirect effect, PIIE)로 눈을 돌릴 수 있습니다 <span class="citation" data-cites="diaz2020causal">(<a href="#ref-diaz2020causal" role="doc-biblioref">Dı́az and Hejazi 2020</a>)</span>.</p>
+<p>이전에 <a href="09-tmle3shift.html">연속형 치료에 대해 어떻게 중재할 것인지</a>를 고려할 때 확률적 중재에 대해 논의한 바 있습니다. 그러나 이러한 중재 계획은 모든 형태의 치료 변수에 적용될 수 있습니다. 이분형 치료를 다루기에 적합한 특정 유형의 확률적 중재는 <span class="citation" data-cites="kennedy2019nonparametric에">(<a href="#ref-kennedy2019nonparametric에" role="doc-biblioref"><strong>kennedy2019nonparametric에?</strong></a>)</span> 의해 처음 제안된 <em>증분 성향 점수 중재</em>(incremental propensity score intervention, IPSI)입니다. 이러한 중재는 관찰된 단위의 치료 수준을 고정된 값으로 결정론적으로 설정(예: <span class="math inline">\(A = 1\)</span>)하는 것이 아니라, 각 개인에 대해 <em>치료를 받을 확률(odds)</em>을 고정된 양(<span class="math inline">\(0 \leq \delta \leq \infty\)</span>)만큼 변경합니다. 구체적으로, 이 중재는 다음과 같은 형태를 가집니다: <span class="math display">\[\begin{equation*}
+  g_{\delta}(1 \mid w) = \frac{\delta g(1 \mid w)}{\delta g(1 \mid w) + 1
+  - g(1\mid w)},
+\end{equation*}\]</span> 여기서 스칼라 <span class="math inline">\(0 &lt; \delta &lt; \infty\)</span>는 <em>치료를 받을 확률의 변화</em>를 지정합니다. 인과 매개 분석의 맥락에서 <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span> 이 설명했듯이, PIDE와 PIIE에 필요한 식별 가정은 NDE와 NIE에 필요한 가정보다 훨씬 관대합니다. 이러한 식별 가정은 다음과 같습니다. 중요한 점은, 교차 세계 반사실적 독립성 가정이 전혀 필요하지 않다는 것입니다.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="치료와 매개체의 조건부 교환 가능성">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>치료와 매개체의 조건부 교환 가능성
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(A \indep Y \mid W\)</span> 및 <span class="math inline">\(M \indep Y \mid (A, W)\)</span>입니다.</p>
+</div>
+</div>
+<!-- TODO: explain this-->
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="치료와 매개체의 공통 지지 집합">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>치료와 매개체의 공통 지지 집합
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\{m: P(M=m \mid A=a', W=w) &gt; 0\} \subseteq \{m: P(M=m \mid A=a, W=w) &gt; 0\}\)</span>입니다.</p>
+</div>
+</div>
+<!-- TODO: explain this-->
+<!--
+Mark notes,
+"where do we say that we can throw out the cross world independence assumption?
+that point has been made by use from early on Petersen, vdL natural direct
+effect models IJB paper and so on. So lets make that clear right away and now
+full data quantiy is $EY_{1,g*_Z}-EY_{0,g*_Z}$, just joint stochastic
+intervention on $A,Z$. So, now we only need randomization assumption and
+positivity assumption.  Changing $1$ and $0$ by a $g*_{A,1}$ and $g*_{A,0}$
+does not change the causal identification assumptions but only changes the
+positivity assumption. You make it sound as if we weaken the causal
+assumptions, no we don't."
+
+Nima: "I respectfully disagree -- vdL + Petersen did not actually resolve the
+cross-world independence assumption for _all_ causal parameters that arise in
+mediation analysis. in Diaz + Hejazi, we formulate an entirely different set of
+effects, which in no way whatsoever require this independence assumption. the
+results of vdL + Petersen change the interpretation of the NDE, viewing it as
+a weighted average of CDEs across different possible values of the mediators,
+which is (1) not the original definition of the effects, even if it leads to
+the same statistical functional, and (2) works around this requirement by
+replacing the static intervention on the mediators with a stochastic draw from
+a particular conditional distribution, which limits their interpretation."
+-->
+</section>
+<section id="decomposing-the-population-intervention-effect" class="level3" data-number="11.3.5">
+<h3 data-number="11.3.5" class="anchored" data-anchor-id="decomposing-the-population-intervention-effect"><span class="header-section-number">11.3.5</span> Decomposing the Population Intervention Effect</h3>
+<p>We may decompose the population intervention effect (PIE) in terms of the <em>population intervention direct effect</em> (PIDE) and the <em>population intervention indirect effect</em> (PIIE): <span class="math display">\[\begin{equation*}
+  \mathbb{E}\{Y(A_\delta)\} - \mathbb{E}Y =
+    \overbrace{\mathbb{E}\{Y(A_\delta, Z(A_\delta))
+      - Y(A_\delta, Z)\}}^{\text{PIIE}} +
+    \overbrace{\mathbb{E}\{Y(A_\delta, Z) - Y(A, Z)\}}^{\text{PIDE}}.
+\end{equation*}\]</span></p>
+<p>This decomposition of the PIE as the sum of the population intervention direct and indirect effects has an interpretation analogous to the corresponding standard decomposition of the average treatment effect. In the sequel, we will compute each of the components of the direct and indirect effects above using appropriate estimators as follows</p>
+<ul>
+<li>For <span class="math inline">\(\E\{Y(A, Z)\}\)</span>, the sample mean <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n Y_i\)</span> is consistent;</li>
+<li>for <span class="math inline">\(\E\{Y(A_{\delta}, Z)\}\)</span>, a TML estimator for the effect of a joint intervention altering the treatment mechanism but not the mediation mechanism, based on the proposal in <span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span>; and,</li>
+<li>for <span class="math inline">\(\E\{Y(A_{\delta}, Z_{A_{\delta}})\}\)</span>, an efficient estimator for the effect of a joint intervention on both the treatment and mediation mechanisms, as per <span class="citation" data-cites="kennedy2019nonparametric">Kennedy (<a href="#ref-kennedy2019nonparametric" role="doc-biblioref">2019</a>)</span>.</li>
+</ul>
+</section>
+<section id="효과-분해-항의-추정" class="level3" data-number="11.3.6">
+<h3 data-number="11.3.6" class="anchored" data-anchor-id="효과-분해-항의-추정"><span class="header-section-number">11.3.6</span> 효과 분해 항의 추정</h3>
+<p><span class="citation" data-cites="diaz2020causal">Dı́az and Hejazi (<a href="#ref-diaz2020causal" role="doc-biblioref">2020</a>)</span> 이 설명했듯이, PIDE와 PIIE에 모두 나타나는 분해 항 <span class="math inline">\(\E\{Y(A_{\delta}, Z)\}\)</span>(매개 기전은 고정된 상태로 유지하면서 치료 기전을 변경하는 것에 대응함)를 식별하는 통계적 기능어는 다음과 같습니다: <span class="math display">\[\begin{equation*}
+  \psi_0(\delta) = \int \overline{Q}_{0,Y}(a, z, w)
+    g_{0,\delta}(a \mid w) p_0(z, w) d\nu(a, z, w),
+\end{equation*}\]</span> 이에 대해서는 TML 추정기를 사용할 수 있습니다. <span class="math inline">\(A \in \{0, 1\}\)</span>인 경우, 비파라메트릭 통계 모델 <span class="math inline">\(\mathcal{M}\)</span>에 대한 <em>효율적 영향 함수</em>(efficient influence function, EIF)는 <span class="math inline">\(D_{\delta}(o) = D^Y_{\delta}(o) + D^A_{\delta}(o) + D^{Z,W}_{\delta}(o) - \psi(\delta)\)</span>이며, 여기서 EIF의 직교 구성 요소는 다음과 같이 정의됩니다:</p>
+<ul>
+<li><span class="math inline">\(D^Y_{\delta}(o) = \{g_{\delta}(a \mid w) / e(a \mid z, w)\} \{y - \overline{Q}_{Y}(z,a,w)\}\)</span>,</li>
+<li><span class="math inline">\(D^A_{\delta}(o) = \{\delta\phi(w) (a - g(1 \mid w))\} / \{(\delta g(1 \mid w) + g(0 \mid w))^2\}\)</span>이며, 여기서 <span class="math inline">\(\phi(w) := \E\{\overline{Q}_{Y}(1, Z, W) - \overline{Q}_{Y}(0, Z, W) \mid W = w\}\)</span>입니다.</li>
+<li><span class="math inline">\(D^{Z,W}_{\delta}(o) = \int_{\mathcal{A}} \overline{Q}_{Y}(z, a, w) g_{\delta}(a \mid w) d\kappa(a)\)</span>.</li>
+</ul>
+<p>TML 추정기는 EIF 추정 방정식을 풀기 위해 보조 변수의 초기 추정치를 변동(fluctuating)시켜 계산할 수 있습니다. 결과적인 TML 추정기는 다음과 같습니다: <span class="math display">\[\begin{equation*}
+  \psi_{n}^{\star}(\delta) = \int_{\mathcal{A}} \frac{1}{n} \sum_{i=1}^n
+  \overline{Q}_{Y,n}^{\star}(Z_i, a, W_i)
+  g_{\delta, n}^{\star}(a \mid W_i) d\kappa(a),
+\end{equation*}\]</span> 여기서 <span class="math inline">\(g_{\delta,n}^{\star}(a \mid w)\)</span>와 <span class="math inline">\(\overline{Q}_{Y,n}^{\star}(z,a,w)\)</span>는 각각 성적 방정식 <span class="math inline">\(n^{-1} \sum_{i=1}^n D^A_{\delta}(O_i) = 0\)</span> 및 <span class="math inline">\(n^{-1} \sum_{i=1}^n D^Y_{\delta}(O_i) = 0\)</span>의 해를 향해 초기 보조 변수 추정치를 변동(또는 틸팅)시키는 <em>표적(targeting)</em> 회귀에 의해 생성됩니다. 이 TML 추정기 <span class="math inline">\(\psi_{n}^{\star}(\delta)\)</span>는 <code>tmle3mediate</code> 패키지에 구현되어 있습니다. 다음의 코드 예제들을 통해 TML 추정기를 사용하여 <span class="math inline">\(\E\{Y(A_{\delta}, Z)\}\)</span>를 구하는 <code>tmle3mediate</code>의 사용법을 보여드립니다.</p>
+</section>
+</section>
+<section id="직접-및-간접-효과의-평가" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="직접-및-간접-효과의-평가"><span class="header-section-number">11.4</span> 직접 및 간접 효과의 평가</h2>
+<p>이제 이전 장들에서 소개된 WASH Benefits 데이터를 사용하여 자연적 직접 및 간접 효과와 인구 중재 직접 효과를 추정해 보겠습니다. 먼저 데이터를 로드합니다:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sl3)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmle3)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmle3mediate)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 다운로드</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> <span class="fu">fread</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/tlverse-data/master/"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wash-benefits/washb_data.csv"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 중재 노드를 이분형으로 만들고 하위 샘플링</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> washb_data[<span class="fu">sample</span>(.N, <span class="dv">600</span>), ]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>washb_data[, tr <span class="sc">:</span><span class="er">=</span> <span class="fu">as.numeric</span>(tr <span class="sc">!=</span> <span class="st">"Control"</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>다음으로 NPSEM의 기본 공변량 <span class="math inline">\(W\)</span>, 치료 <span class="math inline">\(A\)</span>, 매개체 <span class="math inline">\(Z\)</span>, 결과 <span class="math inline">\(Y\)</span> 노드를 “노드 리스트” 객체를 통해 정의합니다:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> <span class="fu">c</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"momage"</span>, <span class="st">"momedu"</span>, <span class="st">"momheight"</span>, <span class="st">"hfiacat"</span>, <span class="st">"Nlt18"</span>, <span class="st">"Ncomp"</span>, <span class="st">"watmin"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"elec"</span>, <span class="st">"floor"</span>, <span class="st">"walls"</span>, <span class="st">"roof"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="st">"tr"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Z =</span> <span class="fu">c</span>(<span class="st">"sex"</span>, <span class="st">"month"</span>, <span class="st">"aged"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="st">"whz"</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>여기서 <code>node_list</code>는 각 노드의 부모 노드를 인코딩합니다. 예를 들어, <span class="math inline">\(Z\)</span>(매개체)의 부모는 <span class="math inline">\(A\)</span>(치료)와 <span class="math inline">\(W\)</span>(기본 교란 요인)이며, <span class="math inline">\(Y\)</span>(결과)의 부모는 <span class="math inline">\(Z, A, W\)</span>입니다. 또한 <code>process_missing</code>을 호출하여 데이터의 결측치를 처리합니다:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>processed <span class="ot">&lt;-</span> <span class="fu">process_missing</span>(washb_data, node_list)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> processed<span class="sc">$</span>data</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> processed<span class="sc">$</span>node_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이제 널리 사용되는 몇 가지 머신러닝 알고리즘을 사용하여 앙상블 학습기를 구축합니다:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 연속형 데이터(보조 변수 Z)에 사용되는 SL 학습기</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>enet_contin_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">family =</span> <span class="st">"gaussian"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>lasso_contin_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">family =</span> <span class="st">"gaussian"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>fglm_contin_learner <span class="ot">&lt;-</span> Lrnr_glm_fast<span class="sc">$</span><span class="fu">new</span>(<span class="at">family =</span> <span class="fu">gaussian</span>())</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>mean_learner <span class="ot">&lt;-</span> Lrnr_mean<span class="sc">$</span><span class="fu">new</span>()</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>contin_learner_lib <span class="ot">&lt;-</span> Stack<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  enet_contin_learner, lasso_contin_learner, fglm_contin_learner, mean_learner</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>sl_contin_learner <span class="ot">&lt;-</span> Lrnr_sl<span class="sc">$</span><span class="fu">new</span>(<span class="at">learners =</span> contin_learner_lib)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 이분형 데이터(이 경우 보조 변수 G 및 E)에 사용되는 SL 학습기</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>enet_binary_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>lasso_binary_learner <span class="ot">&lt;-</span> Lrnr_glmnet<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">nfolds =</span> <span class="dv">3</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>fglm_binary_learner <span class="ot">&lt;-</span> Lrnr_glm_fast<span class="sc">$</span><span class="fu">new</span>(<span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>binary_learner_lib <span class="ot">&lt;-</span> Stack<span class="sc">$</span><span class="fu">new</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  enet_binary_learner, lasso_binary_learner, fglm_binary_learner, mean_learner</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>sl_binary_learner <span class="ot">&lt;-</span> Lrnr_sl<span class="sc">$</span><span class="fu">new</span>(<span class="at">learners =</span> binary_learner_lib)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 치료 및 결과 기전 회귀를 위한 리스트 생성</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>learner_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> sl_contin_learner,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> sl_binary_learner</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="자연적-간접-효과의-표적-추정" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="자연적-간접-효과의-표적-추정"><span class="header-section-number">11.4.1</span> 자연적 간접 효과의 표적 추정</h3>
+<p>아래에서 NIE 계산을 시연합니다. 먼저 보조 변수 <span class="math inline">\(e(A \mid Z, W)\)</span> 및 <span class="math inline">\(\psi_Z\)</span>에 어떤 학습기를 사용할지 인코딩하는 “Spec” 객체를 인스턴스화하는 것으로 시작합니다. 그런 다음 데이터, 위에서 생성한 노드 리스트, 그리고 <span class="math inline">\(A\)</span>와 <span class="math inline">\(Y\)</span>를 기반으로 보조 변수를 추정하는 데 사용할 머신러닝 알고리즘을 나타내는 학습기 리스트와 함께 Spec 객체를 <code>tmle3</code> 함수에 전달합니다.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmle_spec_NIE <span class="ot">&lt;-</span> <span class="fu">tmle_NIE</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">e_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_binary_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">psi_Z_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_contin_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_iter =</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>washb_NIE <span class="ot">&lt;-</span> <span class="fu">tmle3</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  tmle_spec_NIE, washb_data, node_list, learner_list</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>washb_NIE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>출력 결과에 따르면, 매개체(sex, month, aged)를 통한 치료의 간접 효과는 0.0입니다.</p>
+</section>
+<section id="자연적-직접-효과의-표적-추정" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="자연적-직접-효과의-표적-추정"><span class="header-section-number">11.4.2</span> 자연적 직접 효과의 표적 추정</h3>
+<p>NDE 추정에도 유사한 절차가 적용되며, NIE를 위한 Spec 객체를 NDE 보조 변수를 위한 학습기를 정의하는 <code>tmle_spec_NDE</code>로 교체하기만 하면 됩니다:</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tmle_spec_NDE <span class="ot">&lt;-</span> <span class="fu">tmle_NDE</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">e_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_binary_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">psi_Z_learners =</span> Lrnr_cv<span class="sc">$</span><span class="fu">new</span>(lasso_contin_learner, <span class="at">full_fit =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_iter =</span> <span class="dv">1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>washb_NDE <span class="ot">&lt;-</span> <span class="fu">tmle3</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  tmle_spec_NDE, washb_data, node_list, learner_list</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>washb_NDE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>이를 통해, 매개체(sex, month, aged)를 포함하지 않는 모든 경로를 통한 치료의 직접 효과는 0.0이라는 결론을 내릴 수 있습니다. 자연적 직접 효과와 간접 효과의 추정치를 합하면 대략 <em>평균 치료 효과</em>(ATE)가 복구된다는 점에 유의하십시오. 즉, NDE와 NIE의 추정치에 기반한 ATE는 대략 0.0입니다.</p>
+</section>
+<section id="인구-중재-직접-효과의-표적-추정" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="인구-중재-직접-효과의-표적-추정"><span class="header-section-number">11.4.3</span> 인구 중재 직접 효과의 표적 추정</h3>
+<p>앞서 언급했듯이, 자연적 직접 및 간접 효과의 근저에 깔린 가정을 정당화하는 것은 어려울 수 있습니다. 또한 효과 정의 자체가 치료에 정적 중재를 적용하는 것에 의존하므로 유연성이 급격히 제한됩니다. 이분형 치료를 고려할 때, 증분 성향 점수 이동은 대안적인 유연한 확률적 중재 클래스를 제공합니다. 이제 치료를 받을 확률을 <span class="math inline">\(\delta = 3\)</span>만큼 조절하는 IPSI를 사용하여 PIDE를 추정해 보겠습니다. 이러한 중재는 연구 참여자들이 치료를 받기로 선택하도록 권장하여 해당 치료를 받을 상대적 확률을 높이는 설계의 효과로 (가상적으로) 해석될 수 있습니다. 우리의 접근 방식을 예시하기 위해, 각 개인에 대해 치료를 받을 확률을 <em>세 배</em>(즉, <span class="math inline">\(\delta = 3\)</span>)로 높이는 동기 부여 중재를 가정해 보겠습니다:</p>
+</section>
+</section>
+<section id="ipsi-곱셈-이동multiplicative-shift-설정" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> IPSI 곱셈 이동(multiplicative shift) 설정</h1>
+<p>delta_ipsi &lt;- 3</p>
+</section>
+<section id="확률적-매개를-위한-tmle3-spec-인스턴스화" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> 확률적 매개를 위한 tmle3 spec 인스턴스화</h1>
+<p>tmle_spec_pie_decomp &lt;- tmle_medshift( delta = delta_ipsi, e_learners = Lrnr_cv<span class="math inline">\(new(lasso_binary_learner, full_fit = TRUE),
+  phi_learners = Lrnr_cv\)</span>new(lasso_contin_learner, full_fit = TRUE) )</p>
+</section>
+<section id="tml-추정치-계산" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> TML 추정치 계산</h1>
+<p>washb_pie_decomp &lt;- tmle3( tmle_spec_pie_decomp, washb_data, node_list, learner_list ) 앞서 설명한 분해를 바탕으로, PIDE는 <span class="math inline">\(\beta_{0,\text{PIDE}}(\delta) = \psi_0(\delta) - \E Y\)</span>로 표기될 수 있음을 상기하십시오. 따라서 PIDE의 TML 추정기 <span class="math inline">\(\beta_{n,\text{PIDE}}(\delta)\)</span>는 구성 매개변수들의 추정기의 합성으로 표현될 수 있습니다: <span class="math display">\[\begin{equation*}
+  \beta_{n,\text{PIDE}}({\delta}) = \psi^{\star}_{n}(\delta) -
+  \frac{1}{n} \sum_{i = 1}^n Y_i.
+\end{equation*}\]</span></p>
+<section id="연습-문제" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="연습-문제"><span class="header-section-number">14.1</span> 연습 문제</h2>
+<section id="주요-개념-복습" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="주요-개념-복습"><span class="header-section-number">14.1.1</span> 주요 개념 복습</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>연습 문제 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>WASH Benefits 데이터셋을 살펴보고, 치료가 키 대비 몸무게 Z-점수(WHZ)에 미치는 효과의 잠재적 매개체 세트를 다르게 선택해 보세요. 이렇게 새로 선택한 매개체 세트(또는 단일 매개체)를 사용하여 자연적 직접 및 간접 효과를 추정해 보세요. 이러한 추정치에 대한 해석을 제공하세요.</p>
+</div>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>추후 제공 예정</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 2">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>연습 문제 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>자연적 직접 효과와 간접 효과의 가법성(additivity)이 성립하는지 평가해 보세요. 위에서 추정된 자연적 직접 및 간접 효과를 사용하여 그 합이 ATE를 복구합니까?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>해답
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>추후 제공 예정</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="연습 문제">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>연습 문제
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>WASH Benefits 예제에서 자연적 직접 및 간접 효과의 식별에 필요한 가정이 타당한지 평가해 보세요. 특히 치료 및 매개체 양의 조건에 대한 경험적 진단 측면에서 이 평가를 수행하세요.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="해답">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>해답
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>추후 제공 예정</p>
+</div>
+</div>
+</section>
+<section id="개념의-실전-적용" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="개념의-실전-적용"><span class="header-section-number">14.1.2</span> 개념의 실전 적용</h3>
+<div class="exercise">
+<p>추후 제공 예정</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>추후 제공 예정</p>
+</div>
+<div class="exercise">
+<p>추후 제공 예정</p>
+</div>
+<div class="proof solution">
+<p><span class="proof-title"><em>Solution</em>. </span>추후 제공 예정</p>
+</div>
+<!--
+1. Incremental propensity score interventions.
+
+2. TODO
+
+3. TODO
+-->
+<!--
+## Appendix
+
+### Exercise solutions
+-->
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-avin2005identifiability" class="csl-entry" role="listitem">
+Avin, Chen, Ilya Shpitser, and Judea Pearl. 2005. <span>“Identifiability of Path-Specific Effects.”</span> In <em>IJCAI International Joint Conference on Artificial Intelligence</em>, 357–63.
+</div>
+<div id="ref-benkeser2020nonparametric" class="csl-entry" role="listitem">
+Benkeser, David, and Jialu Ran. 2021. <span>“Nonparametric Inference for Interventional Effects with Multiple Mediators.”</span> <em>Journal of Causal Inference</em>. <a href="https://doi.org/10.1515/jci-2020-0018">https://doi.org/10.1515/jci-2020-0018</a>.
+</div>
+<div id="ref-dawid2000causal" class="csl-entry" role="listitem">
+Dawid, A Philip. 2000. <span>“Causal Inference Without Counterfactuals.”</span> <em>Journal of the American Statistical Association</em> 95 (450): 407–24.
+</div>
+<div id="ref-didelez2006direct" class="csl-entry" role="listitem">
+Didelez, Vanessa, Philip Dawid, and Sara Geneletti. 2006. <span>“Direct and Indirect Effects of Sequential Treatments.”</span> In <em>Proceedings of the 22nd Annual Conference on Uncertainty in Artificial Intelligence</em>, 138–46.
+</div>
+<div id="ref-diaz2020causal" class="csl-entry" role="listitem">
+Dı́az, Iván, and Nima S Hejazi. 2020. <span>“Causal Mediation Analysis for Stochastic Interventions.”</span> <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 82 (3): 661–83. <a href="https://doi.org/10.1111/rssb.12362">https://doi.org/10.1111/rssb.12362</a>.
+</div>
+<div id="ref-diaz2020nonparametric" class="csl-entry" role="listitem">
+Dı́az, Iván, Nima S Hejazi, Kara E Rudolph, and Mark J van der Laan. 2020. <span>“Non-Parametric Efficient Causal Mediation with Intermediate Confounders.”</span> <em>Biometrika</em>. <a href="https://doi.org/10.1093/biomet/asaa085">https://doi.org/10.1093/biomet/asaa085</a>.
+</div>
+<div id="ref-diaz2011super" class="csl-entry" role="listitem">
+Dı́az, Iván, and Mark J van der Laan. 2011. <span>“Super Learner Based Conditional Density Estimation with Application to Marginal Structural Models.”</span> <em>The International Journal of Biostatistics</em> 7 (1): 1–20.
+</div>
+<div id="ref-hejazi2020haldensify" class="csl-entry" role="listitem">
+Hejazi, Nima S, David C Benkeser, and Mark J van der Laan. 2022. <em><span class="nocase">haldensify</span>: Highly Adaptive Lasso Conditional Density Estimation</em>. <a href="https://github.com/nhejazi/haldensify" class="uri">https://github.com/nhejazi/haldensify</a>. <a href="https://doi.org/10.5281/zenodo.3698329">https://doi.org/10.5281/zenodo.3698329</a>.
+</div>
+<div id="ref-hejazi2021nonparametric" class="csl-entry" role="listitem">
+Hejazi, Nima S, Kara E Rudolph, Mark J van der Laan, and Iván Dı́az. 2022. <span>“Nonparametric Causal Mediation Analysis for Stochastic Interventional (in)direct Effects.”</span> <em>Biostatistics</em> (in press). <a href="https://doi.org/10.1093/biostatistics/kxac002">https://doi.org/10.1093/biostatistics/kxac002</a>.
+</div>
+<div id="ref-imai2010identification" class="csl-entry" role="listitem">
+Imai, Kosuke, Luke Keele, and Teppei Yamamoto. 2010. <span>“Identification, Inference and Sensitivity Analysis for Causal Mediation Effects.”</span> <em>Statistical Science</em>, 51–71.
+</div>
+<div id="ref-kennedy2019nonparametric" class="csl-entry" role="listitem">
+Kennedy, Edward H. 2019. <span>“Nonparametric Causal Effects Based on Incremental Propensity Score Interventions.”</span> <em>Journal of the American Statistical Association</em> 114 (526): 645–56.
+</div>
+<div id="ref-lok2016defining" class="csl-entry" role="listitem">
+Lok, Judith J. 2016. <span>“Defining and Estimating Causal Direct and Indirect Effects When Setting the Mediator to Specific Values Is Not Feasible.”</span> <em>Statistics in Medicine</em> 35 (22): 4008–20.
+</div>
+<div id="ref-nguyen2019clarifying" class="csl-entry" role="listitem">
+Nguyen, Trang Quynh, Ian Schmid, and Elizabeth A Stuart. 2019. <span>“Clarifying Causal Mediation Analysis for the Applied Researcher: Defining Effects Based on What We Want to Learn.”</span> <em>arXiv Preprint arXiv:1904.08515</em>.
+</div>
+<div id="ref-pearl1995causal" class="csl-entry" role="listitem">
+Pearl, Judea. 1995. <span>“Causal Diagrams for Empirical Research.”</span> <em>Biometrika</em> 82 (4): 669–88.
+</div>
+<div id="ref-pearl2001direct" class="csl-entry" role="listitem">
+———. 2001. <span>“Direct and Indirect Effects.”</span> <em>arXiv Preprint arXiv:1301.2300</em>.
+</div>
+<div id="ref-pearl2009causality" class="csl-entry" role="listitem">
+———. 2009. <em>Causality: Models, Reasoning, and Inference</em>. Cambridge University Press.
+</div>
+<div id="ref-pearl2010brief" class="csl-entry" role="listitem">
+———. 2010. <span>“Brief Report: On the Consistency Rule in Causal Inference: <span>‘Axiom, Definition, Assumption, or Theorem?’</span>”</span> <em>Epidemiology</em>, 872–75.
+</div>
+<div id="ref-petersen2006estimation" class="csl-entry" role="listitem">
+Petersen, Maya L, Sandra E Sinisi, and Mark J van der Laan. 2006. <span>“Estimation of Direct Causal Effects.”</span> <em>Epidemiology</em>, 276–84.
+</div>
+<div id="ref-popper1934logic" class="csl-entry" role="listitem">
+Popper, Karl. 1934. <em>The Logic of Scientific Discovery</em>. Routledge.
+</div>
+<div id="ref-robins1986new" class="csl-entry" role="listitem">
+Robins, James M. 1986. <span>“A New Approach to Causal Inference in Mortality Studies with Sustained Exposure Periods — Application to Control of the Healthy Worker Survivor Effect.”</span> <em>Mathematical Modelling</em> 7: 1393–1512.
+</div>
+<div id="ref-robins1992identifiability" class="csl-entry" role="listitem">
+Robins, James M, and Sander Greenland. 1992. <span>“Identifiability and Exchangeability for Direct and Indirect Effects.”</span> <em>Epidemiology</em>, 143–55.
+</div>
+<div id="ref-robins2010alternative" class="csl-entry" role="listitem">
+Robins, James M, and Thomas S Richardson. 2010. <span>“Alternative Graphical Causal Models and the Identification of Direct Effects.”</span> <em>Causality and Psychopathology: Finding the Determinants of Disorders and Their Cures</em>, 103–58.
+</div>
+<div id="ref-rubin1978bayesian" class="csl-entry" role="listitem">
+Rubin, Donald B. 1978. <span>“Bayesian Inference for Causal Effects: The Role of Randomization.”</span> <em>The Annals of Statistics</em>, 34–58.
+</div>
+<div id="ref-rubin1980randomization" class="csl-entry" role="listitem">
+———. 1980. <span>“Randomization Analysis of Experimental Data: The Fisher Randomization Test Comment.”</span> <em>Journal of the American Statistical Association</em> 75 (371): 591–93.
+</div>
+<div id="ref-rudolph2017robust" class="csl-entry" role="listitem">
+Rudolph, Kara E, Oleg Sofrygin, Wenjing Zheng, and Mark J van der Laan. 2017. <span>“Robust and Flexible Estimation of Stochastic Mediation Effects: A Proposed Method and Example in a Randomized Trial Setting.”</span> <em>Epidemiologic Methods</em> 7 (1).
+</div>
+<div id="ref-spirtes2000causation" class="csl-entry" role="listitem">
+Spirtes, Peter, Clark N Glymour, Richard Scheines, David Heckerman, Christopher Meek, Gregory Cooper, and Thomas Richardson. 2000. <em>Causation, Prediction, and Search</em>. MIT press.
+</div>
+<div id="ref-tchetgen2013inverse" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J. 2013. <span>“Inverse Odds Ratio-Weighted Estimation for Causal Mediation Analysis.”</span> <em>Statistics in Medicine</em> 32 (26): 4567–80.
+</div>
+<div id="ref-tchetgen2012semiparametric" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J, and Ilya Shpitser. 2012. <span>“Semiparametric Theory for Causal Mediation Analysis: Efficiency Bounds, Multiple Robustness, and Sensitivity Analysis.”</span> <em>Annals of Statistics</em> 40 (3): 1816–45. <a href="https://doi.org/10.1214/12-AOS990">https://doi.org/10.1214/12-AOS990</a>.
+</div>
+<div id="ref-tchetgen2014identification" class="csl-entry" role="listitem">
+Tchetgen Tchetgen, Eric J, and Tyler J VanderWeele. 2014. <span>“On Identification of Natural Direct Effects When a Confounder of the Mediator Is Directly Affected by Exposure.”</span> <em>Epidemiology</em> 25 (2): 282.
+</div>
+<div id="ref-vanderweele2015explanation" class="csl-entry" role="listitem">
+VanderWeele, Tyler. 2015. <em>Explanation in Causal Inference: Methods for Mediation and Interaction</em>. Oxford University Press.
+</div>
+<div id="ref-vanderweele2014effect" class="csl-entry" role="listitem">
+VanderWeele, Tyler J, Stijn Vansteelandt, and James M Robins. 2014. <span>“Effect Decomposition in the Presence of an Exposure-Induced Mediator-Outcome Confounder.”</span> <em>Epidemiology</em> 25 (2): 300.
+</div>
+<div id="ref-vansteelandt2012imputation" class="csl-entry" role="listitem">
+Vansteelandt, Stijn, Maarten Bekaert, and Theis Lange. 2012. <span>“Imputation Strategies for the Estimation of Natural Direct and Indirect Effects.”</span> <em>Epidemiologic Methods</em> 1 (1): 131–58.
+</div>
+<div id="ref-vansteelandt2017interventional" class="csl-entry" role="listitem">
+Vansteelandt, Stijn, and Rhian M Daniel. 2017. <span>“Interventional Effects for Mediation Analysis with Multiple Mediators.”</span> <em>Epidemiology</em> 28 (2): 258.
+</div>
+<div id="ref-vansteelandt2012natural" class="csl-entry" role="listitem">
+Vansteelandt, Stijn, and Tyler J VanderWeele. 2012. <span>“Natural Direct and Indirect Effects on the Exposed: Effect Decomposition Under Weaker Assumptions.”</span> <em>Biometrics</em> 68 (4): 1019–27.
+</div>
+<div id="ref-wright1934method" class="csl-entry" role="listitem">
+Wright, Sewall. 1934. <span>“The Method of Path Coefficients.”</span> <em>The Annals of Mathematical Statistics</em> 5 (3): 161–215.
+</div>
+<div id="ref-zheng2012targeted" class="csl-entry" role="listitem">
+Zheng, Wenjing, and Mark J van der Laan. 2012. <span>“Targeted Maximum Likelihood Estimation of Natural Direct Effects.”</span> <em>International Journal of Biostatistics</em> 8 (1). <a href="https://doi.org/10.2202/1557-4679.1361">https://doi.org/10.2202/1557-4679.1361</a>.
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-tmle3shift.html" class="pagination-link" aria-label="확률적 치료 요법">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">확률적 치료 요법</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-tmle3survival.html" class="pagination-link" aria-label="사건 시간 결과에 대한 1단계 TMLE">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

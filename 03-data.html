@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard">
-<meta name="dcterms.date" content="2026-02-21">
 
-<title>tlverse와 함께하는 R에서의 타겟 러닝</title>
+<title>4&nbsp; 예제 데이터셋 – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,7 +85,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-intro.html" rel="next">
+<link href="./04-roadmap.html" rel="next">
+<link href="./02-tlverse.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -72,6 +126,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -85,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">I. 타겟 러닝의 기초</a></li><li class="breadcrumb-item"><a href="./03-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -112,7 +195,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
   </div>
 </li>
@@ -139,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-data.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-data.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></span></a>
   </div>
 </li>
@@ -231,38 +314,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#환영합니다" id="toc-환영합니다" class="nav-link active" data-scroll-target="#환영합니다"><span class="header-section-number">1</span> 환영합니다</a></li>
-  <li><a href="#개요" id="toc-개요" class="nav-link" data-scroll-target="#개요"><span class="header-section-number">2</span> 개요</a></li>
-  <li><a href="#라이선스" id="toc-라이선스" class="nav-link" data-scroll-target="#라이선스"><span class="header-section-number">3</span> 라이선스</a></li>
+  <li><a href="#wash" id="toc-wash" class="nav-link active" data-scroll-target="#wash"><span class="header-section-number">4.1</span> 방글라데시 WASH Benefits 연구</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-intro.html">I. 타겟 러닝의 기초</a></li><li class="breadcrumb-item"><a href="./03-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</h1>
-<p class="subtitle lead"><code>tlverse</code> 소프트웨어 생태계를 활용한 인과 데이터 과학</p>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">February 21, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -272,28 +340,89 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="환영합니다" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 환영합니다</h1>
-<p>_<code>R</code>을 활용한 타겟 러닝: <code>tlverse</code> 소프트웨어 생태계를 이용한 인과 데이터 과학_은 <a href="https://github.com/tlverse"><code>tlverse</code> 생태계</a>에서 제공하는 소프트웨어 스택을 사용하여 타겟 러닝 방법론을 실무에 적용하기 위한 완전 재현 가능한 오픈 소스 전자 핸드북입니다. 이 저작물은 현재 초안 단계에 있으며, 커뮤니티의 의견을 수렴하기 위해 공개되어 있습니다. 내용을 확인하거나 기여하시려면 <a href="https://github.com/tlverse/tlverse-handbook">GitHub 저장소</a>를 방문해 주세요.</p>
-<p><img style="float: left; margin-right: 1%; margin-bottom: 0.01em" src="img/logos/tlverse-logo.svg" width="30%" height="30%"> <img style="float: center; margin-right: 1%; margin-bottom: 0.01em" src="img/logos/Rlogo.svg" width="35%" height="35%"> <img style="float: right; margin-right: 1%; margin-bottom: 0.01em" src="img/logos/vdl-logo-transparent.svg" width="30%" height="30%"></p>
-<p><br><br><br><br></p>
-</section>
-<section id="개요" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 개요</h1>
-<p>이 핸드북은 타겟 러닝 방법론과 <a href="https://github.com/tlverse"><code>tlverse</code> 소프트웨어 생태계</a>를 활용하여 인과 추론 및 기계 학습을 수행하는 일련의 예제와 튜토리얼을 제공하기 위해 작성되었습니다. 타겟 러닝 프레임워크에 대한 더 심도 있는 배경 지식이 필요하시다면, <a href="https://doi.org/10.1007/978-1-4419-9782-1">“Targeted Learning: Causal Inference for Observational and Experimental Data”</a> (van der Laan &amp; Rose, 2011) 및 <a href="https://doi.org/10.1007/978-3-319-65304-4">“Targeted Learning in Data Science: Causal Inference for Complex Longitudinal Studies”</a> (van der Laan &amp; Rose, 2018) 서적을 참고하시기 바랍니다.</p>
-</section>
-<section id="라이선스" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> 라이선스</h1>
-<p>© 2017–2024 <a href="https://nimahejazi.org">Nima Hejazi</a>.</p>
-<p><a href="https://tlverse.org/tlverse-handbook"><code>tlverse</code> 핸드북</a>은 <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a> 하에 라이선스가 부여되었습니다.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" class="img-fluid figure-img"></a></p>
-<figcaption>Creative Commons License</figcaption>
-</figure>
+<section id="wash" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="wash"><span class="header-section-number">4.1</span> 방글라데시 WASH Benefits 연구</h2>
+<p>이 예제 데이터는 방글라데시 농촌 지역의 수질, 위생, 손 씻기 및 영양 중재가 아동 발달에 미치는 효과에 대한 연구(WASH Benefits Bangladesh)에서 가져온 것으로, 클러스터 무작위 대조 시험(cluster randomized controlled trial) 결과입니다 <span class="citation" data-cites="luby2018effect">(<a href="#ref-luby2018effect" role="doc-biblioref">Tofail et al. 2018</a>)</span>. 이 연구는 방글라데시 중부의 가지푸르(Gazipur), 키쇼레간지(Kishoreganj), 마이멘싱(Mymensingh), 탕가일(Tangail) 지역의 농촌 마을에서 임신 초기 또는 중기의 임산부를 모집했으며, 클러스터당 평균 8명의 여성이 참여했습니다. 지리적으로 인접한 8개의 클러스터 그룹을 블록 무작위 배정 방식(난수 생성기 사용)을 통해 6개의 중재 그룹과 2배 규모의 대조군(중재 또는 보건 홍보 요원 방문 없음)으로 나누었습니다. 6개의 중재 그룹은 다음과 같습니다.</p>
+<ol type="1">
+<li>염소 소독된 식수 제공</li>
+<li>개선된 위생 시설</li>
+<li>비누를 이용한 손 씻기</li>
+<li>식수, 위생, 손 씻기 결합</li>
+<li>상담 및 지질 기반 영양 보충제 제공을 통한 영양 개선</li>
+<li>식수, 위생, 손 씻기 및 영양 결합</li>
+</ol>
+<p>이 핸드북에서는 관심 결과 변수로 아동의 성장(연령 대비 신장)에 집중합니다. 참고로, 이 임상 시험은 ClinicalTrials.gov에 등록 번호 NCT01590095로 등록되었습니다.</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># readr::read_csv를 통해 데이터 로드</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/tlverse-data/master/"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wash-benefits/washb_data.csv"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div>
+<p>학습 목적으로, 우리는 처음에 이 데이터를 큰 대상 모집단에서 추출한 독립적이고 동일하게 분포된(i.i.d.) 무작위 표본으로 취급합니다. 샘플링된 지리적 단위 내의 데이터 클러스터링을 고려할 수도 있겠지만, 설명의 명확성을 위해 이 핸드북에서는 이러한 세부 사항을 피합니다. 편향된 표본, 반복 측정 및 관련 복잡한 상황에 대한 TL 방법론의 수정 버전은 이미 마련되어 있습니다.</p>
+<p>우리는 28개의 측정된 변수를 가지고 있으며, 그중 하나의 변수를 관심 결과 변수로 설정합니다. 이 결과 변수 <span class="math inline">\(Y\)</span>는 연령 대비 체중 Z-점수(<code>dat</code>의 <code>whz</code>)입니다. 관심 치료 변수 <span class="math inline">\(A\)</span>는 무작위 배정된 치료 그룹(<code>dat</code>의 <code>tr</code>)이며, 조정 세트(잠재적 기저 혼란 변수) <span class="math inline">\(W\)</span>는 단순히 <em>그 외 모든 변수</em>로 구성됩니다. 결과적으로 관찰된 데이터 구조는 <span class="math inline">\(i = 1, \ldots, n\)</span>에 대해 <span class="math inline">\(O_i = (W_i, A_i, Y_i)\)</span>의 <span class="math inline">\(n\)</span>개 i.i.d. 복사본입니다.</p>
+<p><a href="https://CRAN.R-project.org/package=skimr"><code>skimr</code> 패키지</a>를 사용하여 WASH Benefits 데이터셋에 측정된 변수들을 빠르게 요약할 수 있습니다.</p>
+<div class="cell" data-layout-align="center">
+<table class="caption-top table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">dat</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">4695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<p>|skim_variable | n_missing| complete_rate| min| max| empty| n_unique| whitespace| |:————-|———:|————-:|—:|—:|—–:|——–:|———-:| |tr | 0| 1| 3| 15| 0| 7| 0| |fracode | 0| 1| 2| 6| 0| 20| 0| |sex | 0| 1| 4| 6| 0| 2| 0| |momedu | 0| 1| 12| 15| 0| 3| 0| |hfiacat | 0| 1| 11| 24| 0| 4| 0|</p>
+<p><strong>Variable type: numeric</strong></p>
+<p>|skim_variable | n_missing| complete_rate| mean| sd| p0| p25| p50| p75| p100|hist | |:————–|———:|————-:|——:|—–:|——:|——:|—–:|——:|——:|:—–| |whz | 0| 1.00| -0.59| 1.03| -4.67| -1.28| -0.6| 0.08| 4.97|▁▆▇▁▁ | |month | 0| 1.00| 6.45| 3.33| 1.00| 4.00| 6.0| 9.00| 12.00|▇▇▅▇▇ | |aged | 0| 1.00| 266.32| 52.17| 42.00| 230.00| 266.0| 303.00| 460.00|▁▂▇▅▁ | |momage | 18| 1.00| 23.91| 5.24| 14.00| 20.00| 23.0| 27.00| 60.00|▇▇▁▁▁ | |momheight | 31| 0.99| 150.50| 5.23| 120.65| 147.05| 150.6| 154.06| 168.00|▁▁▆▇▁ | |Nlt18 | 0| 1.00| 1.60| 1.25| 0.00| 1.00| 1.0| 2.00| 10.00|▇▂▁▁▁ | |Ncomp | 0| 1.00| 11.04| 6.35| 2.00| 6.00| 10.0| 14.00| 52.00|▇▃▁▁▁ | |watmin | 0| 1.00| 0.95| 9.48| 0.00| 0.00| 0.0| 1.00| 600.00|▇▁▁▁▁ | |elec | 0| 1.00| 0.60| 0.49| 0.00| 0.00| 1.0| 1.00| 1.00|▆▁▁▁▇ | |floor | 0| 1.00| 0.11| 0.31| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |walls | 0| 1.00| 0.72| 0.45| 0.00| 0.00| 1.0| 1.00| 1.00|▃▁▁▁▇ | |roof | 0| 1.00| 0.99| 0.12| 0.00| 1.00| 1.0| 1.00| 1.00|▁▁▁▁▇ | |asset_wardrobe | 0| 1.00| 0.17| 0.37| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▂ | |asset_table | 0| 1.00| 0.73| 0.44| 0.00| 0.00| 1.0| 1.00| 1.00|▃▁▁▁▇ | |asset_chair | 0| 1.00| 0.73| 0.44| 0.00| 0.00| 1.0| 1.00| 1.00|▃▁▁▁▇ | |asset_khat | 0| 1.00| 0.61| 0.49| 0.00| 0.00| 1.0| 1.00| 1.00|▅▁▁▁▇ | |asset_chouki | 0| 1.00| 0.78| 0.41| 0.00| 1.00| 1.0| 1.00| 1.00|▂▁▁▁▇ | |asset_tv | 0| 1.00| 0.30| 0.46| 0.00| 0.00| 0.0| 1.00| 1.00|▇▁▁▁▃ | |asset_refrig | 0| 1.00| 0.08| 0.27| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |asset_bike | 0| 1.00| 0.32| 0.47| 0.00| 0.00| 0.0| 1.00| 1.00|▇▁▁▁▃ | |asset_moto | 0| 1.00| 0.07| 0.25| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |asset_sewmach | 0| 1.00| 0.06| 0.25| 0.00| 0.00| 0.0| 0.00| 1.00|▇▁▁▁▁ | |asset_mobile | 0| 1.00| 0.86| 0.35| 0.00| 1.00| 1.0| 1.00| 1.00|▁▁▁▁▇ |</p>
+</div>
+<p>관련 변수들에 대한 편리한 요약이 위에 나타나며, 각 공변량의 주변부 특성을 설명하는 스파크라인 시각화가 포함되어 있습니다. <em>asset</em> 변수들은 연구 참여자들의 사회경제적 지위를 반영한다는 점에 유의하십시오. 또한 치료 그룹의 분포가 균등하며(대조군이 2배 더 많음), 이는 물론 설계에 의한 것임을 알 수 있습니다.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-luby2018effect" class="csl-entry" role="listitem">
+Tofail, Fahmida, Lia CH Fernald, Kishor K Das, Mahbubur Rahman, Tahmeed Ahmed, Kaniz K Jannat, Leanne Unicomb, et al. 2018. <span>“Effect of Water Quality, Sanitation, Hand Washing, and Nutritional Interventions on Child Development in Rural Bangladesh (WASH Benefits Bangladesh): A Cluster-Randomised Controlled Trial.”</span> <em>The Lancet Child &amp; Adolescent Health</em> 2 (4): 255–68.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -699,10 +828,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./02-tlverse.html" class="pagination-link" aria-label="(PART) 1부: 예비 지식">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(PART) 1부: 예비 지식</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-intro.html" class="pagination-link" aria-label="서론">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">서론</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04-roadmap.html" class="pagination-link" aria-label="(PART) 2부: 기초">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

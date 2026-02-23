@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; The TMLE Framework – 'tlverse'와 함께하는 R에서의 타겟 러닝</title>
+<title>8&nbsp; TMLE 프레임워크 – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,26 +58,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../qmd_files/08-tmle3mopttx.html" rel="next">
-<link href="../qmd_files/06-sl3.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./08-tmle3mopttx.html" rel="next">
+<link href="./06-sl3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -136,7 +136,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -148,7 +148,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../qmd_files/07-tmle3.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The TMLE Framework</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./07-tmle3.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -163,7 +163,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">’tlverse’와 함께하는 R에서의 타겟 러닝</a> 
+      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -175,74 +175,113 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">I. 타겟 러닝의 기초</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/01-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">서론</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/02-tlverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(PART) Part 1: Preliminaries</span></a>
+  <a href="./02-tlverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(PART) 1부: 예비 지식</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/03-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Example Datasets</span></span></a>
+  <a href="./03-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/04-roadmap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(PART) Part 2: Foundations</span></a>
+  <a href="./04-roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">II. 핵심 기계 학습 엔진</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/05-origami.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cross-validation</span></span></a>
+  <a href="./05-origami.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/06-sl3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Super Learning</span></span></a>
+  <a href="./06-sl3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">III. TMLE 프레임워크 및 응용</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/07-tmle3.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The TMLE Framework</span></span></a>
+  <a href="./07-tmle3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(PART) Part 3: Advanced Topics</span></a>
+  <a href="./08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">(PART) Part 3: 고급 주제</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/09-tmle3shift.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Stochastic Treatment Regimes</span></span></a>
+  <a href="./09-tmle3shift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">확률적 치료 요법</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/10-tmle3mediate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Causal Mediation Analysis</span></span></a>
+  <a href="./10-tmle3mediate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-tmle3survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
@@ -255,51 +294,47 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learn-tmle" id="toc-learn-tmle" class="nav-link active" data-scroll-target="#learn-tmle"><span class="header-section-number">4.1</span> Learning Objectives</a></li>
-  <li><a href="#tmle-intro" id="toc-tmle-intro" class="nav-link" data-scroll-target="#tmle-intro"><span class="header-section-number">4.2</span> Introduction</a></li>
-  <li><a href="#substitution-est" id="toc-substitution-est" class="nav-link" data-scroll-target="#substitution-est"><span class="header-section-number">4.3</span> Substitution Estimators</a></li>
-  <li><a href="#tmle" id="toc-tmle" class="nav-link" data-scroll-target="#tmle"><span class="header-section-number">4.4</span> Targeted Maximum Likelihood Estimation</a>
+  <li><a href="#tmle-intro" id="toc-tmle-intro" class="nav-link active" data-scroll-target="#tmle-intro"><span class="header-section-number">8.1</span> 소개</a></li>
+  <li><a href="#substitution-est" id="toc-substitution-est" class="nav-link" data-scroll-target="#substitution-est"><span class="header-section-number">8.2</span> 대입 추정기 (Substitution Estimators)</a></li>
+  <li><a href="#tmle" id="toc-tmle" class="nav-link" data-scroll-target="#tmle"><span class="header-section-number">8.3</span> 타겟 최대 가능도 추정 (TMLE)</a>
   <ul class="collapse">
-  <li><a href="#tmle-updates" id="toc-tmle-updates" class="nav-link" data-scroll-target="#tmle-updates"><span class="header-section-number">4.4.1</span> TMLE Updates</a></li>
-  <li><a href="#tmle-infer" id="toc-tmle-infer" class="nav-link" data-scroll-target="#tmle-infer"><span class="header-section-number">4.4.2</span> Statistical Inference</a></li>
+  <li><a href="#tmle-updates" id="toc-tmle-updates" class="nav-link" data-scroll-target="#tmle-updates"><span class="header-section-number">8.3.1</span> TMLE 업데이트</a></li>
+  <li><a href="#tmle-infer" id="toc-tmle-infer" class="nav-link" data-scroll-target="#tmle-infer"><span class="header-section-number">8.3.2</span> 통계적 추론</a></li>
   </ul></li>
-  <li><a href="#easy-bake-example-tmle3-for-ate" id="toc-easy-bake-example-tmle3-for-ate" class="nav-link" data-scroll-target="#easy-bake-example-tmle3-for-ate"><span class="header-section-number">4.5</span> Easy-Bake Example: <code>tmle3</code> for ATE</a>
+  <li><a href="#간단한-예제-ate를-위한-tmle3" id="toc-간단한-예제-ate를-위한-tmle3" class="nav-link" data-scroll-target="#간단한-예제-ate를-위한-tmle3"><span class="header-section-number">8.4</span> 간단한 예제: ATE를 위한 <code>tmle3</code></a>
   <ul class="collapse">
-  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data"><span class="header-section-number">4.5.1</span> Load the Data</a></li>
-  <li><a href="#define-the-variable-roles" id="toc-define-the-variable-roles" class="nav-link" data-scroll-target="#define-the-variable-roles"><span class="header-section-number">4.5.2</span> Define the variable roles</a></li>
-  <li><a href="#handle-missingness" id="toc-handle-missingness" class="nav-link" data-scroll-target="#handle-missingness"><span class="header-section-number">4.5.3</span> Handle Missingness</a></li>
-  <li><a href="#create-a-spec-object" id="toc-create-a-spec-object" class="nav-link" data-scroll-target="#create-a-spec-object"><span class="header-section-number">4.5.4</span> Create a “Spec” Object</a></li>
-  <li><a href="#define-the-learners" id="toc-define-the-learners" class="nav-link" data-scroll-target="#define-the-learners"><span class="header-section-number">4.5.5</span> Define the learners</a></li>
-  <li><a href="#fit-the-tmle" id="toc-fit-the-tmle" class="nav-link" data-scroll-target="#fit-the-tmle"><span class="header-section-number">4.5.6</span> Fit the TMLE</a></li>
-  <li><a href="#evaluate-the-estimates" id="toc-evaluate-the-estimates" class="nav-link" data-scroll-target="#evaluate-the-estimates"><span class="header-section-number">4.5.7</span> Evaluate the Estimates</a></li>
+  <li><a href="#데이터-로드" id="toc-데이터-로드" class="nav-link" data-scroll-target="#데이터-로드"><span class="header-section-number">8.4.1</span> 데이터 로드</a></li>
+  <li><a href="#변수-역할-정의" id="toc-변수-역할-정의" class="nav-link" data-scroll-target="#변수-역할-정의"><span class="header-section-number">8.4.2</span> 변수 역할 정의</a></li>
+  <li><a href="#누락성-처리" id="toc-누락성-처리" class="nav-link" data-scroll-target="#누락성-처리"><span class="header-section-number">8.4.3</span> 누락성 처리</a></li>
+  <li><a href="#spec-객체-생성" id="toc-spec-객체-생성" class="nav-link" data-scroll-target="#spec-객체-생성"><span class="header-section-number">8.4.4</span> “Spec” 객체 생성</a></li>
+  <li><a href="#학습자-정의" id="toc-학습자-정의" class="nav-link" data-scroll-target="#학습자-정의"><span class="header-section-number">8.4.5</span> 학습자 정의</a></li>
+  <li><a href="#tmle-적합" id="toc-tmle-적합" class="nav-link" data-scroll-target="#tmle-적합"><span class="header-section-number">8.4.6</span> TMLE 적합</a></li>
+  <li><a href="#추정치-평가" id="toc-추정치-평가" class="nav-link" data-scroll-target="#추정치-평가"><span class="header-section-number">8.4.7</span> 추정치 평가</a></li>
   </ul></li>
-  <li><a href="#tmle3-components" id="toc-tmle3-components" class="nav-link" data-scroll-target="#tmle3-components"><span class="header-section-number">4.6</span> <code>tmle3</code> Components</a>
+  <li><a href="#tmle3-구성-요소" id="toc-tmle3-구성-요소" class="nav-link" data-scroll-target="#tmle3-구성-요소"><span class="header-section-number">8.5</span> <code>tmle3</code> 구성 요소</a>
   <ul class="collapse">
-  <li><a href="#tmle3_task" id="toc-tmle3_task" class="nav-link" data-scroll-target="#tmle3_task"><span class="header-section-number">4.6.1</span> <code>tmle3_task</code></a></li>
-  <li><a href="#initial-likelihood" id="toc-initial-likelihood" class="nav-link" data-scroll-target="#initial-likelihood"><span class="header-section-number">4.6.2</span> Initial Likelihood</a></li>
-  <li><a href="#targeted-likelihood-updater" id="toc-targeted-likelihood-updater" class="nav-link" data-scroll-target="#targeted-likelihood-updater"><span class="header-section-number">4.6.3</span> Targeted Likelihood (updater)</a></li>
-  <li><a href="#parameter-mapping" id="toc-parameter-mapping" class="nav-link" data-scroll-target="#parameter-mapping"><span class="header-section-number">4.6.4</span> Parameter Mapping</a></li>
-  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">4.6.5</span> Putting it all together</a></li>
+  <li><a href="#tmle3_task" id="toc-tmle3_task" class="nav-link" data-scroll-target="#tmle3_task"><span class="header-section-number">8.5.1</span> <code>tmle3_task</code></a></li>
+  <li><a href="#초기-가능도-initial-likelihood" id="toc-초기-가능도-initial-likelihood" class="nav-link" data-scroll-target="#초기-가능도-initial-likelihood"><span class="header-section-number">8.5.2</span> 초기 가능도 (Initial Likelihood)</a></li>
+  <li><a href="#타겟팅된-가능도-업데이터" id="toc-타겟팅된-가능도-업데이터" class="nav-link" data-scroll-target="#타겟팅된-가능도-업데이터"><span class="header-section-number">8.5.3</span> 타겟팅된 가능도 (업데이터)</a></li>
+  <li><a href="#파라미터-매핑" id="toc-파라미터-매핑" class="nav-link" data-scroll-target="#파라미터-매핑"><span class="header-section-number">8.5.4</span> 파라미터 매핑</a></li>
+  <li><a href="#모든-것을-하나로-묶기" id="toc-모든-것을-하나로-묶기" class="nav-link" data-scroll-target="#모든-것을-하나로-묶기"><span class="header-section-number">8.5.5</span> 모든 것을 하나로 묶기</a></li>
   </ul></li>
-  <li><a href="#fitting-tmle3-with-multiple-parameters" id="toc-fitting-tmle3-with-multiple-parameters" class="nav-link" data-scroll-target="#fitting-tmle3-with-multiple-parameters"><span class="header-section-number">4.7</span> Fitting <code>tmle3</code> with multiple parameters</a>
+  <li><a href="#여러-파라미터를-사용하여-tmle3-적합시키기" id="toc-여러-파라미터를-사용하여-tmle3-적합시키기" class="nav-link" data-scroll-target="#여러-파라미터를-사용하여-tmle3-적합시키기"><span class="header-section-number">8.6</span> 여러 파라미터를 사용하여 <code>tmle3</code> 적합시키기</a>
   <ul class="collapse">
-  <li><a href="#delta-method" id="toc-delta-method" class="nav-link" data-scroll-target="#delta-method"><span class="header-section-number">4.7.1</span> Delta Method</a></li>
-  <li><a href="#fit" id="toc-fit" class="nav-link" data-scroll-target="#fit"><span class="header-section-number">4.7.2</span> Fit</a></li>
+  <li><a href="#델타-방법-delta-method" id="toc-델타-방법-delta-method" class="nav-link" data-scroll-target="#델타-방법-delta-method"><span class="header-section-number">8.6.1</span> 델타 방법 (Delta Method)</a></li>
+  <li><a href="#적합" id="toc-적합" class="nav-link" data-scroll-target="#적합"><span class="header-section-number">8.6.2</span> 적합</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.8</span> Exercises</a>
-  <ul class="collapse">
-  <li><a href="#tmle3-ex1" id="toc-tmle3-ex1" class="nav-link" data-scroll-target="#tmle3-ex1"><span class="header-section-number">4.8.1</span> Estimation of the ATE with <code>tmle3</code></a></li>
-  </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.9</span> Summary</a></li>
+  <li><a href="#연습-문제" id="toc-연습-문제" class="nav-link" data-scroll-target="#연습-문제"><span class="header-section-number">8.7</span> 연습 문제</a></li>
+  <li><a href="#요약" id="toc-요약" class="nav-link" data-scroll-target="#요약"><span class="header-section-number">8.8</span> 요약</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-tmle3.html">III. TMLE 프레임워크 및 응용</a></li><li class="breadcrumb-item"><a href="./07-tmle3.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="tmle3" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The TMLE Framework</span></span></h1>
+<h1 class="title"><span id="tmle3" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></h1>
 </div>
 
 
@@ -317,78 +352,84 @@ window.Quarto = {
 
 
 <p><em>Jeremy Coyle</em></p>
-<p>Based on the <a href="https://github.com/tlverse/tmle3"><code>tmle3</code> <code>R</code> package</a>.</p>
-<section id="learn-tmle" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="learn-tmle"><span class="header-section-number">4.1</span> Learning Objectives</h2>
-<p>By the end of this chapter, you will be able to</p>
+<p><a href="https://github.com/tlverse/tmle3"><code>tmle3</code> <code>R</code> 패키지</a>를 바탕으로 합니다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>학습 목표
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이 장을 마치면 여러분은 다음을 할 수 있게 됩니다.</p>
 <ol type="1">
-<li>Understand why we use TMLE for effect estimation.</li>
-<li>Use <code>tmle3</code> to estimate an Average Treatment Effect (ATE).</li>
-<li>Understand how to use <code>tmle3</code> “Specs” objects.</li>
-<li>Fit <code>tmle3</code> for a custom set of target parameters.</li>
-<li>Use the delta method to estimate transformations of target parameters.</li>
+<li>효과 추정을 위해 왜 TMLE를 사용하는지 이해합니다.</li>
+<li><code>tmle3</code>를 사용하여 평균 치료 효과(ATE)를 추정합니다.</li>
+<li><code>tmle3</code> “Specs” 객체 사용법을 이해합니다.</li>
+<li>사용자 정의 타겟 파라미터 세트에 대해 <code>tmle3</code>를 적합시킵니다.</li>
+<li>델타 방법(delta method)을 사용하여 타겟 파라미터의 변환을 추정합니다.</li>
 </ol>
-</section>
-<section id="tmle-intro" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="tmle-intro"><span class="header-section-number">4.2</span> Introduction</h2>
-<p>In the previous chapter on <code>sl3</code> we learned how to estimate a regression function like <span class="math inline">\(\mathbb{E}[Y \mid X]\)</span> from data. That’s an important first step in learning from data, but how can we use this predictive model to estimate statistical and causal effects?</p>
-<p>Going back to <a href="04-roadmap.html#roadmap">the roadmap for targeted learning</a>, suppose we’d like to estimate the effect of a treatment variable <span class="math inline">\(A\)</span> on an outcome <span class="math inline">\(Y\)</span>. As discussed, one potential parameter that characterizes that effect is the Average Treatment Effect (ATE), defined as <span class="math inline">\(\psi_0 = \mathbb{E}_W[\mathbb{E}[Y \mid A=1,W] -
-\mathbb{E}[Y \mid A=0,W]]\)</span> and interpreted as the difference in mean outcome under when treatment <span class="math inline">\(A=1\)</span> and <span class="math inline">\(A=0\)</span>, averaging over the distribution of covariates <span class="math inline">\(W\)</span>. We’ll illustrate several potential estimators for this parameter, and motivate the use of the TMLE (targeted maximum likelihood estimation; targeted minimum loss-based estimation) framework, using the following example data:</p>
+</div>
+</div>
+<section id="tmle-intro" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="tmle-intro"><span class="header-section-number">8.1</span> 소개</h2>
+<p><code>sl3</code>에 관한 이전 장에서 데이터로부터 <span class="math inline">\(\mathbb{E}[Y \mid X]\)</span>와 같은 회귀 함수를 추정하는 방법을 배웠습니다. 그것은 데이터로부터 배우는 중요한 첫 번째 단계이지만, 이 예측 모델을 사용하여 통계적 및 인과적 효과를 어떻게 추정할 수 있을까요?</p>
+<p><a href="04-roadmap.html#roadmap">타겟 러닝을 위한 로드맵</a>으로 돌아가서, 치료 변수 <span class="math inline">\(A\)</span>가 결과 <span class="math inline">\(Y\)</span>에 미치는 효과를 추정하고 싶다고 가정해 봅시다. 논의한 바와 같이, 그 효과를 특성화하는 하나의 잠재적 파라미터는 평균 치료 효과(ATE)이며, 이는 <span class="math inline">\(\psi_0 = \mathbb{E}_W[\mathbb{E}[Y \mid A=1,W] - \mathbb{E}[Y \mid A=0,W]]\)</span>로 정의됩니다. 또한 공변량 <span class="math inline">\(W\)</span>의 분포에 대해 평균을 냈을 때 치료 <span class="math inline">\(A=1\)</span>과 <span class="math inline">\(A=0\)</span> 하에서의 평균 결과 차이로 해석됩니다. 우리는 다음 예제 데이터를 사용하여 이 파라미터에 대한 몇 가지 잠재적 추정기를 설명하고 TMLE(타겟 최대 가능도 추정; 타겟 최소 손실 기반 추정) 프레임워크의 사용 동기를 부여할 것입니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/schematic_1_truedgd.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="img/png/schematic_1_truedgd.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
-<p>The small ticks on the right indicate the mean outcomes (averaging over <span class="math inline">\(W\)</span>) under <span class="math inline">\(A=1\)</span> and <span class="math inline">\(A=0\)</span> respectively, so their difference is the quantity we’d like to estimate.</p>
-<p>While we hope to motivate the application of TMLE in this chapter, we refer the interested reader to the two Targeted Learning books and associated works for full technical details.</p>
+<p>오른쪽의 작은 눈금은 각각 <span class="math inline">\(A=1\)</span>과 <span class="math inline">\(A=0\)</span> 하에서의 평균 결과(<span class="math inline">\(W\)</span>에 대해 평균을 냄)를 나타내며, 따라서 그들의 차이가 우리가 추정하고자 하는 양입니다.</p>
+<p>이 장에서 TMLE의 적용 동기를 부여하기를 바라지만, 전체 기술적 세부 사항에 대해서는 두 권의 타겟 러닝 서적과 관련 저작물을 참고하시기 바랍니다.</p>
 </section>
-<section id="substitution-est" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="substitution-est"><span class="header-section-number">4.3</span> Substitution Estimators</h2>
-<p>We can use <code>sl3</code> to fit a Super Learner or other regression model to estimate the outcome regression function <span class="math inline">\(\mathbb{E}_0[Y \mid A,W]\)</span>, which we often refer to as <span class="math inline">\(\overline{Q}_0(A,W)\)</span> and whose estimate we denote <span class="math inline">\(\overline{Q}_n(A,W)\)</span>. To construct an estimate of the ATE <span class="math inline">\(\psi_n\)</span>, we need only “plug-in” the estimates of <span class="math inline">\(\overline{Q}_n(A,W)\)</span>, evaluated at the two intervention contrasts, to the corresponding ATE “plug-in” formula: <span class="math inline">\(\psi_n = \frac{1}{n}\sum(\overline{Q}_n(1,W)-\overline{Q}_n(0,W))\)</span>. This kind of estimator is called a <em>plug-in</em> or <em>substitution</em> estimator, since accurate estimates <span class="math inline">\(\psi_n\)</span> of the parameter <span class="math inline">\(\psi_0\)</span> may be obtained by substituting estimates <span class="math inline">\(\overline{Q}_n(A,W)\)</span> for the relevant regression functions <span class="math inline">\(\overline{Q}_0(A,W)\)</span> themselves.</p>
-<p>Applying <code>sl3</code> to estimate the outcome regression in our example, we can see that the ensemble machine learning predictions fit the data quite well:</p>
+<section id="substitution-est" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="substitution-est"><span class="header-section-number">8.2</span> 대입 추정기 (Substitution Estimators)</h2>
+<p>우리는 <code>sl3</code>를 사용하여 슈퍼 러너 또는 다른 회귀 모델을 적합시켜 결과 회귀 함수 <span class="math inline">\(\mathbb{E}_0[Y \mid A,W]\)</span>를 추정할 수 있습니다. 우리는 이를 종종 <span class="math inline">\(\overline{Q}_0(A,W)\)</span>라고 부르며 그 추정치를 <span class="math inline">\(\overline{Q}_n(A,W)\)</span>로 표시합니다. ATE 추정치 <span class="math inline">\(\psi_n\)</span>을 구성하려면, 두 중재 대조에서 평가된 <span class="math inline">\(\overline{Q}_n(A,W)\)</span>의 추정치를 해당 ATE “플러그인” 공식에 “대입(plug-in)”하기만 하면 됩니다: <span class="math inline">\(\psi_n = \frac{1}{n}\sum(\overline{Q}_n(1,W)-\overline{Q}_n(0,W))\)</span>. 이러한 종류의 추정기를 <em>플러그인</em> 또는 <em>대입</em> 추정기라고 부릅니다. 파라미터 <span class="math inline">\(\psi_0\)</span>의 정확한 추정치 <span class="math inline">\(\psi_n\)</span>은 관련 회귀 함수 <span class="math inline">\(\overline{Q}_0(A,W)\)</span> 자체에 대한 추정치 <span class="math inline">\(\overline{Q}_n(A,W)\)</span>를 대입함으로써 얻어질 수 있기 때문입니다.</p>
+<p>예제에서 결과 회귀를 추정하기 위해 <code>sl3</code>를 적용하면, 앙상블 기계 학습 예측이 데이터를 꽤 잘 적합시키는 것을 볼 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/schematic_2b_sllik.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="img/png/schematic_2b_sllik.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
-<p>The solid lines indicate the <code>sl3</code> estimate of the regression function, with the dotted lines indicating the <code>tmle3</code> updates <a href="#tmle-updates">(described below)</a>.</p>
-<p>While substitution estimators are intuitive, naively using this approach with a Super Learner estimate of <span class="math inline">\(\overline{Q}_0(A,W)\)</span> has several limitations. First, Super Learner is selecting learner weights to minimize risk across the entire regression function, instead of “targeting” the ATE parameter we hope to estimate, leading to biased estimation. That is, <code>sl3</code> is trying to do well on the full regression curve on the left, instead of focusing on the small ticks on the right. What’s more, the sampling distribution of this approach is not asymptotically linear, and therefore inference is not possible.</p>
-<p>We can see these limitations illustrated in the estimates generated for the example data:</p>
+<p>실선은 회귀 함수에 대한 <code>sl3</code> 추정치를 나타내며, 점선은 <a href="#tmle-updates">아래에서 설명할</a> <code>tmle3</code> 업데이트를 나타냅니다.</p>
+<p>대입 추정기는 직관적이지만, <span class="math inline">\(\overline{Q}_0(A,W)\)</span>의 슈퍼 러너 추정치와 함께 이 접근 방식을 순진하게 사용하는 것에는 몇 가지 한계가 있습니다. 첫째, 슈퍼 러너는 우리가 추정하고자 하는 ATE 파라미터를 “타겟팅”하는 대신 전체 회귀 함수에 걸쳐 리스크를 최소화하도록 학습자 가중치를 선택하고 있으며, 이는 편향된 추정으로 이어집니다. 즉, <code>sl3</code>는 오른쪽의 작은 눈금에 집중하는 대신 왼쪽의 전체 회귀 곡선에서 잘하려고 노력하고 있습니다. 더욱이 이 접근 방식의 샘플링 분포는 점근적으로 선형이 아니며, 따라서 추론이 불가능합니다.</p>
+<p>우리는 예제 데이터에 대해 생성된 추정치에서 이러한 한계가 설명된 것을 볼 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/schematic_3_effects.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="img/png/schematic_3_effects.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
-<p>We see that Super Learner, estimates the true parameter value (indicated by the dashed vertical line) more accurately than GLM. However, it is still less accurate than TMLE, and valid inference is not possible. In contrast, TMLE achieves a less biased estimator and valid inference.</p>
+<p>슈퍼 러너가 GLM보다 참 파라미터 값(수직 점선으로 표시됨)을 더 정확하게 추정하는 것을 볼 수 있습니다. 그러나 여전히 TMLE보다는 덜 정확하며 유효한 추론이 불가능합니다. 반면에 TMLE는 편향이 적은 추정기와 유효한 추론을 달성합니다.</p>
 </section>
-<section id="tmle" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="tmle"><span class="header-section-number">4.4</span> Targeted Maximum Likelihood Estimation</h2>
-<p>TMLE takes an initial estimate <span class="math inline">\(\overline{Q}_n(A,W)\)</span> as well as an estimate of the propensity score <span class="math inline">\(g_n(A \mid W) = \mathbb{P}(A = 1 \mid W)\)</span> and produces an updated estimate <span class="math inline">\(\overline{Q}^{\star}_n(A,W)\)</span> that is “targeted” to the parameter of interest. TMLE keeps the benefits of substitution estimators (it is one), but augments the original, potentially erratic estimates to <em>correct for bias</em> while also resulting in an <em>asymptotically linear</em> (and thus normally distributed) estimator that accommodates inference via asymptotically consistent Wald-style confidence intervals.</p>
-<section id="tmle-updates" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="tmle-updates"><span class="header-section-number">4.4.1</span> TMLE Updates</h3>
-<p>There are different types of TMLEs (and, sometimes, multiple for the same set of target parameters) – below, we give an example of the algorithm for TML estimation of the ATE. <span class="math inline">\(\overline{Q}^{\star}_n(A,W)\)</span> is the TMLE-augmented estimate <span class="math inline">\(f(\overline{Q}^{\star}_n(A,W)) = f(\overline{Q}_n(A,W)) + \epsilon
-\cdot H_n(A,W)\)</span>, where <span class="math inline">\(f(\cdot)\)</span> is the appropriate link function (e.g., <span class="math inline">\(\text{logit}(x) = \log(x / (1 - x))\)</span>), and an estimate <span class="math inline">\(\epsilon_n\)</span> of the coefficient <span class="math inline">\(\epsilon\)</span> of the “clever covariate” <span class="math inline">\(H_n(A,W)\)</span> is computed. The form of the covariate <span class="math inline">\(H_n(A,W)\)</span> differs across target parameters; in this case of the ATE, it is <span class="math inline">\(H_n(A,W) = \frac{A}{g_n(A \mid W)} - \frac{1-A}{1-g_n(A,
-W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)\)</span> being the estimated propensity score, so the estimator depends both on the initial fit (by <code>sl3</code>) of the outcome regression (<span class="math inline">\(\overline{Q}_n\)</span>) and of the propensity score (<span class="math inline">\(g_n\)</span>).</p>
-<p>There are several robust augmentations that are used across the <code>tlverse</code>, including the use of an additional layer of cross-validation to avoid over-fitting bias (i.e., CV-TMLE) as well as approaches for more consistently estimating several parameters simultaneously (e.g., the points on a survival curve).</p>
+<section id="tmle" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="tmle"><span class="header-section-number">8.3</span> 타겟 최대 가능도 추정 (TMLE)</h2>
+<p>TMLE는 초기 추정치 <span class="math inline">\(\overline{Q}_n(A,W)\)</span>뿐만 아니라 성향 점수의 추정치 <span class="math inline">\(g_n(A \mid W) = \mathbb{P}(A = 1 \mid W)\)</span>를 가져와서 관심 파라미터에 “타겟팅된” 업데이트된 추정치 <span class="math inline">\(\overline{Q}^{\star}_n(A,W)\)</span>를 생성합니다. TMLE는 대입 추정기의 장점을 유지하면서도(대입 추정기 중 하나임), 원래의 잠재적으로 불규칙한 추정치를 보강하여 _편향을 수정_하는 동시에, 점근적으로 일관된 Wald 스타일 신뢰 구간을 통한 추론을 수용하는 <em>점근적 선형</em>(따라서 정규 분포를 따름) 추정기를 결과로 냅니다.</p>
+<section id="tmle-updates" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="tmle-updates"><span class="header-section-number">8.3.1</span> TMLE 업데이트</h3>
+<p>TMLE에는 여러 유형이 있으며(때로는 동일한 타겟 파라미터 세트에 대해 여러 개가 있기도 함), 아래에 ATE의 TML 추정을 위한 알고리즘의 예를 제시합니다. <span class="math inline">\(\overline{Q}^{\star}_n(A,W)\)</span>는 TMLE 보강 추정치 <span class="math inline">\(f(\overline{Q}^{\star}_n(A,W)) = f(\overline{Q}_n(A,W)) + \epsilon \cdot H_n(A,W)\)</span>입니다. 여기서 <span class="math inline">\(f(\cdot)\)</span>은 적절한 링크 함수(예: <span class="math inline">\(\text{logit}(x) = \log(x / (1 - x))\)</span>)이며, “영리한 공변량(clever covariate)” <span class="math inline">\(H_n(A,W)\)</span>의 계수 <span class="math inline">\(\epsilon\)</span>에 대한 추정치 <span class="math inline">\(\epsilon_n\)</span>이 계산됩니다. 공변량 <span class="math inline">\(H_n(A,W)\)</span>의 형태는 타겟 파라미터마다 다릅니다. ATE의 경우 <span class="math inline">\(H_n(A,W) = \frac{A}{g_n(A \mid W)} - \frac{1-A}{1-g_n(A, W)}\)</span>입니다. 여기서 <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)\)</span>는 추정된 성향 점수이므로, 추정기는 결과 회귀(<span class="math inline">\(\overline{Q}_n\)</span>)와 성향 점수(<span class="math inline">\(g_n\)</span>)의 초기 적합(<code>sl3</code>에 의한) 모두에 의존합니다.</p>
+<p>과적합 편향을 피하기 위해 추가적인 교차 검증 계층을 사용하는 것(즉, CV-TMLE)뿐만 아니라 여러 파라미터를 동시에 더 일관되게 추정하기 위한 접근 방식(예: 생존 곡선의 지점들)을 포함하여 <code>tlverse</code> 전반에서 사용되는 몇 가지 견고한 보강 방법이 있습니다.</p>
 </section>
-<section id="tmle-infer" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="tmle-infer"><span class="header-section-number">4.4.2</span> Statistical Inference</h3>
-<p>Since TMLE yields an <strong>asymptotically linear</strong> estimator, obtaining statistical inference is very convenient. Each TML estimator has a corresponding <strong>(efficient) influence function</strong> (often, “EIF”, for short) that describes the asymptotic distribution of the estimator. By using the estimated EIF, Wald-style inference (asymptotically correct confidence intervals) can be constructed simply by plugging into the form of the EIF our initial estimates <span class="math inline">\(\overline{Q}_n\)</span> and <span class="math inline">\(g_n\)</span>, then computing the sample standard error.</p>
-<p>The following sections describe both a simple and more detailed way of specifying and estimating a TMLE in the <code>tlverse</code>. In designing <code>tmle3</code>, we sought to replicate as closely as possible the very general estimation framework of TMLE, and so each theoretical object relevant to TMLE is encoded in a corresponding software object/method. First, we will present the simple application of <code>tmle3</code> to the WASH Benefits example, and then go on to describe the underlying objects in greater detail.</p>
+<section id="tmle-infer" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="tmle-infer"><span class="header-section-number">8.3.2</span> 통계적 추론</h3>
+<p>TMLE는 <strong>점근적 선형</strong> 추정기를 생성하므로 통계적 추론을 얻는 것이 매우 편리합니다. 각 TML 추정기에는 추정기의 점근적 분포를 설명하는 대응하는 <strong>(효율적) 영향 함수</strong>(종종 줄여서 “EIF”)가 있습니다. 추정된 EIF를 사용함으로써, 우리의 초기 추정치 <span class="math inline">\(\overline{Q}_n\)</span>과 <span class="math inline">\(g_n\)</span>을 EIF의 형태에 대입한 다음 샘플 표준 오차를 계산함으로써 Wald 스타일 추론(점근적으로 정확한 신뢰 구간)을 간단히 구축할 수 있습니다.</p>
+<p>다음 섹션에서는 <code>tlverse</code>에서 TMLE를 지정하고 추정하는 간단한 방법과 더 자세한 방법을 모두 설명합니다. <code>tmle3</code>를 설계하면서 우리는 TMLE의 매우 일반적인 추정 프레임워크를 가능한 한 가깝게 복제하고자 노력했으며, 따라서 TMLE와 관련된 각 이론적 객체는 대응하는 소프트웨어 객체/메서드로 인코딩되어 있습니다. 먼저 WASH Benefits 예제에 <code>tmle3</code>를 간단히 적용한 모습을 제시한 다음, 기저 객체들에 대해 더 자세히 설명하겠습니다.</p>
 </section>
 </section>
-<section id="easy-bake-example-tmle3-for-ate" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="easy-bake-example-tmle3-for-ate"><span class="header-section-number">4.5</span> Easy-Bake Example: <code>tmle3</code> for ATE</h2>
-<p>We’ll illustrate the most basic use of TMLE using the WASH Benefits data introduced earlier and estimating an average treatment effect.</p>
-<section id="load-the-data" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">4.5.1</span> Load the Data</h3>
-<p>We’ll use the same WASH Benefits data as the earlier chapters:</p>
+<section id="간단한-예제-ate를-위한-tmle3" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="간단한-예제-ate를-위한-tmle3"><span class="header-section-number">8.4</span> 간단한 예제: ATE를 위한 <code>tmle3</code></h2>
+<p>앞서 소개한 WASH Benefits 데이터를 사용하고 평균 치료 효과를 추정하여 TMLE의 가장 기본적인 사용법을 설명하겠습니다.</p>
+<section id="데이터-로드" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="데이터-로드"><span class="header-section-number">8.4.1</span> 데이터 로드</h3>
+<p>이전 장과 동일한 WASH Benefits 데이터를 사용하겠습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -406,9 +447,9 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="define-the-variable-roles" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="define-the-variable-roles"><span class="header-section-number">4.5.2</span> Define the variable roles</h3>
-<p>We’ll use the common <span class="math inline">\(W\)</span> (covariates), <span class="math inline">\(A\)</span> (treatment/intervention), <span class="math inline">\(Y\)</span> (outcome) data structure. <code>tmle3</code> needs to know what variables in the dataset correspond to each of these roles. We use a list of character vectors to tell it. We call this a “Node List” as it corresponds to the nodes in a Directed Acyclic Graph (DAG), a way of displaying causal relationships between variables.</p>
+<section id="변수-역할-정의" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="변수-역할-정의"><span class="header-section-number">8.4.2</span> 변수 역할 정의</h3>
+<p>일반적인 <span class="math inline">\(W\)</span>(공변량), <span class="math inline">\(A\)</span>(치료/중재), <span class="math inline">\(Y\)</span>(결과) 데이터 구조를 사용하겠습니다. <code>tmle3</code>는 데이터셋의 어떤 변수가 이러한 각 역할에 해당하는지 알아야 합니다. 이를 알려주기 위해 문자열 벡터의 리스트를 사용합니다. 우리는 이를 변수들 사이의 인과 관계를 표시하는 방법인 유향 비순환 그래프(DAG)의 노드에 대응하므로 “노드 리스트(Node List)”라고 부릅니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -428,15 +469,15 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="handle-missingness" class="level3" data-number="4.5.3">
-<h3 data-number="4.5.3" class="anchored" data-anchor-id="handle-missingness"><span class="header-section-number">4.5.3</span> Handle Missingness</h3>
-<p>Currently, missingness in <code>tmle3</code> is handled in a fairly simple way:</p>
+<section id="누락성-처리" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="누락성-처리"><span class="header-section-number">8.4.3</span> 누락성 처리</h3>
+<p>현재 <code>tmle3</code>에서 누락성은 상당히 간단한 방식으로 처리됩니다.</p>
 <ul>
-<li>Missing covariates are median- (for continuous) or mode- (for discrete) imputed, and additional covariates indicating imputation are generated, just as described in <a href="06-sl3.html">the <code>sl3</code> chapter</a>.</li>
-<li>Missing treatment variables are excluded – such observations are dropped.</li>
-<li>Missing outcomes are efficiently handled by the automatic calculation (and incorporation into estimators) of <em>inverse probability of censoring weights</em> (IPCW); this is also known as IPCW-TMLE and may be thought of as a joint intervention to remove missingness and is analogous to the procedure used with classical inverse probability weighted estimators.</li>
+<li>누락된 공변량은 중앙값(연속형의 경우) 또는 최빈값(이산형의 경우)으로 대체되며, <a href="06-sl3.html"><code>sl3</code> 장</a>에서 설명한 대로 대체되었음을 나타내는 추가 공변량이 생성됩니다.</li>
+<li>누락된 치료 변수는 제외됩니다 — 그러한 관찰값은 삭제됩니다.</li>
+<li>누락된 결과는 _역 검쇄 확률 가중치(inverse probability of censoring weights, IPCW)_의 자동 계산(및 추정기에 통합)을 통해 효율적으로 처리됩니다. 이는 IPCW-TMLE로도 알려져 있으며 누락을 제거하기 위한 합동 중재로 생각할 수 있으며 고전적인 역 확률 가중 추정기에서 사용되는 절차와 유사합니다.</li>
 </ul>
-<p>These steps are implemented in the <code>process_missing</code> function in <code>tmle3</code>:</p>
+<p>이러한 단계는 <code>tmle3</code>의 <code>process_missing</code> 함수에 구현되어 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -446,10 +487,10 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="create-a-spec-object" class="level3" data-number="4.5.4">
-<h3 data-number="4.5.4" class="anchored" data-anchor-id="create-a-spec-object"><span class="header-section-number">4.5.4</span> Create a “Spec” Object</h3>
-<p><code>tmle3</code> is general, and allows most components of the TMLE procedure to be specified in a modular way. However, most users will not be interested in manually specifying all of these components. Therefore, <code>tmle3</code> implements a <code>tmle3_Spec</code> object that bundles a set of components into a <em>specification</em> (“Spec”) that, with minimal additional detail, can be run to fit a TMLE.</p>
-<p>We’ll start with using one of the specs, and then work our way down into the internals of <code>tmle3</code>.</p>
+<section id="spec-객체-생성" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="spec-객체-생성"><span class="header-section-number">8.4.4</span> “Spec” 객체 생성</h3>
+<p><code>tmle3</code>는 일반적이며 TMLE 절차의 대부분의 구성 요소를 모듈식 방식으로 지정할 수 있게 해줍니다. 그러나 대부분의 사용자는 이러한 모든 구성 요소를 수동으로 지정하는 데 관심이 없을 것입니다. 따라서 <code>tmle3</code>는 일련의 구성 요소를 <em>사양(specification)</em>(“Spec”)으로 묶는 <code>tmle3_Spec</code> 객체를 구현하며, 최소한의 추가 세부 사항만으로 TMLE를 적합시키기 위해 실행될 수 있습니다.</p>
+<p>먼저 스펙 중 하나를 사용하는 것부터 시작하여 <code>tmle3</code>의 내부로 들어가 보겠습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -460,18 +501,18 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="define-the-learners" class="level3" data-number="4.5.5">
-<h3 data-number="4.5.5" class="anchored" data-anchor-id="define-the-learners"><span class="header-section-number">4.5.5</span> Define the learners</h3>
-<p>Currently, the only other thing a user must define are the <code>sl3</code> learners used to estimate the relevant factors of the likelihood: Q and g.</p>
-<p>This takes the form of a list of <code>sl3</code> learners, one for each likelihood factor to be estimated with <code>sl3</code>:</p>
+<section id="학습자-정의" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="학습자-정의"><span class="header-section-number">8.4.5</span> 학습자 정의</h3>
+<p>현재 사용자가 정의해야 하는 유일한 다른 사항은 가능도의 관련 인자들인 Q와 g를 추정하는 데 사용되는 <code>sl3</code> 학습자들입니다.</p>
+<p>이는 <code>sl3</code> 적합을 통해 추정될 각 가능도 인자당 하나씩, <code>sl3</code> 학습자들의 리스트 형태를 취합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># choose base learners</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기본 학습자 선택</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lrnr_mean <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_mean)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>lrnr_rf <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_ranger)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># define metalearners appropriate to data types</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터 유형에 적합한 메타 학습자 정의</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ls_metalearner <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(Lrnr_nnls)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>mn_metalearner <span class="ot">&lt;-</span> <span class="fu">make_learner</span>(</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  Lrnr_solnp, metalearner_linear_multinomial,</span>
@@ -488,11 +529,11 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>learner_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> sl_A, <span class="at">Y =</span> sl_Y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Here, we use a Super Learner as defined in the previous chapter. In the future, we plan to include reasonable defaults learners.</p>
+<p>여기서는 이전 장에서 정의한 것과 같은 슈퍼 러너를 사용합니다. 향후에는 합리적인 기본 학습자들을 포함할 계획입니다.</p>
 </section>
-<section id="fit-the-tmle" class="level3" data-number="4.5.6">
-<h3 data-number="4.5.6" class="anchored" data-anchor-id="fit-the-tmle"><span class="header-section-number">4.5.6</span> Fit the TMLE</h3>
-<p>We now have everything we need to fit the tmle using <code>tmle3</code>:</p>
+<section id="tmle-적합" class="level3" data-number="8.4.6">
+<h3 data-number="8.4.6" class="anchored" data-anchor-id="tmle-적합"><span class="header-section-number">8.4.6</span> TMLE 적합</h3>
+<p>이제 <code>tmle3</code>를 사용하여 tmle를 적합시키는 데 필요한 모든 것이 준비되었습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -508,9 +549,9 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="evaluate-the-estimates" class="level3" data-number="4.5.7">
-<h3 data-number="4.5.7" class="anchored" data-anchor-id="evaluate-the-estimates"><span class="header-section-number">4.5.7</span> Evaluate the Estimates</h3>
-<p>We can see the summary results by printing the fit object. Alternatively, we can extra results from the summary by indexing into it:</p>
+<section id="추정치-평가" class="level3" data-number="8.4.7">
+<h3 data-number="8.4.7" class="anchored" data-anchor-id="추정치-평가"><span class="header-section-number">8.4.7</span> 추정치 평가</h3>
+<p>적합 객체를 프린트하여 요약 결과를 볼 수 있습니다. 또는 다음과 같이 요약 결과를 인덱싱하여 결과를 추출할 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -521,12 +562,12 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </div>
 </section>
 </section>
-<section id="tmle3-components" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="tmle3-components"><span class="header-section-number">4.6</span> <code>tmle3</code> Components</h2>
-<p>Now that we’ve successfully used a spec to obtain a TML estimate, let’s look under the hood at the components. The spec has a number of functions that generate the objects necessary to define and fit a TMLE.</p>
-<section id="tmle3_task" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="tmle3_task"><span class="header-section-number">4.6.1</span> <code>tmle3_task</code></h3>
-<p>First is, a <code>tmle3_Task</code>, analogous to an <code>sl3_Task</code>, containing the data we’re fitting the TMLE to, as well as an NPSEM generated from the <code>node_list</code> defined above, describing the variables and their relationships.</p>
+<section id="tmle3-구성-요소" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="tmle3-구성-요소"><span class="header-section-number">8.5</span> <code>tmle3</code> 구성 요소</h2>
+<p>스펙을 사용하여 TML 추정치를 성공적으로 얻었으므로 이제 구성 요소들을 살펴보겠습니다. 스펙에는 TMLE를 정의하고 적합시키는 데 필요한 객체들을 생성하는 여러 함수가 있습니다.</p>
+<section id="tmle3_task" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="tmle3_task"><span class="header-section-number">8.5.1</span> <code>tmle3_task</code></h3>
+<p>첫 번째는 <code>sl3_Task</code>와 유사한 <code>tmle3_Task</code>로, TMLE를 적합시키려는 데이터와 위에서 정의된 <code>node_list</code>에서 생성된 변수 및 그들의 관계를 설명하는 NPSEM을 포함합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -557,9 +598,9 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="initial-likelihood" class="level3" data-number="4.6.2">
-<h3 data-number="4.6.2" class="anchored" data-anchor-id="initial-likelihood"><span class="header-section-number">4.6.2</span> Initial Likelihood</h3>
-<p>Next, is an object representing the likelihood, factorized according to the NPSEM described above:</p>
+<section id="초기-가능도-initial-likelihood" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="초기-가능도-initial-likelihood"><span class="header-section-number">8.5.2</span> 초기 가능도 (Initial Likelihood)</h3>
+<p>다음은 위에서 설명한 NPSEM에 따라 인수 분해된 가능도를 나타내는 객체입니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -573,8 +614,8 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>Y<span class="sc">:</span> LF_fit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>These components of the likelihood indicate how the factors were estimated: the marginal distribution of <span class="math inline">\(W\)</span> was estimated using NP-MLE, and the conditional distributions of <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> were estimated using <code>sl3</code> fits (as defined with the <code>learner_list</code>) above.</p>
-<p>We can use this in tandem with the <code>tmle_task</code> object to obtain likelihood estimates for each observation:</p>
+<p>가능도의 이러한 구성 요소들은 인자들이 어떻게 추정되었는지 나타냅니다. <span class="math inline">\(W\)</span>의 주변 분포는 NP-MLE를 사용하여 추정되었고, <span class="math inline">\(A\)</span>와 <span class="math inline">\(Y\)</span>의 조건부 분포는 위에서 <code>learner_list</code>로 정의한 <code>sl3</code> 적합을 사용하여 추정되었습니다.</p>
+<p>이를 <code>tmle_task</code> 객체와 함께 사용하여 각 관찰값에 대한 가능도 추정치를 얻을 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -594,18 +635,18 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="dv">4695</span><span class="sc">:</span> <span class="fl">0.000213</span> <span class="fl">0.1968</span> <span class="sc">-</span><span class="fl">1.0573</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<!-- TODO: make helper to get learners out of fit objects -->
+<!-- TODO: 적합 객체에서 학습자를 꺼내는 도우미 만들기 -->
 </section>
-<section id="targeted-likelihood-updater" class="level3" data-number="4.6.3">
-<h3 data-number="4.6.3" class="anchored" data-anchor-id="targeted-likelihood-updater"><span class="header-section-number">4.6.3</span> Targeted Likelihood (updater)</h3>
-<p>We also need to define a “Targeted Likelihood” object. This is a special type of likelihood that is able to be updated using an <code>tmle3_Update</code> object. This object defines the update strategy (e.g., submodel, loss function, CV-TMLE or not).</p>
+<section id="타겟팅된-가능도-업데이터" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="타겟팅된-가능도-업데이터"><span class="header-section-number">8.5.3</span> 타겟팅된 가능도 (업데이터)</h3>
+<p>또한 “타겟팅된 가능도(Targeted Likelihood)” 객체를 정의해야 합니다. 이는 <code>tmle3_Update</code> 객체를 사용하여 업데이트될 수 있는 특수한 유형의 가능도입니다. 이 객체는 업데이트 전략(예: 서브모델, 손실 함수, CV-TMLE 사용 여부)을 정의합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>targeted_likelihood <span class="ot">&lt;-</span> Targeted_Likelihood<span class="sc">$</span><span class="fu">new</span>(initial_likelihood)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>When constructing the targeted likelihood, you can specify different update options. See the documentation for <code>tmle3_Update</code> for details of the different options. For example, you can disable CV-TMLE (the default in <code>tmle3</code>) as follows:</p>
+<p>타겟팅된 가능도를 구축할 때 서로 다른 업데이트 옵션을 지정할 수 있습니다. 다양한 옵션에 대한 자세한 내용은 <code>tmle3_Update</code> 문서를 참조하십시오. 예를 들어, 다음과 같이 CV-TMLE(<code>tmle3</code>의 기본값)를 비활성화할 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -616,9 +657,9 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="parameter-mapping" class="level3" data-number="4.6.4">
-<h3 data-number="4.6.4" class="anchored" data-anchor-id="parameter-mapping"><span class="header-section-number">4.6.4</span> Parameter Mapping</h3>
-<p>Finally, we need to define the parameters of interest. Here, the spec defines a single parameter, the ATE. In the next section, we’ll see how to add additional parameters.</p>
+<section id="파라미터-매핑" class="level3" data-number="8.5.4">
+<h3 data-number="8.5.4" class="anchored" data-anchor-id="파라미터-매핑"><span class="header-section-number">8.5.4</span> 파라미터 매핑</h3>
+<p>마지막으로 관심 있는 파라미터를 정의해야 합니다. 여기서 스펙은 단일 파라미터인 ATE를 정의합니다. 다음 섹션에서는 추가 파라미터를 추가하는 방법을 살펴보겠습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -629,9 +670,9 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </details>
 </div>
 </section>
-<section id="putting-it-all-together" class="level3" data-number="4.6.5">
-<h3 data-number="4.6.5" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">4.6.5</span> Putting it all together</h3>
-<p>Having used the spec to manually generate all these components, we can now manually fit a <code>tmle3</code>:</p>
+<section id="모든-것을-하나로-묶기" class="level3" data-number="8.5.5">
+<h3 data-number="8.5.5" class="anchored" data-anchor-id="모든-것을-하나로-묶기"><span class="header-section-number">8.5.5</span> 모든 것을 하나로 묶기</h3>
+<p>스펙을 사용하여 이러한 모든 구성 요소를 수동으로 생성했으므로 이제 <code>tmle3</code>를 수동으로 적합시킬 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -649,12 +690,12 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span> <span class="sc">-</span><span class="fl">0.08471</span> <span class="fl">0.1133</span>         <span class="fl">0.01432</span>          <span class="sc">-</span><span class="fl">0.08471</span>            <span class="fl">0.1133</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>The result is equivalent to fitting using the <code>tmle3</code> function as above.</p>
+<p>결과는 위에서와 같이 <code>tmle3</code> 함수를 사용하여 적합시킨 것과 동일합니다.</p>
 </section>
 </section>
-<section id="fitting-tmle3-with-multiple-parameters" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="fitting-tmle3-with-multiple-parameters"><span class="header-section-number">4.7</span> Fitting <code>tmle3</code> with multiple parameters</h2>
-<p>Above, we fit a <code>tmle3</code> with just one parameter. <code>tmle3</code> also supports fitting multiple parameters simultaneously. To illustrate this, we’ll use the <code>tmle_TSM_all</code> spec:</p>
+<section id="여러-파라미터를-사용하여-tmle3-적합시키기" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="여러-파라미터를-사용하여-tmle3-적합시키기"><span class="header-section-number">8.6</span> 여러 파라미터를 사용하여 <code>tmle3</code> 적합시키기</h2>
+<p>위에서는 단 하나의 파라미터를 사용하여 <code>tmle3</code>를 적합시켰습니다. <code>tmle3</code>는 여러 파라미터를 동시에 적합시키는 것도 지원합니다. 이를 설명하기 위해 <code>tmle_TSM_all</code> 스펙을 사용하겠습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -684,10 +725,10 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>Param_TSM<span class="sc">:</span> E[Y_{A<span class="ot">=</span>Water}]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>This spec generates a Treatment Specific Mean (TSM) for each level of the exposure variable. Note that we must first generate a new targeted likelihood, as the old one was targeted to the ATE. However, we can recycle the initial likelihood we fit above, saving us a super learner step.</p>
-<section id="delta-method" class="level3" data-number="4.7.1">
-<h3 data-number="4.7.1" class="anchored" data-anchor-id="delta-method"><span class="header-section-number">4.7.1</span> Delta Method</h3>
-<p>We can also define parameters based on Delta Method Transformations of other parameters. For instance, we can estimate a ATE using the delta method and two of the above TSM parameters:</p>
+<p>이 스펙은 노출 변수의 각 수준에 대해 치료 특정 평균(Treatment Specific Mean, TSM)을 생성합니다. 이전 가능도는 ATE에 타겟팅되었으므로 먼저 새로운 타겟팅된 가능성을 생성해야 함에 유의하십시오. 그러나 위에서 적합시킨 초기 가능도는 재사용할 수 있으므로 슈퍼 학습자 단계를 절약할 수 있습니다.</p>
+<section id="델타-방법-delta-method" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="델타-방법-delta-method"><span class="header-section-number">8.6.1</span> 델타 방법 (Delta Method)</h3>
+<p>우리는 또한 다른 파라미터의 델타 방법 변환에 기초하여 파라미터를 정의할 수 있습니다. 예를 들어, 델타 방법과 위의 두 TSM 파라미터를 사용하여 ATE를 추정할 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -700,11 +741,11 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>Param_delta<span class="sc">:</span> E[Y_{A<span class="ot">=</span>Nutrition <span class="sc">+</span> WSH}] <span class="sc">-</span> E[Y_{A<span class="ot">=</span>Control}]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>This can similarly be used to estimate other derived parameters like Relative Risks, and Population Attributable Risks</p>
+<p>이는 상대 위험도(Relative Risks) 및 모집단 귀속 위험도(Population Attributable Risks)와 같은 다른 파생 파라미터를 추정하는 데에도 유사하게 사용될 수 있습니다.</p>
 </section>
-<section id="fit" class="level3" data-number="4.7.2">
-<h3 data-number="4.7.2" class="anchored" data-anchor-id="fit"><span class="header-section-number">4.7.2</span> Fit</h3>
-<p>We can now fit a TMLE simultaneously for all TSM parameters, as well as the above defined ATE parameter</p>
+<section id="적합" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="적합"><span class="header-section-number">8.6.2</span> 적합</h3>
+<p>이제 위에서 정의된 ATE 파라미터뿐만 아니라 모든 TSM 파라미터에 대해 동시에 TMLE를 적합시킬 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -741,15 +782,23 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 </div>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.8</span> Exercises</h2>
-<section id="tmle3-ex1" class="level3" data-number="4.8.1">
-<h3 data-number="4.8.1" class="anchored" data-anchor-id="tmle3-ex1"><span class="header-section-number">4.8.1</span> Estimation of the ATE with <code>tmle3</code></h3>
-<p>Follow the steps below to estimate an average treatment effect using data from the Collaborative Perinatal Project (CPP), available in the <code>sl3</code> package. To simplify this example, we define a binary intervention variable, <code>parity01</code> – an indicator of having one or more children before the current child and a binary outcome, <code>haz01</code> – an indicator of having an above average height for age.</p>
+<section id="연습-문제" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="연습-문제"><span class="header-section-number">8.7</span> 연습 문제</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="연습 문제 1: tmle3를 사용한 ATE 추정">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>연습 문제 1: tmle3를 사용한 ATE 추정
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>sl3</code> 패키지에서 제공하는 Collaborative Perinatal Project(CPP) 데이터를 사용하여 평균 치료 효과를 추정하려면 아래 단계를 따르십시오. 이 예제를 단순화하기 위해, 이진 중재 변수 <code>parity01</code>(현재 아이 이전에 한 명 이상의 자녀가 있는지 여부를 나타내는 지표)과 이진 결과 변수 <code>haz01</code>(연령 대비 신장이 평균 이상인지 여부를 나타내는 지표)을 정의합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data set</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터셋 로드</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(cpp)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>cpp <span class="ot">&lt;-</span> cpp <span class="sc">%&gt;%</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
@@ -760,39 +809,11 @@ W)}\)</span>, with <span class="math inline">\(g_n(A,W) = \mathbb{P}(A=1 \mid W)
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<!--
-We're interested in using this simplified data to estimate an Average Treatment
-Effect (ATE):
-$\Psi(P_0)=\mathbb{E}_0(\mathbb{E}_0[Y \mid A=1,W]-\mathbb{E}_0[Y \mid A=0,W])$
-
-The purely statistical (non-causal) parameter can be interpreted as the average
-of the difference in means across the strata for $W$, and only requires the
-positivity assumption, that the conditional treatment assignment probabilities
-are positive for each possible $w$: $\mathbb{P}_0(A=1 \mid W=w) > 0$ and
-$\mathbb{P}_0(A=0 \mid W=w) > 0$ for each possible $w$.
-
-To interpret this parameter as causal, specifically the causal risk difference
-$E_0Y_1-E_0Y_0$, then we would also need to make the randomization assumption
-stating that $A$ is independent of the counterfactuals $(Y_0,Y_1)$ within
-strata of $W$. This assumption might have been included in the original SCM
-$\mathcal{M}^F$, but, if one knows there are unmeasured confounders, then the
-model $\mathcal{M}^{F\*}$ would be more restrictive by enforcing this "known
-to be wrong" randomization assumption. Still, this assumption does not change
-the statistical model $\mathcal{M}$, and as a consequence, it does not affect
-the estimation problem either. Thus, the theorem's that establish desirable
-properties of the TMLE, still hold even when this non-testable randomization
-assumption is violated.
-
-We proceed with implementing a targeted minimum loss-based estimator (TMLE),
-an efficient substitution estimator which is not only asymptotically
-consistent, asymptotically normally distributed, and asymptotically efficient,
-but also tailored to have robust finite sample performance.
--->
 <ol type="1">
-<li>Define the variable roles <span class="math inline">\((W,A,Y)\)</span> by creating a list of these nodes. Include the following baseline covariates in <span class="math inline">\(W\)</span>: <code>apgar1</code>, <code>apgar5</code>, <code>gagebrth</code>, <code>mage</code>, <code>meducyrs</code>, <code>sexn</code>. Both <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> are specified above. The missingness in the data (specifically, the missingness in the columns that are specified in the node list) will need to be taking care of. The <code>process_missing</code> function can be used to accomplish this, like the <code>washb_data</code> example above.</li>
-<li>Define a <code>tmle3_Spec</code> object for the ATE, <code>tmle_ATE()</code>.</li>
-<li>Using the same base learning libraries defined above, specify <code>sl3</code> base learners for estimation of <span class="math inline">\(\overline{Q}_0 = \mathbb{E}_0(Y \mid A, W)\)</span> and <span class="math inline">\(g_0 = \mathbb{P}(A = 1 \mid W)\)</span>.</li>
-<li>Define the metalearner like below.</li>
+<li>이러한 노드들의 리스트를 생성하여 변수 역할 <span class="math inline">\((W,A,Y)\)</span>을 정의합니다. <span class="math inline">\(W\)</span>에 다음 기본 공변량들을 포함하십시오: <code>apgar1</code>, <code>apgar5</code>, <code>gagebrth</code>, <code>mage</code>, <code>meducyrs</code>, <code>sexn</code>. <span class="math inline">\(A\)</span>와 <span class="math inline">\(Y\)</span>는 모두 위에서 지정되었습니다. 데이터의 누락성(특히 노드 리스트에 지정된 열의 누락)을 처리해야 합니다. 위의 <code>washb_data</code> 예제와 같이 <code>process_missing</code> 함수를 사용하여 이를 수행할 수 있습니다.</li>
+<li>ATE를 위한 <code>tmle3_Spec</code> 객체인 <code>tmle_ATE()</code>를 정의합니다.</li>
+<li>위에서 정의된 것과 동일한 기본 학습 라이브러리를 사용하여, <span class="math inline">\(\overline{Q}_0 = \mathbb{E}_0(Y \mid A, W)\)</span> 및 <span class="math inline">\(g_0 = \mathbb{P}(A = 1 \mid W)\)</span> 추정을 위한 <code>sl3</code> 기본 학습자들을 지정합니다.</li>
+<li>아래와 같이 메타 학습자를 정의합니다.</li>
 </ol>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
@@ -805,15 +826,18 @@ but also tailored to have robust finite sample performance.
 </details>
 </div>
 <ol start="5" type="1">
-<li>Define one super learner for estimating <span class="math inline">\(\overline{Q}_0\)</span> and another for estimating <span class="math inline">\(g_0\)</span>. Use the metalearner above for both super learners.</li>
-<li>Create a list of the two super learners defined in the step above and call this object <code>learner_list</code>. The list names should be <code>A</code> (defining the super learner for estimation of <span class="math inline">\(g_0\)</span>) and <code>Y</code> (defining the super learner for estimation of <span class="math inline">\(\overline{Q}_0\)</span>).</li>
-<li>Fit the TMLE with the <code>tmle3</code> function by specifying (1) the <code>tmle3_Spec</code>, which we defined in Step 2; (2) the data; (3) the list of nodes, which we specified in Step 1; and (4) the list of super learners for estimation of <span class="math inline">\(g_0\)</span> and <span class="math inline">\(\overline{Q}_0\)</span>, which we defined in Step 6. <em>Note</em>: Like before, you will need to explicitly make a copy of the data (to work around <code>data.table</code> optimizations), e.g., (<code>cpp2 &lt;- data.table::copy(cpp)</code>), then use the <code>cpp2</code> data going forward.</li>
+<li><span class="math inline">\(\overline{Q}_0\)</span> 추정을 위한 슈퍼 러너 하나와 <span class="math inline">\(g_0\)</span> 추정을 위한 슈퍼 러너 하나를 정의합니다. 두 슈퍼 러너 모두에 대해 위의 메타 학습자를 사용하십시오.</li>
+<li>이전 단계에서 정의된 두 슈퍼 러너의 리스트를 생성하고 이 객체를 <code>learner_list</code>라고 부릅니다. 리스트 이름은 <code>A</code>(<span class="math inline">\(g_0\)</span> 추정을 위한 슈퍼 러너 정의)와 <code>Y</code>(<span class="math inline">\(\overline{Q}_0\)</span> 추정을 위한 슈퍼 러너 정의)여야 합니다.</li>
+<li><ol type="1">
+<li>2단계에서 정의한 <code>tmle3_Spec</code>, (2) 데이터, (3) 1단계에서 지정한 노드 리스트, (4) 6단계에서 정의한 <span class="math inline">\(g_0\)</span> 및 <span class="math inline">\(\overline{Q}_0\)</span> 추정을 위한 슈퍼 러너 리스트를 지정하여 <code>tmle3</code> 함수로 TMLE를 적합시킵니다. <em>참고</em>: 이전과 마찬가지로 (<code>cpp2 &lt;- data.table::copy(cpp)</code>)와 같이 데이터의 복본을 명시적으로 만들어야 하며, 이후에는 <code>cpp2</code> 데이터를 사용하십시오.</li>
+</ol></li>
 </ol>
+</div>
+</div>
 </section>
-</section>
-<section id="summary" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.9</span> Summary</h2>
-<p><code>tmle3</code> is a general purpose framework for generating TML estimates. The easiest way to use it is to use a predefined spec, allowing you to just fill in the blanks for the data, variable roles, and <code>sl3</code> learners. However, digging under the hood allows users to specify a wide range of TMLEs. In the next sections, we’ll see how this framework can be used to estimate advanced parameters such as optimal treatments and stochastic shift interventions.</p>
+<section id="요약" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="요약"><span class="header-section-number">8.8</span> 요약</h2>
+<p><code>tmle3</code>는 TML 추정치를 생성하기 위한 범용 프레임워크입니다. 이를 사용하는 가장 쉬운 방법은 미리 정의된 스펙을 사용하는 것이며, 데이터, 변수 역할 및 <code>sl3</code> 학습자만 채우면 됩니다. 그러나 내부를 파고들면 사용자가 최적 치료 및 확률적 이동 중재와 같은 고급 파라미터를 추정하는 광범위한 TMLE를 지정할 수 있습니다. 다음 섹션에서는 이 프레임워크가 최적 치료 및 확률적 이동 중재와 같은 고급 파라미터를 추정하는 데 어떻게 사용될 수 있는지 살펴보겠습니다.</p>
 
 
 </section>
@@ -1221,13 +1245,13 @@ but also tailored to have robust finite sample performance.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../qmd_files/06-sl3.html" class="pagination-link" aria-label="Super Learning">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Super Learning</span></span>
+      <a href="./06-sl3.html" class="pagination-link" aria-label="슈퍼 러닝">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../qmd_files/08-tmle3mopttx.html" class="pagination-link" aria-label="(PART) Part 3: Advanced Topics">
-        <span class="nav-page-text">(PART) Part 3: Advanced Topics</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./08-tmle3mopttx.html" class="pagination-link" aria-label="(PART) Part 3: 고급 주제">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">(PART) Part 3: 고급 주제</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

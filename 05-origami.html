@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Cross-validation – 'tlverse'와 함께하는 R에서의 타겟 러닝</title>
+<title>6&nbsp; 교차 검증 – `tlverse`와 함께하는 R에서의 타겟 러닝</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,26 +78,26 @@ div.csl-indent {
 }</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../qmd_files/06-sl3.html" rel="next">
-<link href="../qmd_files/04-roadmap.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./06-sl3.html" rel="next">
+<link href="./04-roadmap.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-841b73d05e5bc75123d26cb7b2f11c52.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -125,8 +125,8 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script src="../site_libs/kePrint/kePrint.js"></script>
-<link href="../site_libs/lightable/lightable.css" rel="stylesheet">
+<script src="site_libs/kePrint/kePrint.js"></script>
+<link href="site_libs/lightable/lightable.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -158,7 +158,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -170,7 +170,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../qmd_files/05-origami.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cross-validation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-origami.html">II. 핵심 기계 학습 엔진</a></li><li class="breadcrumb-item"><a href="./05-origami.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -185,7 +185,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">’tlverse’와 함께하는 R에서의 타겟 러닝</a> 
+      <a href="./"><code>tlverse</code>와 함께하는 R에서의 타겟 러닝</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -197,74 +197,113 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">환영합니다</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">I. 타겟 러닝의 기초</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/01-intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">서론</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/02-tlverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(PART) Part 1: Preliminaries</span></a>
+  <a href="./02-tlverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(PART) 1부: 예비 지식</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/03-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Example Datasets</span></span></a>
+  <a href="./03-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">예제 데이터셋</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/04-roadmap.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(PART) Part 2: Foundations</span></a>
+  <a href="./04-roadmap.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">II. 핵심 기계 학습 엔진</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/05-origami.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cross-validation</span></span></a>
+  <a href="./05-origami.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/06-sl3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Super Learning</span></span></a>
+  <a href="./06-sl3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">III. TMLE 프레임워크 및 응용</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/07-tmle3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">The TMLE Framework</span></span></a>
+  <a href="./07-tmle3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">TMLE 프레임워크</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">(PART) Part 3: Advanced Topics</span></a>
+  <a href="./08-tmle3mopttx.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">(PART) Part 3: 고급 주제</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/09-tmle3shift.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Stochastic Treatment Regimes</span></span></a>
+  <a href="./09-tmle3shift.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">확률적 치료 요법</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/10-tmle3mediate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Causal Mediation Analysis</span></span></a>
+  <a href="./10-tmle3mediate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">인과 매개 분석</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-tmle3survival.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">사건 시간 결과에 대한 1단계 TMLE</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../qmd_files/references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">References</span></span></a>
   </div>
 </li>
     </ul>
@@ -277,37 +316,36 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2.1</span> Introduction</a></li>
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">2.2</span> Background</a>
+  <li><a href="#소개" id="toc-소개" class="nav-link active" data-scroll-target="#소개"><span class="header-section-number">6.1</span> 소개</a></li>
+  <li><a href="#배경" id="toc-배경" class="nav-link" data-scroll-target="#배경"><span class="header-section-number">6.2</span> 배경</a>
   <ul class="collapse">
-  <li><a href="#introducing-cross-validation" id="toc-introducing-cross-validation" class="nav-link" data-scroll-target="#introducing-cross-validation"><span class="header-section-number">2.2.1</span> Introducing: cross-validation</a></li>
+  <li><a href="#교차-검증-소개" id="toc-교차-검증-소개" class="nav-link" data-scroll-target="#교차-검증-소개"><span class="header-section-number">6.2.1</span> 교차 검증 소개</a></li>
   </ul></li>
-  <li><a href="#estimation-roadmap-how-does-it-all-fit-together" id="toc-estimation-roadmap-how-does-it-all-fit-together" class="nav-link" data-scroll-target="#estimation-roadmap-how-does-it-all-fit-together"><span class="header-section-number">2.3</span> Estimation Roadmap: How does it all fit together?</a></li>
-  <li><a href="#example-cross-validation-and-prediction" id="toc-example-cross-validation-and-prediction" class="nav-link" data-scroll-target="#example-cross-validation-and-prediction"><span class="header-section-number">2.4</span> Example: Cross-validation and Prediction</a></li>
-  <li><a href="#cross-validation-schemes-in-origami" id="toc-cross-validation-schemes-in-origami" class="nav-link" data-scroll-target="#cross-validation-schemes-in-origami"><span class="header-section-number">2.5</span> Cross-validation schemes in <code>origami</code></a>
+  <li><a href="#추정-로드맵-모든-것이-어떻게-어우러지나요" id="toc-추정-로드맵-모든-것이-어떻게-어우러지나요" class="nav-link" data-scroll-target="#추정-로드맵-모든-것이-어떻게-어우러지나요"><span class="header-section-number">6.3</span> 추정 로드맵: 모든 것이 어떻게 어우러지나요?</a></li>
+  <li><a href="#예-교차-검증과-예측" id="toc-예-교차-검증과-예측" class="nav-link" data-scroll-target="#예-교차-검증과-예측"><span class="header-section-number">6.4</span> 예: 교차 검증과 예측</a></li>
+  <li><a href="#origami의-교차-검증-체계" id="toc-origami의-교차-검증-체계" class="nav-link" data-scroll-target="#origami의-교차-검증-체계"><span class="header-section-number">6.5</span> <code>origami</code>의 교차 검증 체계</a>
   <ul class="collapse">
-  <li><a href="#wash-benefits-study-example" id="toc-wash-benefits-study-example" class="nav-link" data-scroll-target="#wash-benefits-study-example">WASH Benefits Study Example</a></li>
-  <li><a href="#cross-validation-for-i.i.d.-data" id="toc-cross-validation-for-i.i.d.-data" class="nav-link" data-scroll-target="#cross-validation-for-i.i.d.-data"><span class="header-section-number">2.5.1</span> Cross-validation for i.i.d. data</a></li>
-  <li><a href="#cross-validation-for-time-series-data" id="toc-cross-validation-for-time-series-data" class="nav-link" data-scroll-target="#cross-validation-for-time-series-data"><span class="header-section-number">2.5.2</span> Cross-validation for Time-series Data</a></li>
-  <li><a href="#airpassenger-data-example" id="toc-airpassenger-data-example" class="nav-link" data-scroll-target="#airpassenger-data-example"><code>AirPassenger</code> Data Example</a></li>
+  <li><a href="#wash-benefits-연구-예제" id="toc-wash-benefits-연구-예제" class="nav-link" data-scroll-target="#wash-benefits-연구-예제"><span class="header-section-number">6.5.1</span> WASH Benefits 연구 예제</a></li>
+  <li><a href="#i.i.d.-데이터를-위한-교차-검증" id="toc-i.i.d.-데이터를-위한-교차-검증" class="nav-link" data-scroll-target="#i.i.d.-데이터를-위한-교차-검증"><span class="header-section-number">6.5.2</span> i.i.d. 데이터를 위한 교차 검증</a></li>
+  <li><a href="#시계열-데이터를-위한-교차-검증" id="toc-시계열-데이터를-위한-교차-검증" class="nav-link" data-scroll-target="#시계열-데이터를-위한-교차-검증"><span class="header-section-number">6.5.3</span> 시계열 데이터를 위한 교차 검증</a></li>
+  <li><a href="#airpassenger-데이터-예제" id="toc-airpassenger-데이터-예제" class="nav-link" data-scroll-target="#airpassenger-데이터-예제"><span class="header-section-number">6.5.4</span> <code>AirPassenger</code> 데이터 예제</a></li>
   </ul></li>
-  <li><a href="#general-workflow-of-origami" id="toc-general-workflow-of-origami" class="nav-link" data-scroll-target="#general-workflow-of-origami"><span class="header-section-number">2.6</span> General workflow of <code>origami</code></a>
+  <li><a href="#origami의-일반적인-워크플로" id="toc-origami의-일반적인-워크플로" class="nav-link" data-scroll-target="#origami의-일반적인-워크플로"><span class="header-section-number">6.6</span> <code>origami</code>의 일반적인 워크플로</a>
   <ul class="collapse">
-  <li><a href="#define-folds" id="toc-define-folds" class="nav-link" data-scroll-target="#define-folds"><span class="header-section-number">2.6.1</span> (1) Define folds</a></li>
-  <li><a href="#define-the-fold-function" id="toc-define-the-fold-function" class="nav-link" data-scroll-target="#define-the-fold-function"><span class="header-section-number">2.6.2</span> (2) Define the fold function</a></li>
-  <li><a href="#apply-cross_validate" id="toc-apply-cross_validate" class="nav-link" data-scroll-target="#apply-cross_validate"><span class="header-section-number">2.6.3</span> (3) Apply <code>cross_validate()</code></a></li>
+  <li><a href="#폴드-정의" id="toc-폴드-정의" class="nav-link" data-scroll-target="#폴드-정의"><span class="header-section-number">6.6.1</span> (1) 폴드 정의</a></li>
+  <li><a href="#폴드-함수-정의" id="toc-폴드-함수-정의" class="nav-link" data-scroll-target="#폴드-함수-정의"><span class="header-section-number">6.6.2</span> (2) 폴드 함수 정의</a></li>
+  <li><a href="#cross_validate-적용" id="toc-cross_validate-적용" class="nav-link" data-scroll-target="#cross_validate-적용"><span class="header-section-number">6.6.3</span> (3) <code>cross_validate()</code> 적용</a></li>
   </ul></li>
-  <li><a href="#cross-validation-in-action" id="toc-cross-validation-in-action" class="nav-link" data-scroll-target="#cross-validation-in-action"><span class="header-section-number">2.7</span> Cross-validation in action</a>
+  <li><a href="#교차-검증의-실제-활용" id="toc-교차-검증의-실제-활용" class="nav-link" data-scroll-target="#교차-검증의-실제-활용"><span class="header-section-number">6.7</span> 교차 검증의 실제 활용</a>
   <ul class="collapse">
-  <li><a href="#cross-validation-with-linear-regression" id="toc-cross-validation-with-linear-regression" class="nav-link" data-scroll-target="#cross-validation-with-linear-regression"><span class="header-section-number">2.7.1</span> Cross-validation with linear regression</a></li>
-  <li><a href="#cross-validation-with-random-forests" id="toc-cross-validation-with-random-forests" class="nav-link" data-scroll-target="#cross-validation-with-random-forests"><span class="header-section-number">2.7.2</span> Cross-validation with random forests</a></li>
-  <li><a href="#cross-validation-with-arima" id="toc-cross-validation-with-arima" class="nav-link" data-scroll-target="#cross-validation-with-arima"><span class="header-section-number">2.7.3</span> Cross-validation with ARIMA</a></li>
+  <li><a href="#선형-회귀와-교차-검증" id="toc-선형-회귀와-교차-검증" class="nav-link" data-scroll-target="#선형-회귀와-교차-검증"><span class="header-section-number">6.7.1</span> 선형 회귀와 교차 검증</a></li>
+  <li><a href="#랜덤-포레스트와-교차-검증" id="toc-랜덤-포레스트와-교차-검증" class="nav-link" data-scroll-target="#랜덤-포레스트와-교차-검증"><span class="header-section-number">6.7.2</span> 랜덤 포레스트와 교차 검증</a></li>
+  <li><a href="#arima와-교차-검증" id="toc-arima와-교차-검증" class="nav-link" data-scroll-target="#arima와-교차-검증"><span class="header-section-number">6.7.3</span> ARIMA와 교차 검증</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">2.8</span> Exercises</a>
+  <li><a href="#연습-문제" id="toc-연습-문제" class="nav-link" data-scroll-target="#연습-문제"><span class="header-section-number">6.8</span> 연습 문제</a>
   <ul class="collapse">
-  <li><a href="#review-of-key-concepts" id="toc-review-of-key-concepts" class="nav-link" data-scroll-target="#review-of-key-concepts"><span class="header-section-number">2.8.1</span> Review of Key Concepts</a></li>
-  <li><a href="#advanced-topics" id="toc-advanced-topics" class="nav-link" data-scroll-target="#advanced-topics"><span class="header-section-number">2.8.2</span> Advanced Topics</a></li>
+  <li><a href="#핵심-개념-복습" id="toc-핵심-개념-복습" class="nav-link" data-scroll-target="#핵심-개념-복습"><span class="header-section-number">6.8.1</span> 핵심 개념 복습</a></li>
+  <li><a href="#고급-주제" id="toc-고급-주제" class="nav-link" data-scroll-target="#고급-주제"><span class="header-section-number">6.8.2</span> 고급 주제</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -315,9 +353,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-origami.html">II. 핵심 기계 학습 엔진</a></li><li class="breadcrumb-item"><a href="./05-origami.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="origami" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Cross-validation</span></span></h1>
+<h1 class="title"><span id="origami" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">교차 검증</span></span></h1>
 </div>
 
 
@@ -335,101 +373,90 @@ window.Quarto = {
 
 
 <p><em>Ivana Malenica</em></p>
-<p>Based on the <a href="https://github.com/tlverse/origami"><code>origami</code> <code>R</code> package</a> by <em>Jeremy Coyle, Nima Hejazi, Ivana Malenica and Rachael Phillips</em>.</p>
-<section id="learning-objectives" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p>By the end of this chapter you will be able to:</p>
+<p>Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips가 작성한 <a href="https://github.com/tlverse/origami"><code>origami</code> <code>R</code> 패키지</a>를 바탕으로 합니다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>학습 목표
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>이 장을 마치면 여러분은 다음을 할 수 있게 됩니다.</p>
 <ol type="1">
-<li><p>Differentiate between training, validation and test sets.</p></li>
-<li><p>Understand the concept of a loss function, risk and cross-validation.</p></li>
-<li><p>Select a loss function that is appropriate for the functional parameter to be estimated.</p></li>
-<li><p>Understand and contrast different cross-validation schemes for i.i.d. data.</p></li>
-<li><p>Understand and contrast different cross-validation schemes for time dependent data.</p></li>
-<li><p>Setup the proper fold structure, build custom fold-based function, and cross-validate the proposed function using the <code>origami</code> <code>R</code> package.</p></li>
-<li><p>Setup the proper cross-validation structure for the use by the Super Learner using the the <code>origami</code> <code>R</code> package.</p></li>
+<li><p>훈련 세트(training set), 검증 세트(validation set), 테스트 세트(test set)를 구분합니다.</p></li>
+<li><p>손실 함수(loss function), 리스크(risk) 및 교차 검증(cross-validation)의 개념을 이해합니다.</p></li>
+<li><p>추정하고자 하는 함수 파라미터에 적합한 손실 함수를 선택합니다.</p></li>
+<li><p>i.i.d. 데이터에 대한 서로 다른 교차 검증 체계를 이해하고 대조합니다.</p></li>
+<li><p>시간 종속 데이터에 대한 서로 다른 교차 검증 체계를 이해하고 대조합니다.</p></li>
+<li><p>적절한 폴드(fold) 구조를 설정하고, 사용자 정의 폴드 기반 함수를 구축하며, <code>origami</code> <code>R</code> 패키지를 사용하여 제안된 함수를 교차 검증합니다.</p></li>
+<li><p><code>origami</code> <code>R</code> 패키지를 사용하여 슈퍼 러너(Super Learner)가 사용할 적절한 교차 검증 구조를 설정합니다.</p></li>
 </ol>
+</div>
+</div>
 <!--
 RP:
-suggestion to modify some LOs (I am also open to not having LOs).
-LOs should be expressed in terms of the reader and use action verbs.
-Some ideas for action verbs related to "understanding" are here, within
-"Action Verbs Aligned with Blooms Taxonomy" section:
+일부 LO를 수정하자는 제안(LO가 없는 것도 괜찮습니다).
+LO는 독자의 관점에서 표현되어야 하며 동작 동사를 사용해야 합니다.
+"이해"와 관련된 동작 동사에 대한 몇 가지 아이디어는 "Bloom의 텍사노미와 일치하는 동작 동사" 섹션 아래 여기에 있습니다.
 https://academiceffectiveness.gatech.edu/assessment-toolkit/developing-student-learning-outcome-statements
-Here's another helpful article:
+여기에 또 다른 도움이 되는 기사가 있습니다.
 https://www.thoughtco.com/common-mistakes-when-writing-learning-objectives-7786
 
-As an example, for LO 2, it can be rephrased by thinking about the answers to
-these questions and targeting the LO towards them. What specifically does a
-reader need to understand about a loss, risk, CV? Why is this important for the
-reader to understand?
+예를 들어 LO 2의 경우, 이러한 질문에 대한 답을 생각하고 LO를 그에 맞게 타겟팅하여 다시 표현할 수 있습니다. 독자가 손실, 리스크, CV에 대해 구체적으로 무엇을 이해해야 합니까? 독자가 이것을 이해하는 것이 왜 중요합니까?
 -->
+<section id="소개" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="소개"><span class="header-section-number">6.1</span> 소개</h2>
+<p><a href="04-roadmap.html#roadmap"><em>타겟 러닝을 위한 로드맵</em></a>에 따라, 본 장에서는 추정 단계에 대해 자세히 설명하기 시작합니다. 타겟 파라미터의 추정치를 생성하기 위해, 우리는 추정 절차의 성능 품질을 어떻게 평가할지 결정해야 합니다. 모든 알고리즘(추정기)의 성능 또는 오차는 동일한 데이터 생성 과정에서 발생하는 독립적인 데이터셋에 대한 일반화 가능성에 해당합니다. 알고리즘의 성능 평가는 매우 중요합니다 — 이는 알고리즘이 얼마나 잘 작동하는지에 대한 정량적 척도를 제공하며, 알고리즘 세트(또는 “라이브러리”) 중에서 선택하는 가이드 역할을 합니다. 알고리즘 또는 그 라이브러리의 성능을 평가하기 위해, <strong>리스크</strong> 또는 <strong>예상 예측 오차</strong>를 정의하는 <strong>손실 함수</strong>의 개념을 도입합니다. 우리의 목표는 추정기의 참 성능(리스크)을 추정하는 것입니다. 다음 장에서는 가장 성능이 좋은 알고리즘을 선택하기 위해 알고리즘 라이브러리의 성능을 추정하는 방법에 대해 자세히 설명합니다. 다음에서는 관찰된 데이터와 <code>origami</code> 패키지 <span class="citation" data-cites="coyle2018origami coyle-cran-origami">(<a href="#ref-coyle2018origami" role="doc-biblioref">Coyle and Hejazi 2018</a>; <a href="#ref-coyle-cran-origami" role="doc-biblioref">Coyle et al., n.d.</a>)</span>에 구현된 <strong>교차 검증</strong> 절차를 사용하여 이를 수행하는 방법을 제안합니다.</p>
 </section>
-<section id="introduction" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
-<p>Following the <a href="04-roadmap.html#roadmap"><em>Roadmap for Targeted Learning</em></a>, we start to elaborate on the estimation step in the current chapter. In order to generate an estimate of the target parameter, we need to decide how to evaluate the quality of our estimation procedure’s performance. The performance, or error, of any algorithm (estimator) corresponds to its generalizability to independent datasets arising from the same data-generating process. Assessment of the performance of an algorithm is extremely important — it provides a quantitative measure of how well the algorithm performs, and it guides the choice of selecting among a set (or “library”) of algorithms. In order to assess the performance of an algorithm, or a library of them, we introduce the concept of a <strong>loss function</strong>, which defines the <strong>risk</strong> or the <strong>expected prediction error</strong>. Our goal is to estimate the true performance (risk) of our estimator. In the next chapter, we elaborate on how to estimate the performance of a library of algorithms in order to choose the best-performing one. In the following, we propose a method to do so using the observed data and <strong>cross-validation</strong> procedures implemented in the <code>origami</code> package <span class="citation" data-cites="coyle2018origami coyle-cran-origami">(<a href="#ref-coyle2018origami" role="doc-biblioref">Coyle and Hejazi 2018</a>; <a href="#ref-coyle-cran-origami" role="doc-biblioref">Coyle et al., n.d.</a>)</span>.</p>
-</section>
-<section id="background" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="background"><span class="header-section-number">2.2</span> Background</h2>
-<p>Ideally, in a data-rich scenario (i.e., one with unlimited observations), we would split our dataset into three parts:</p>
+<section id="배경" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="배경"><span class="header-section-number">6.2</span> 배경</h2>
+<p>이상적으로, 데이터가 풍부한 시나리오(즉, 관찰값이 무제한인 경우)에서는 데이터셋을 다음 세 부분으로 나눕니다.</p>
 <ol type="1">
-<li>the training set,</li>
-<li>the validation set, and</li>
-<li>the test (or holdout) set.</li>
+<li>훈련 세트(training set),</li>
+<li>검증 세트(validation set),</li>
+<li>테스트(또는 홀드아웃) 세트(test or holdout set).</li>
 </ol>
-<p>The training set is used to fit algorithm(s) of interest; we evaluate the performance of the fit(s) on a validation set, which can be used to estimate prediction error (e.g., for algorithm tuning or selection). The final error of the selected algorithm is obtained by using the test (or holdout) set, which is kept entirely separate such that the algorithms never encounter these observations until the final model evaluation step. One might wonder, with training data readily available, why not use the training error to evaluate the proposed algorithm’s performance? Unfortunately, the training error is a biased estimate of a fitted algorithm’s generalizability, since it uses the same data for fitting and evaluation.</p>
-<p>Since data are often scarce, separating a dataset into training, validation and test sets can prove too limiting, on account of decreasing the available data for use in training by too much. In the absence of a large dataset and a designated test set, we must resort to methods that estimate the algorithm’s true performance by efficient sample re-use. Re-sampling methods, like the bootstrap, involve repeatedly sampling from the training set and fitting the algorithms to these samples. While often computationally intensive, re-sampling methods are particularly useful for evaluating an algorithm and selecting among a set of them. In addition, they provide more insight on the variability and robustness of a fitted algorithm, relative to fitting an algorithm only once to all of the training data.</p>
+<p>훈련 세트는 관심 있는 알고리즘을 적합(fit)시키는 데 사용됩니다. 검증 세트에서 적합의 성능을 평가하며, 이는 예측 오차를 추정하는 데(예: 알고리즘 튜닝 또는 선택을 위해) 사용될 수 있습니다. 선택된 알고리즘의 최종 오차는 최종 모델 평가 단계까지 알고리즘이 이러한 관찰값을 절대 접하지 않도록 완전히 분리되어 유지된 테스트(또는 홀드아웃) 세트를 사용하여 얻습니다. 훈련 데이터가 이미 준비되어 있는데, 제안된 알고리즘의 성능을 평가하는 데 훈련 오차를 사용하면 안 되는지 궁금할 수 있습니다. 불행하게도 훈련 오차는 적합된 알고리즘의 일반화 가능성에 대한 편향된 추정치입니다. 적합과 평가에 동일한 데이터를 사용하기 때문입니다.</p>
+<p>데이터가 부족한 경우가 많으므로 데이터셋을 훈련, 검증, 테스트 세트로 나누는 것은 훈련에 사용할 수 있는 데이터를 너무 많이 감소시켜 너무 제한적일 수 있습니다. 대규모 데이터셋과 지정된 테스트 세트가 없는 경우, 효율적인 샘플 재사용을 통해 알고리즘의 참 성능을 추정하는 방법에 의존해야 합니다. 부트스트랩과 같은 재표본(Re-sampling) 방법은 훈련 세트에서 반복적으로 샘플링하고 이러한 샘플에 알고리즘을 적합시키는 과정을 포함합니다. 종종 계산 집약적이지만, 재표본 방법은 알고리즘을 평가하고 그중 하나를 선택하는 데 특히 유용합니다. 또한 알고리즘을 모든 훈련 데이터에 단 한 번만 적합시키는 것에 비해, 적합된 알고리즘의 가변성과 견고성에 대한 더 많은 통찰력을 제공합니다.</p>
 <!--
 RP:
-What is meant by "scarce", "by too much", "large dataset" here? We also might
-want to use CV even when we have thousands of observations, so our assessment
-of the algorithm isn't hinging on a single split. Is the data's size the
-motivating reason for re-sampling? Ah-ha! I knew you had it somewhere! I think
-the (some of) message that you're getting across in the paragraph around L380
-should be included here.
+여기서 "부족한", "너무 많이", "대규모 데이터셋"은 무엇을 의미하나요? 또한 수천 개의 관찰값이 있는 경우에도 CV를 사용하여 알고리즘 평가가 단일 분할에 좌우되지 않도록 하고 싶을 수 있습니다. 데이터의 크기가 재표본을 하는 동기 부여 이유입니까? 아하! 어딘가에 있을 줄 알았어요! L380 주변 단락에서 전달하려는 메시지(의 일부)가 여기에 포함되어야 한다고 생각합니다.
 -->
-<section id="introducing-cross-validation" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="introducing-cross-validation"><span class="header-section-number">2.2.1</span> Introducing: cross-validation</h3>
-<p>In this chapter, we focus on <strong>cross-validation</strong> — an essential tool for evaluating how any algorithm extends from a sample of data to the target population from which it arose. Cross-validation has seen widespread application in all facets of modern statistics, and perhaps most notably in statistical machine learning. The cross-validation procedure has been proven to be optimal for algorithm selection in large samples, i.e.&nbsp;asymptotically. In particular,cross-validated algorithm estimates the true risk when the estimate is applied to an independent sample from the joint distribution of the predictors and outcome.</p>
-<p>When used for model selection, cross-validation has powerful optimality properties. The asymptotic optimality results state that the cross-validated selector performs (in terms of risk) asymptotically as well as an optimal oracle selector — a hypothetical procedure with free access to the true, unknown data-generating distribution. For further details on the theoretical results, we suggest consulting <span class="citation" data-cites="vdl2003unified">van der Laan and Dudoit (<a href="#ref-vdl2003unified" role="doc-biblioref">2003</a>)</span>, <span class="citation" data-cites="vdl2004asymptotic">van der Laan, Dudoit, and Keles (<a href="#ref-vdl2004asymptotic" role="doc-biblioref">2004</a>)</span>, <span class="citation" data-cites="dudoit2005asymptotics">Dudoit and van der Laan (<a href="#ref-dudoit2005asymptotics" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="vaart2006oracle">van der Vaart, Dudoit, and van der Laan (<a href="#ref-vaart2006oracle" role="doc-biblioref">2006</a>)</span>.</p>
-<p>The <code>origami</code> package provides a suite of tools for cross-validation. In the following, we describe different types of cross-validation schemes readily available in <code>origami</code>, introduce the general structure of the <code>origami</code> package, and demonstrate the use of these procedures in various applied settings.</p>
+<section id="교차-검증-소개" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="교차-검증-소개"><span class="header-section-number">6.2.1</span> 교차 검증 소개</h3>
+<p>이 장에서는 임의의 알고리즘이 데이터 샘플로부터 그것이 발생한 타겟 모집단으로 어떻게 확장되는지 평가하기 위한 필수 도구인 <strong>교차 검증</strong>에 집중합니다. 교차 검증은 현대 통계학의 모든 측면에서 널리 적용되어 왔으며, 아마도 통계적 기계 학습에서 가장 두드러지게 나타날 것입니다. 교차 검증 절차는 대표본에서, 즉 점근적으로 알고리즘 선택에 최적인 것으로 입증되었습니다. 특히 교차 검증된 알고리즘은 추정치가 예측 변수와 결과 변수의 결합 분포로부터 얻은 독립적인 표본에 적용될 때 참 리스크를 추정합니다.</p>
+<p>모델 선택에 사용될 때 교차 검증은 강력한 최적성 속성을 갖습니다. 점근적 최적성 결과에 따르면 교차 검증 선택기는 참인 미지의 데이터 생성 분포에 자유롭게 접근할 수 있는 가상의 절차인 최적의 오라클(oracle) 선택기만큼 (리스크 측면에서) 점근적으로 잘 수행됩니다. 이론적 결과에 대한 자세한 내용은 <span class="citation" data-cites="vdl2003unified">van der Laan and Dudoit (<a href="#ref-vdl2003unified" role="doc-biblioref">2003</a>)</span>, <span class="citation" data-cites="vdl2004asymptotic">van der Laan, Dudoit, and Keles (<a href="#ref-vdl2004asymptotic" role="doc-biblioref">2004</a>)</span>, <span class="citation" data-cites="dudoit2005asymptotics">Dudoit and van der Laan (<a href="#ref-dudoit2005asymptotics" role="doc-biblioref">2005</a>)</span> 및 <span class="citation" data-cites="vaart2006oracle">van der Vaart, Dudoit, and van der Laan (<a href="#ref-vaart2006oracle" role="doc-biblioref">2006</a>)</span> 을 참조하십시오.</p>
+<p><code>origami</code> 패키지는 교차 검증을 위한 일련의 도구를 제공합니다. 다음에서는 <code>origami</code>에서 즉시 사용할 수 있는 다양한 유형의 교차 검증 체계를 설명하고, <code>origami</code> 패키지의 일반적인 구조를 소개하며, 다양한 응용 환경에서 이러한 절차의 사용을 시연합니다.</p>
 </section>
 </section>
-<section id="estimation-roadmap-how-does-it-all-fit-together" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="estimation-roadmap-how-does-it-all-fit-together"><span class="header-section-number">2.3</span> Estimation Roadmap: How does it all fit together?</h2>
-<p>Similarly to how we defined the <a href="04-roadmap.html#roadmap"><em>Roadmap for Targeted Learning</em></a>, we can define the <strong>Estimation Roadmap</strong> as a guide for the estimation process. In particular, the unified loss-based estimation framework <span class="citation" data-cites="vdl2003unified vdl2004asymptotic dudoit2005asymptotics vaart2006oracle vdl2007super">(<a href="#ref-vdl2003unified" role="doc-biblioref">van der Laan and Dudoit 2003</a>; <a href="#ref-vdl2004asymptotic" role="doc-biblioref">van der Laan, Dudoit, and Keles 2004</a>; <a href="#ref-dudoit2005asymptotics" role="doc-biblioref">Dudoit and van der Laan 2005</a>; <a href="#ref-vaart2006oracle" role="doc-biblioref">van der Vaart, Dudoit, and van der Laan 2006</a>; <a href="#ref-vdl2007super" role="doc-biblioref">van der Laan, Polley, and Hubbard 2007</a>)</span>, which relies on cross-validation for estimator construction, selection, and performance assessment, consists of three main steps:</p>
+<section id="추정-로드맵-모든-것이-어떻게-어우러지나요" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="추정-로드맵-모든-것이-어떻게-어우러지나요"><span class="header-section-number">6.3</span> 추정 로드맵: 모든 것이 어떻게 어우러지나요?</h2>
+<p><a href="04-roadmap.html#roadmap"><em>타겟 러닝을 위한 로드맵</em></a>을 정의한 것과 비슷하게, 추정 과정을 위한 가이드로서 <strong>추정 로드맵</strong>을 정의할 수 있습니다. 특히 추정기 구축, 선택 및 성능 평가를 위해 교차 검증에 의존하는 통합된 손실 기반 추정 프레임워크 <span class="citation" data-cites="vdl2003unified vdl2004asymptotic dudoit2005asymptotics vaart2006oracle vdl2007super">(<a href="#ref-vdl2003unified" role="doc-biblioref">van der Laan and Dudoit 2003</a>; <a href="#ref-vdl2004asymptotic" role="doc-biblioref">van der Laan, Dudoit, and Keles 2004</a>; <a href="#ref-dudoit2005asymptotics" role="doc-biblioref">Dudoit and van der Laan 2005</a>; <a href="#ref-vaart2006oracle" role="doc-biblioref">van der Vaart, Dudoit, and van der Laan 2006</a>; <a href="#ref-vdl2007super" role="doc-biblioref">van der Laan, Polley, and Hubbard 2007</a>)</span>는 세 가지 주요 단계로 구성됩니다.</p>
 <ol type="1">
-<li><p><strong>Loss function</strong>: Define the target parameter as the minimizer of the expected loss (risk) for a full data loss function chosen to represent the desired performance measure. By full data, we refer to the complete data including missingness process, for example. Map the full data loss function into an observed data loss function, having the same expected value and leading to an estimator of risk.</p></li>
-<li><p><strong>Algorithms</strong>: Construct a finite collection of candidate estimators of the parameter of interest.</p></li>
-<li><p><strong>Cross-validation scheme</strong>: Apply appropriate cross-validation, and use the cross-validated risk in order to select the best performing estimator among the candidates. Assess the overall performance of the resulting estimator.</p></li>
+<li><p><strong>손실 함수</strong>: 원하는 성능 측도를 나타내도록 선택된 전체 데이터 손실 함수에 대해 예상 손실(리스크)의 최소화 장치로 타겟 파라미터를 정의합니다. 전체 데이터란 예를 들어 누락 과정을 포함한 완전한 데이터를 의미합니다. 전체 데이터 손실 함수를 동일한 기댓값을 가지며 리스크 추정기로 이어지는 관찰 데이터 손실 함수로 매핑합니다.</p></li>
+<li><p><strong>알고리즘</strong>: 관심 파라미터에 대한 후보 추정기들의 유한한 모음을 구축합니다.</p></li>
+<li><p><strong>교차 검증 체계</strong>: 적절한 교차 검증을 적용하고, 후보들 중에서 가장 성능이 좋은 추정기를 선택하기 위해 교차 검증된 리스크를 사용합니다. 결과로 나오는 추정기의 전반적인 성능을 평가합니다.</p></li>
 </ol>
 </section>
-<section id="example-cross-validation-and-prediction" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="example-cross-validation-and-prediction"><span class="header-section-number">2.4</span> Example: Cross-validation and Prediction</h2>
-<p>Having introduced the <a href="04-roadmap.html#roadmap">Estimation Roadmap</a>, we can more precisely define our objective using prediction as an example. Let the observed data be defined as <span class="math inline">\(O = (W, Y)\)</span>, where a unit specific data structure can be written as <span class="math inline">\(O_i = (W_i, Y_i)\)</span>, for <span class="math inline">\(i = 1, \ldots, n\)</span>. We denote <span class="math inline">\(Y_i\)</span> as the outcome/dependent variable of interest, and <span class="math inline">\(W_i\)</span> as a <span class="math inline">\(p\)</span>-dimensional set of covariate (predictor) variables. We assume the <span class="math inline">\(n\)</span> units are independent, or conditionally independent, and identically distributed. Let <span class="math inline">\(\psi_0(W)\)</span> denote the target parameter of interest, the quantity we wish to estimate (estimand). For this example, we are interested in estimating the conditional expectation of the outcome given the covariates, <span class="math inline">\(\psi_0(W) = \E(Y \mid W)\)</span>. Following the <a href="04-roadmap.html#roadmap">Estimation Roadmap</a>, we choose the appropriate loss function, <span class="math inline">\(L\)</span>, such that <span class="math inline">\(\psi_0(W) = \text{argmin}_{\psi} \E_0[L(O, \psi(W))]\)</span>. Note that <span class="math inline">\(\psi_0(W)\)</span>, the true target parameter, is a minimizer of the risk (expected value of the chosen loss function). The appropriate loss function for conditional expectation with continuous outcome could be a mean squared error, for example. Then we can define <span class="math inline">\(L\)</span> as <span class="math inline">\(L(O, \psi(W)) = (Y_i -\psi(W_i)^2\)</span>. Note that there can be many different algorithms which estimate the estimand (many different <span class="math inline">\(\psi\)</span>s). How do we know how well each of the candidate estimators of <span class="math inline">\(\psi_0(W)\)</span> are doing? To pick the best-performing candidate estimator and assess its overall performance, we use cross-validation. Observations in the training set are used to fit (or train) the estimator, while those in validation set are used to assess the risk of (or validate) it.</p>
-<p>Next, we introduce notation flexible enough to represent any cross-validation scheme. In particular, we define a <strong>split vector</strong>, <span class="math inline">\(B_n = (B_n(i): i = 1,
-\ldots, n) \in \{0,1\}^n\)</span>. <!--
-Note that such a split vector is independent of the empirical distribution
-$P_n$, as in $B_n$ is not a function of $P_n$, but $P_0$.
---> A realization of <span class="math inline">\(B_n\)</span> defines a random split of the data into training and validation subsets such that if <span class="math display">\[B_n(i) = 0, \ \ \text{i sample is in the training set}\]</span> <span class="math display">\[B_n(i) = 1, \ \ \text{i sample is in the validation set.}\]</span> We can further define <span class="math inline">\(P_{n, B_n}^0\)</span> and <span class="math inline">\(P_{n, B_n}^1\)</span> as the empirical distributions of the training and validation sets, respectively. Then, <span class="math inline">\(n_0 =
-\sum_i (1 - B_n(i))\)</span> and <span class="math inline">\(n_1 = \sum_i B_n(i)\)</span> denote the number of samples in the training and validation sets, respectively. The particular distribution of the split vector <span class="math inline">\(B_n\)</span> defines the type of cross-validation scheme, tailored to the problem and dataset at hand.</p>
+<section id="예-교차-검증과-예측" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="예-교차-검증과-예측"><span class="header-section-number">6.4</span> 예: 교차 검증과 예측</h2>
+<p><a href="04-roadmap.html#roadmap">추정 로드맵</a>을 소개했으므로 예측을 예로 들어 우리의 목표를 더 정밀하게 정의할 수 있습니다. 관찰된 데이터를 <span class="math inline">\(O = (W, Y)\)</span>로 정의하며, 여기서 단위별 데이터 구조는 <span class="math inline">\(i = 1, \ldots, n\)</span>에 대해 <span class="math inline">\(O_i = (W_i, Y_i)\)</span>로 쓸 수 있습니다. <span class="math inline">\(Y_i\)</span>를 관심 결과/종속 변수로, <span class="math inline">\(W_i\)</span>를 <span class="math inline">\(p\)</span>차원의 공변량(예측 변수) 세트로 표시합니다. 우리는 <span class="math inline">\(n\)</span>개의 단위가 독립적이거나 조건부 독립적이며 동일하게 분포되어 있다고 가정합니다. <span class="math inline">\(\psi_0(W)\)</span>를 관심 있는 타겟 파라미터, 즉 우리가 추정하고자 하는 양(피추정치)이라고 합시다. 이 예에서 우리는 공변량이 주어졌을 때 결과의 조건부 기댓값 <span class="math inline">\(\psi_0(W) = \E(Y \mid W)\)</span>을 추정하는 데 관심이 있습니다. <a href="04-roadmap.html#roadmap">추정 로드맵</a>에 따라 <span class="math inline">\(\psi_0(W) = \text{argmin}_{\psi} \E_0[L(O, \psi(W))]\)</span>가 되도록 적절한 손실 함수 <span class="math inline">\(L\)</span>을 선택합니다. 참 타겟 파라미터 <span class="math inline">\(\psi_0(W)\)</span>는 리스크(선택된 손실 함수의 기댓값)의 최소화 장치임을 유의하십시오. 연속형 결과 변수를 갖는 조건부 기댓값에 적절한 손실 함수는 예를 들어 평균 제곱 오차(MSE)일 수 있습니다. 그러면 <span class="math inline">\(L\)</span>을 <span class="math inline">\(L(O, \psi(W)) = (Y_i -\psi(W_i))^2\)</span>로 정의할 수 있습니다. 피추정치를 추정하는 다양한 알고리즘(다양한 <span class="math inline">\(\psi\)</span>들)이 있을 수 있음에 유의하십시오. <span class="math inline">\(\psi_0(W)\)</span>의 각 후보 추정기가 얼마나 잘 수행되고 있는지 어떻게 알 수 있을까요? 가장 성능이 좋은 후보 추정기를 고르고 그 전반적인 성능을 평가하기 위해 교차 검증을 사용합니다. 훈련 세트의 관찰값은 추정기를 적합(또는 훈련)시키는 데 사용되고, 검증 세트의 관찰값은 리스크를 평가(또는 검증)하는 데 사용됩니다.</p>
+<p>다음으로, 모든 교차 검증 체계를 표현할 수 있을 만큼 유연한 표기법을 도입합니다. 특히 <strong>분할 벡터(split vector)</strong> <span class="math inline">\(B_n = (B_n(i): i = 1, \ldots, n) \in \{0,1\}^n\)</span>를 정의합니다. <!--
+그러한 분할 벡터는 경험적 분포 $P_n$과 독립적입니다. 즉, $B_n$은 $P_n$의 함수가 아니라 $P_0$의 함수입니다.
+--> <span class="math inline">\(B_n\)</span>의 실현은 데이터를 다음과 같이 훈련 및 검증 하위 집합으로 무작위 분할하는 것을 정의합니다. <span class="math display">\[B_n(i) = 0, \ \ \text{i번째 샘플이 훈련 세트에 있음}\]</span> <span class="math display">\[B_n(i) = 1, \ \ \text{i번째 샘플이 검증 세트에 있음.}\]</span> 우리는 <span class="math inline">\(P_{n, B_n}^0\)</span>과 <span class="math inline">\(P_{n, B_n}^1\)</span>을 각각 훈련 세트와 검증 세트의 경험적 분포로 정의할 수 있습니다. 그러면 <span class="math inline">\(n_0 = \sum_i (1 - B_n(i))\)</span>과 <span class="math inline">\(n_1 = \sum_i B_n(i)\)</span>은 각각 훈련 세트와 검증 세트의 샘플 수를 나타냅니다. 분할 벡터 <span class="math inline">\(B_n\)</span>의 특정한 분포가 당면한 문제와 데이터셋에 맞춤화된 교차 검증 체계의 유형을 정의합니다.</p>
 <!--
-nh: high-level comment -- it's helpful to define the splitting vector notation
-with B_n and to explain it, but I think it could be made even clearer by
-explicitly writing the forms of the splitting vector for each of the CV schemes
-discussed below. this helps to make it concrete, since the notation is quite
-general and exact but simultaneously cumbersome (a complaint I've heard in
-seminars and agree with, personally -- e.g., it's much easier to write V-fold
-CV in simpler notation than this). it seems it shouldn't be much work to write
-examples of the splitting vector notation for the more common CV schemes, but
-maybe it gets annoying for time-series examples. just a thought...
+nh: 상위 수준 코멘트 -- B_n을 사용하여 분할 벡터 표기법을 정의하고 설명하는 것이 도움이 되지만, 아래에서 논의되는 각 CV 체계에 대해 분할 벡터의 형태를 명시적으로 작성함으로써 훨씬 더 명확하게 만들 수 있다고 생각합니다. 표기법이 상당히 일반적이고 정확하지만 동시에 번거롭기 때문에(세미나에서 들은 불만이고 개인적으로 동의합니다 -- 예를 들어 V-fold CV를 이것보다 더 간단한 표기법으로 쓰는 것이 훨씬 쉽습니다), 이를 구체화하는 데 도움이 됩니다. 더 일반적인 CV 체계에 대해 분할 벡터 표기법의 예를 작성하는 것이 그리 큰 일은 아닐 것 같지만, 시계열 예제의 경우 짜증스러워질 수도 있습니다. 그냥 생각일 뿐입니다...
 -->
 </section>
-<section id="cross-validation-schemes-in-origami" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="cross-validation-schemes-in-origami"><span class="header-section-number">2.5</span> Cross-validation schemes in <code>origami</code></h2>
-<p>A variety of different partitioning schemes exist, each tailored to the salient details of the problem of interest, including data size, prevalence of the outcome, and dependence structure (between units or across time). In the following, we describe different cross-validation schemes available in the <code>origami</code> package, and we go on to demonstrate their use in practical data analysis examples.</p>
-<section id="wash-benefits-study-example" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="wash-benefits-study-example">WASH Benefits Study Example</h3>
-<p>In order to illustrate different cross-validation schemes, we will be using the WASH Benefits example dataset (detailed information can be found in <a href="03-data.html#wash">Chapter 3</a>). In particular, we are interested in predicting weight-for-height Z-score (<code>whz</code>) using the available covariate data. For this illustration, we will start by treating the data as independent and identically distributed (i.i.d.) random draws from an unknown distribution <span class="math inline">\(P_0\)</span>. To see what each cross-validation scheme is doing, we will subset the data to only <span class="math inline">\(n=30\)</span>. Note that each row represents an i.i.d. sampled unit, indexed by the row number.</p>
+<section id="origami의-교차-검증-체계" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="origami의-교차-검증-체계"><span class="header-section-number">6.5</span> <code>origami</code>의 교차 검증 체계</h2>
+<p>데이터 크기, 결과 변수의 보급률(prevalence), 의존성 구조(단위 간 또는 시간 경과에 따른)를 포함하여 관심 문제의 두드러진 세부 사항에 맞춰진 다양한 파티셔닝 체계가 존재합니다. 다음에서는 <code>origami</code> 패키지에서 사용할 수 있는 다양한 교차 검증 체계를 설명하고, 실제 데이터 분석 예제에서 그 사용법을 시연합니다.</p>
+<section id="wash-benefits-연구-예제" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="wash-benefits-연구-예제"><span class="header-section-number">6.5.1</span> WASH Benefits 연구 예제</h3>
+<p>다양한 교차 검증 체계를 설명하기 위해 WASH Benefits 예제 데이터셋을 사용합니다(자세한 정보는 <a href="03-data.html#wash">3장</a>에서 찾을 수 있습니다). 특히 가용한 공변량 데이터를 사용하여 연령 대비 체중 Z-점수(<code>whz</code>)를 예측하는 데 관심이 있습니다. 이 예시를 위해 데이터를 미지의 분포 <span class="math inline">\(P_0\)</span>로부터 얻은 독립적이고 동일하게 분포된(i.i.d.) 무작위 추출물로 취급하는 것부터 시작하겠습니다. 각 교차 검증 체계가 무엇을 하는지 확인하기 위해 데이터를 <span class="math inline">\(n=30\)</span>으로만 하위 집합화합니다. 각 행은 행 번호로 인덱싱된 i.i.d. 샘플링된 단위를 나타냅니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -438,7 +465,7 @@ maybe it gets annoying for time-series examples. just a thought...
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># load data set and take a peek</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터셋 로드 및 살펴보기</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> <span class="fu">fread</span>(</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/tlverse-data/master/"</span>,</span>
@@ -671,20 +698,20 @@ height:300px; overflow-x: scroll; width:100%; ">
 </div>
 </div>
 </div>
-<p>Above is a look at the first 30 of the data.</p>
+<p>위는 데이터의 처음 30개를 본 모습입니다.</p>
 </section>
-<section id="cross-validation-for-i.i.d.-data" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="cross-validation-for-i.i.d.-data"><span class="header-section-number">2.5.1</span> Cross-validation for i.i.d. data</h3>
-<section id="re-substitution" class="level4" data-number="2.5.1.1">
-<h4 data-number="2.5.1.1" class="anchored" data-anchor-id="re-substitution"><span class="header-section-number">2.5.1.1</span> Re-substitution</h4>
-<p>The re-substitution method is perhaps the simplest strategy for estimating the risk of a fitted algorithm. With this cross-validation scheme, all observed data units are used in both the training and validation set.</p>
-<p>We illustrate the usage of the re-substitution method with <code>origami</code> below, using the function <code>folds_resubstitution</code>. In order to set up <code>folds_resubstitution</code>, we need only to specify the total number of sampled units that we want to allocate to the training and validation sets; remember that each row of the dataset is a unique i.i.d. sampled unit. Also, notice the structure of the <code>origami</code> output:</p>
+<section id="i.i.d.-데이터를-위한-교차-검증" class="level3" data-number="6.5.2">
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="i.i.d.-데이터를-위한-교차-검증"><span class="header-section-number">6.5.2</span> i.i.d. 데이터를 위한 교차 검증</h3>
+<section id="재대입-re-substitution" class="level4" data-number="6.5.2.1">
+<h4 data-number="6.5.2.1" class="anchored" data-anchor-id="재대입-re-substitution"><span class="header-section-number">6.5.2.1</span> 재대입 (Re-substitution)</h4>
+<p>재대입 방법은 적합된 알고리즘의 리스크를 추정하는 가장 간단한 전략일 것입니다. 이 교차 검증 체계에서는 관찰된 모든 데이터 단위가 훈련 세트와 검증 세트 모두에 사용됩니다.</p>
+<p>아래에서 <code>folds_resubstitution</code> 함수를 사용하여 <code>origami</code>로 재대입 방법을 사용하는 법을 보여줍니다. <code>folds_resubstitution</code>을 설정하려면 훈련 세트와 검증 세트에 할당하려는 총 샘플 단위 수만 지정하면 됩니다. 데이터셋의 각 행은 고유한 i.i.d. 샘플링된 단위임을 기억하십시오. 또한 <code>origami</code> 출력 구조를 확인하십시오.</p>
 <ol type="1">
-<li><strong>v:</strong> the cross-validation fold</li>
-<li><strong>training_set:</strong> the indices of the samples in the training set</li>
-<li><strong>validation_set:</strong> the indices of the samples in the training set.</li>
+<li><strong>v:</strong> 교차 검증 폴드</li>
+<li><strong>training_set:</strong> 훈련 세트에 있는 샘플의 인덱스</li>
+<li><strong>validation_set:</strong> 검증 세트에 있는 샘플의 인덱스 (여기서는 훈련 세트와 동일)</li>
 </ol>
-<p>The structure of the <code>origami</code> output, a <code>list</code> of fold(s), holds across all of the cross-validation schemes presented in this chapter. Below, we show the fold generated by the re-substitution method:</p>
+<p>폴드의 <code>list</code>인 <code>origami</code> 출력 구조는 이 장에서 제시된 모든 교차 검증 체계에 걸쳐 유지됩니다. 아래에 재대입 방법으로 생성된 폴드를 보여줍니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -707,25 +734,22 @@ height:300px; overflow-x: scroll; width:100%; ">
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 </section>
-<section id="holdout" class="level4" data-number="2.5.1.2">
-<h4 data-number="2.5.1.2" class="anchored" data-anchor-id="holdout"><span class="header-section-number">2.5.1.2</span> Holdout</h4>
-<p>The holdout method, or the validation set approach, consists of randomly dividing the available data into training and validation (holdout) sets. The model is then fitted (i.e., “trained”) using the observations in the training set and subsequently evaluated (i.e., “validated”) using the observations in the validation set. Typically, the dataset is split into <span class="math inline">\(60:40\)</span>, <span class="math inline">\(70:30\)</span>, <span class="math inline">\(80:20\)</span> or even <span class="math inline">\(90:10\)</span> training-to-validation splits.</p>
-<p>The holdout method is intuitive and computationally inexpensive; however, it does carry a disadvantage: If we were to repeat the process of randomly splitting the data into training and validation sets, we could get very different cross-validated estimates of the empirical risk. In particular, the empirical mean of the loss function (i.e., the empirical risk) evaluated over the validation set(s) could be highly variable, depending on which samples were included in the training and validation splits. Overall, the cross-validated empirical risk for the holdout method is more variable, since in includes variability of the random split as well — this is not desirable. For classification problems (with a binary or categorical outcome variable), there is an additional disadvantage: it is possible for the training and validation sets to end up with uneven distributions of the two (or more) outcome classes, leading to better training and poor validation, or vice-versa — though this may be corrected by incorporating stratification into the cross-validation process. Finally, note that we are not using all of the data in training or in evaluating the performance of the proposed algorithm, which could itself introduce bias.</p>
+<section id="홀드아웃-holdout" class="level4" data-number="6.5.2.2">
+<h4 data-number="6.5.2.2" class="anchored" data-anchor-id="홀드아웃-holdout"><span class="header-section-number">6.5.2.2</span> 홀드아웃 (Holdout)</h4>
+<p>홀드아웃 방법 또는 검증 세트 접근 방식은 가용한 데이터를 훈련 세트와 검증(홀드아웃) 세트로 무작위로 나누는 것으로 구성됩니다. 그런 다음 훈련 세트의 관찰값을 사용하여 모델을 적합(즉, “훈련”)시키고, 이어서 검증 세트의 관찰값을 사용하여 평가(즉, “검증”)합니다. 일반적으로 데이터셋은 <span class="math inline">\(60:40, 70:30, 80:20\)</span> 또는 심지어 <span class="math inline">\(90:10\)</span>의 훈련 대 검증 비율로 나뉩니다.</p>
+<p>홀드아웃 방법은 직관적이고 계산 비용이 적게 듭니다. 하지만 한 가지 단점이 있습니다. 데이터를 훈련 세트와 검증 세트로 무작위로 나누는 과정을 반복하면 경험적 리스크에 대해 매우 다른 교차 검증 추정치를 얻을 수 있습니다. 특히 검증 세트에서 평가된 손실 함수의 경험적 평균(즉, 경험적 리스크)은 훈련 및 검증 분할에 어떤 샘플이 포함되었는지에 따라 변동성이 매우 클 수 있습니다. 전반적으로 홀드아웃 방법의 교차 검증된 경험적 리스크는 무작위 분할의 가변성도 포함하기 때문에 더 가변적입니다 — 이는 바람직하지 않습니다. 분류 문제(이분형 또는 범주형 결과 변수가 있는 경우)에는 추가적인 단점이 있습니다. 훈련 세트와 검증 세트가 두 개(또는 그 이상)의 결과 클래스에 대해 불균등한 분포를 갖게 되어 훈련은 잘 되지만 검증은 제대로 되지 않거나 그 반대의 경우가 발생할 수 있습니다. 다만 이는 교차 검증 과정에 층화(stratification)를 통합함으로써 수정될 수 있습니다. 마지막으로, 제안된 알고리즘의 성능을 훈련하거나 평가할 때 모든 데이터를 사용하지 않는다는 점에 유의하십시오. 이 자체가 편향을 유발할 수 있습니다.</p>
 <!--
-nh: is there no folds_* function for this in origami? it seems to be the only
-cross-validation scheme for which we don't demonstrate fold construction
+nh: origami에 이를 위한 folds_* 함수가 없나요? 폴드 구축을 시연하지 않는 유일한 교차 검증 체계인 것 같습니다.
 -->
 </section>
-<section id="leave-one-out" class="level4" data-number="2.5.1.3">
-<h4 data-number="2.5.1.3" class="anchored" data-anchor-id="leave-one-out"><span class="header-section-number">2.5.1.3</span> Leave-one-out</h4>
-<p>The leave-one-out cross-validation scheme is closely related to the holdout method, as it also involves splitting the dataset into training and validation sets; however, instead of partitioning the dataset into sets of similar size, a single observation is used as the validation set. In doing so, the vast majority of the sampled units are employed for fitting (or training) the candidate learning algorithm. Since only a single sampled unit (for example <span class="math inline">\(O_1 = (W_1,
-Y_1)\)</span>) is left out of the fitting process, leave-one-out cross-validation can result in a less biased estimate of the risk. Typically, the leave-one-out approach will not overestimate the risk as much as the holdout method does. On the other hand, since the estimate of risk is based on a single sampled unit, it is usually a highly variable estimate.</p>
-<p>We can repeat the process of spiting the dataset into training and validation sets until all of the sampled units have had a chance to act as the validation set. Continuing the example above, a subsequent iteration of the leave-one-out cross-validation scheme may use <span class="math inline">\(O_2 = (W_2, Y_2)\)</span> as the validation set (where, before, <span class="math inline">\(O_1 = (W_1, Y_1)\)</span> played that role), while the remaining <span class="math inline">\(n-1\)</span> sampled units are included in the training set. Repeating this approach <span class="math inline">\(n\)</span> times results in <span class="math inline">\(n\)</span> risk estimates, for example, <span class="math inline">\(MSE_1, MSE_2, \ldots, MSE_n\)</span> (note that these are the mean squared error (MSE) estimates when unit <span class="math inline">\(i\)</span> is the validation set). The estimate of the true risk is then the average over the <span class="math inline">\(n\)</span> leave-one-out risk estimates. While the leave-one-out cross-validation scheme results in a less biased (albeit, more variable) estimate of risk than the holdout method, it can be computationally very expensive to implement when <span class="math inline">\(n\)</span> is large.</p>
-<p>We illustrate the usage of the leave-one-out cross-validation scheme with <code>origami</code> below, using the <code>folds_loo(n)</code> function. In order to set up <code>folds_loo(n)</code>, similarly to the case of the re-substitution method, we need only the total number of sampled units over which the cross-validation procedure is to operate. We show the first two folds generated by leave-one-out cross-validation below.</p>
+<section id="하나-빼기-leave-one-out" class="level4" data-number="6.5.2.3">
+<h4 data-number="6.5.2.3" class="anchored" data-anchor-id="하나-빼기-leave-one-out"><span class="header-section-number">6.5.2.3</span> 하나 빼기 (Leave-one-out)</h4>
+<p>하나 빼기 교차 검증 체계는 데이터셋을 훈련 세트와 검증 세트로 나눈다는 점에서 홀드아웃 방법과 밀접하게 관련되어 있지만, 데이터셋을 비슷한 크기의 세트로 나누는 대신 단일 관찰값을 검증 세트로 사용합니다. 그렇게 함으로써 샘플 단위의 대다수가 후보 학습 알고리즘을 적합(또는 훈련)시키는 데 사용됩니다. 단 하나의 샘플 단위(예를 들어 <span class="math inline">\(O_1 = (W_1, Y_1)\)</span>)만 적합 과정에서 제외되므로, 하나 빼기 교차 검증은 리스크에 대해 덜 편향된 추정치를 낼 수 있습니다. 일반적으로 하나 빼기 접근 방식은 홀드아웃 방법만큼 리스크를 과대평가하지 않습니다. 반면에 리스크 추정치가 단일 샘플 단위에 기반하므로 일반적으로 변동성이 매우 큰 추정치입니다.</p>
+<p>모든 샘플 단위가 검증 세트 역할을 할 기회를 가질 때까지 데이터셋을 훈련 세트와 검증 세트로 나누는 과정을 반복할 수 있습니다. 위의 예시를 계속해서, 하나 빼기 교차 검증 체계의 후속 반복에서는 <span class="math inline">\(O_2 = (W_2, Y_2)\)</span>를 검증 세트로 사용할 수 있으며(이전에는 <span class="math inline">\(O_1 = (W_1, Y_1)\)</span>이 그 역할을 했음), 나머지 <span class="math inline">\(n-1\)</span>개의 샘플 단위는 훈련 세트에 포함됩니다. 이 접근 방식을 <span class="math inline">\(n\)</span>번 반복하면 <span class="math inline">\(n\)</span>개의 리스크 추정치, 예를 들어 <span class="math inline">\(MSE_1, MSE_2, \ldots, MSE_n\)</span>이 생성됩니다(단위 <span class="math inline">\(i\)</span>가 검증 세트일 때의 평균 제곱 오차(MSE) 추정치임에 유의하십시오). 참 리스크의 추정치는 <span class="math inline">\(n\)</span>개의 하나 빼기 리스크 추정치에 대한 평균입니다. 하나 빼기 교차 검증 체계는 홀드아웃 방법보다 덜 편향된(비록 가변적이지만) 리스크 추정치를 내놓지만, <span class="math inline">\(n\)</span>이 클 때는 구현하기에 계산 비용이 매우 많이 들 수 있습니다.</p>
+<p>아래에서 <code>folds_loo(n)</code> 함수를 사용하여 <code>origami</code>로 하나 빼기 교차 검증 체계의 사용법을 보여줍니다. <code>folds_loo(n)</code>를 설정하려면 재대입 방법의 경우와 비슷하게 교차 검증 절차가 작동할 총 샘플 단위 수만 있으면 됩니다. 아래에 하나 빼기 교차 검증으로 생성된 처음 두 개의 폴드를 보여줍니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -759,16 +783,15 @@ Y_1)\)</span>) is left out of the fitting process, leave-one-out cross-validatio
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 </section>
-<section id="v-fold" class="level4" data-number="2.5.1.4">
-<h4 data-number="2.5.1.4" class="anchored" data-anchor-id="v-fold"><span class="header-section-number">2.5.1.4</span> <span class="math inline">\(V\)</span>-fold</h4>
-<p>An alternative to the leave-one-out scheme is <span class="math inline">\(V\)</span>-fold cross-validation. This cross-validation scheme randomly divides the dataset into <span class="math inline">\(V\)</span> splits of equal (or approximately equal) size. For each split <span class="math inline">\(v=1,\ldots,V\)</span>, the <span class="math inline">\(v\)</span>th fold is defined by the <span class="math inline">\(v\)</span>th split (which defines the validation set for fold <span class="math inline">\(v\)</span>) and the complement of the <span class="math inline">\(v\)</span>th split (which defines the training set for fold <span class="math inline">\(v\)</span>). The algorithms are fit <span class="math inline">\(V\)</span> times separately, to each of the <span class="math inline">\(V\)</span> training sets. The risk of each fold’s fitted algorithms is then evaluated via predictions obtained from the validation set. The cross-validated risk for a fitted algorithm, for example the MSE, is its average risk across all folds. With <span class="math inline">\(V\)</span>-fold cross-validation, all of the observations are used in the training and validation stages, preventing the candidate learning algorithm from overfitting to only a subset of the data (e.g., a given training set).</p>
-<p>For a dataset with <span class="math inline">\(n\)</span> sampled units, <span class="math inline">\(V\)</span>-fold cross-validation with <span class="math inline">\(v=n\)</span> merely reduces to leave-one-out. Similarly, if we set <span class="math inline">\(n=1\)</span>, we can get the holdout method’s estimate of the candidate learning algorithm’s performance. Beyond its computational advantages, <span class="math inline">\(V\)</span>-fold cross-validation often yields more accurate estimates of the true, underlying risk. This is rooted in the differing bias-variance trade-offs associated with these two cross-validation schemes: While the leave-one-out scheme may be less biased, it has much greater variance (since only a single unit is included in the validation set). This difference becomes more obvious as <span class="math inline">\(n\)</span> becomes much greater than <span class="math inline">\(v\)</span>. With the <span class="math inline">\(V\)</span>-fold cross-validation scheme, we end up averaging risk estimates across the <span class="math inline">\(v\)</span> validation folds, which are typically less correlated than the risk estimates from the leave-one-out fits. Owing to the fact that the mean of many highly correlated quantities has higher variance, leave-one-out estimates of the risk will have higher variance than the corresponding estimates based on <span class="math inline">\(V\)</span>-fold cross-validation.</p>
-<p>Now, let’s see <span class="math inline">\(V\)</span>-fold cross-validation with <code>origami</code> in action! In the next chapter, we will turn to studying the Super Learner algorithm — an algorithm capable of selecting the “best” algorithm from among a large library of candidate learning algorithms – which we’d like to fit <em>and</em> evaluate the performance of. The Super Learner algorithm relies on <span class="math inline">\(V\)</span>-fold cross-validation as its default cross-validation scheme. In order to set up <span class="math inline">\(V\)</span>-fold cross-validation, we need to call <code>origami</code>’s <code>folds_vfold(n, V)</code> function. The two required arguments for <code>folds_vfold(n, V)</code> are the total number of sample units to be cross-validated and the number of folds we wish to have.</p>
-<p>For example, at <span class="math inline">\(V=2\)</span>, we will get two folds, each with approximately <span class="math inline">\(n/2\)</span> sampled units in the training and validation sets.</p>
+<section id="v-폴드-v-fold" class="level4" data-number="6.5.2.4">
+<h4 data-number="6.5.2.4" class="anchored" data-anchor-id="v-폴드-v-fold"><span class="header-section-number">6.5.2.4</span> <span class="math inline">\(V\)</span>-폴드 (<span class="math inline">\(V\)</span>-fold)</h4>
+<p>하나 빼기 체계의 대안은 <span class="math inline">\(V\)</span>-폴드 교차 검증입니다. 이 교차 검증 체계는 데이터셋을 동일한(또는 거의 동일한) 크기의 <span class="math inline">\(V\)</span>개 분할로 무작위로 나눕니다. 각 분할 <span class="math inline">\(v=1,\ldots,V\)</span>에 대해, <span class="math inline">\(v\)</span>번째 폴드는 <span class="math inline">\(v\)</span>번째 분할(폴드 <span class="math inline">\(v\)</span>에 대한 검증 세트를 정의함)과 <span class="math inline">\(v\)</span>번째 분할의 여집합(폴드 <span class="math inline">\(v\)</span>에 대한 훈련 세트를 정의함)으로 정의됩니다. 알고리즘은 <span class="math inline">\(V\)</span>개의 각 훈련 세트에 대해 별도로 <span class="math inline">\(V\)</span>번 적합됩니다. 각 폴드의 적합된 알고리즘의 리스크는 검증 세트에서 얻은 예측을 통해 평가됩니다. 적합된 알고리즘에 대한 교차 검증된 리스크(예: MSE)는 모든 폴드에 대한 평균 리스크입니다. <span class="math inline">\(V\)</span>-폴드 교차 검증을 사용하면 훈련 및 검증 단계에서 모든 관찰값이 사용되므로 후보 학습 알고리즘이 데이터의 하위 집합(예: 특정 훈련 세트)에만 과적합되는 것을 방지할 수 있습니다.</p>
+<p><span class="math inline">\(n\)</span>개의 샘플 단위가 있는 데이터셋에서 <span class="math inline">\(v=n\)</span>인 <span class="math inline">\(V\)</span>-폴드 교차 검증은 단순히 하나 빼기로 축소됩니다. 마찬가지로 <span class="math inline">\(n=1\)</span>로 설정하면 후보 학습 알고리즘의 성능에 대한 홀드아웃 방법의 추정치를 얻을 수 있습니다. 계산상의 이점 외에도 <span class="math inline">\(V\)</span>-폴드 교차 검증은 종종 기저의 참 리스크에 대해 더 정확한 추정치를 제공합니다. 이는 이 두 교차 검증 체계와 관련된 서로 다른 편향-분산 트레이드오프(bias-variance trade-offs)에 기인합니다. 하나 빼기 체계는 편향이 적을 수 있지만, 분산이 훨씬 큽니다(검증 세트에 단 하나의 단위만 포함되기 때문). 이 차이는 <span class="math inline">\(n\)</span>이 <span class="math inline">\(v\)</span>보다 훨씬 커질수록 더 분명해집니다. <span class="math inline">\(V\)</span>-폴드 교차 검증 체계를 사용하면 <span class="math inline">\(v\)</span>개의 검증 폴드에 대해 리스크 추정치를 평균 내게 되는데, 이들은 일반적으로 하나 빼기 적합에서 얻은 리스크 추정치보다 상관관계가 적습니다. 상관관계가 높은 많은 수량의 평균은 더 높은 분산을 갖는다는 사실 때문에, 하나 빼기 리스크 추정치는 <span class="math inline">\(V\)</span>-폴드 교차 검증 기반의 해당 추정치보다 더 높은 분산을 갖게 됩니다.</p>
+<p>이제 <code>origami</code>를 사용한 <span class="math inline">\(V\)</span>-폴드 교차 검증이 실제로 작동하는 모습을 봅시다! 다음 장에서는 대규모 후보 학습 알고리즘 라이브러리 중에서 “최고의” 알고리즘을 선택할 수 있는 알고리즘인 슈퍼 러너 알고리즘을 공부할 것이며, 우리는 그 성능을 적합시키고 평가하고자 합니다. 슈퍼 러너 알고리즘은 기본 교차 검증 체계로 <span class="math inline">\(V\)</span>-폴드 교차 검증에 의존합니다. <span class="math inline">\(V\)</span>-폴드 교차 검증을 설정하려면 <code>origami</code>의 <code>folds_vfold(n, V)</code> 함수를 호출해야 합니다. <code>folds_vfold(n, V)</code>에 필요한 두 개의 인자는 교차 검증될 총 샘플 단위 수와 원하는 폴드 수입니다.</p>
+<p>예를 들어 <span class="math inline">\(V=2\)</span>이면 각각 훈련 및 검증 세트에 약 <span class="math inline">\(n/2\)</span>개의 샘플 단위를 가진 두 개의 폴드를 얻게 됩니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -800,22 +823,20 @@ and validation folds?
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 </section>
-<section id="monte-carlo" class="level4" data-number="2.5.1.5">
-<h4 data-number="2.5.1.5" class="anchored" data-anchor-id="monte-carlo"><span class="header-section-number">2.5.1.5</span> Monte Carlo</h4>
-<p>In the Monte Carlo cross-validation scheme, we randomly select some fraction of the data, <em>without replacement</em>, to form the training set, assigning the remainder of the sampled units to the validation set. In this way, the dataset is randomly divided into two independent splits: A training set of <span class="math inline">\(n_0 = n
-\cdot (1 - p)\)</span> observations and a validation set of <span class="math inline">\(n_1 = n \cdot p\)</span> observations. By repeating this procedure many times, the Monte Carlo cross-validation scheme generates, at random, many training and validation partitions of the dataset.</p>
-<p>Since the partitions are independent across folds, the same observational unit can appear in the validation set multiple times; note that this is a stark difference between the Monte Carlo and <span class="math inline">\(V\)</span>-fold cross-validation schemes. For a given sampling fraction <span class="math inline">\(p\)</span>, the Monte Carlo cross-validation scheme would be optimal if repeated infinitely many times — of course, this is not computationally feasible. With Monte Carlo cross-validation, it is possible to explore many more partitions of the dataset than with <span class="math inline">\(V\)</span>-fold cross-validation, resulting in (possibly) less variable estimates of the risk (across partitions), though this comes at the cost of an increase in bias (because the splits are correlated). Because Monte Carlo cross-validation generates many splits with overlaps in the sampled units, more splits (and thus more computational time) will be necessary to achieve the level of performance (in terms of unbiasedness) that the <span class="math inline">\(V\)</span>-fold cross-validation scheme achieves with only <span class="math inline">\(V\)</span> splits.</p>
-<p>We illustrate the usage of the Monte Carlo cross-validation scheme with <code>origami</code> below, using the <code>folds_montecarlo(n, V, pvalidation)</code> function. In order to set up <code>folds_montecarlo(n, V, pvalidation)</code>, we need the following,</p>
+<section id="몬테카를로-monte-carlo" class="level4" data-number="6.5.2.5">
+<h4 data-number="6.5.2.5" class="anchored" data-anchor-id="몬테카를로-monte-carlo"><span class="header-section-number">6.5.2.5</span> 몬테카를로 (Monte Carlo)</h4>
+<p>몬테카를로 교차 검증 체계에서는 데이터의 일부를 _비복원 추출_로 무작위 선택하여 훈련 세트를 형성하고, 나머지 샘플 단위를 검증 세트에 할당합니다. 이런 방식으로 데이터셋은 두 개의 독립적인 분할로 무작위 분할됩니다. <span class="math inline">\(n_0 = n \cdot (1 - p)\)</span>개의 관찰값으로 구성된 훈련 세트와 <span class="math inline">\(n_1 = n \cdot p\)</span>개의 관찰값으로 구성된 검증 세트입니다. 이 절차를 여러 번 반복함으로써 몬테카를로 교차 검증 체계는 데이터셋의 많은 훈련 및 검증 파티션을 무작위로 생성합니다.</p>
+<p>파티션이 폴드 간에 독립적이므로 동일한 관찰 단위가 검증 세트에 여러 번 나타날 수 있습니다. 이는 몬테카를로와 <span class="math inline">\(V\)</span>-폴드 교차 검증 체계 사이의 극명한 차이점임에 유의하십시오. 주어진 샘플링 비율 <span class="math inline">\(p\)</span>에 대해 몬테카를로 교차 검증 체계는 무한히 반복된다면 최적일 것입니다 — 물론 이는 계산상 불가능합니다. 몬테카를로 교차 검증을 사용하면 <span class="math inline">\(V\)</span>-폴드 교차 검증보다 데이터셋의 훨씬 더 많은 파티션을 탐색할 수 있으며, 그 결과 리스크에 대해 (파티션 간에) 가변성이 덜한 추정치를 얻을 수 있습니다(물론 이는 분할이 상관되어 있기 때문에 편향이 증가하는 대가를 치릅니다). 몬테카를로 교차 검증은 샘플 단위가 중복되는 많은 분할을 생성하기 때문에, <span class="math inline">\(V\)</span>-폴드 교차 검증 체계가 단 <span class="math inline">\(V\)</span>개의 분할로 달성하는 수준의 성능(비편향성 측면에서)을 달성하려면 더 많은 분할(따라서 더 많은 계산 시간)이 필요할 것입니다.</p>
+<p>아래에서 <code>folds_montecarlo(n, V, pvalidation)</code> 함수를 사용하여 <code>origami</code>로 몬테카를로 교차 검증 체계의 사용법을 보여줍니다. <code>folds_montecarlo(n, V, pvalidation)</code>를 설정하려면 다음이 필요합니다.</p>
 <ol type="1">
-<li>the total number of observations we wish to cross-validate;</li>
-<li>the number of folds; and</li>
-<li>the proportion of observations to be placed in the validation set.</li>
+<li>교차 검증하고자 하는 총 관찰값 수</li>
+<li>폴드 수</li>
+<li>검증 세트에 배치할 관찰값의 비율</li>
 </ol>
-<p>For example, setting <span class="math inline">\(V=2\)</span> and <span class="math inline">\(pvalidation = 0.2\)</span>, we obtain two folds, each with approximately <span class="math inline">\(6\)</span> sampled units in the validation set for each fold.</p>
+<p>예를 들어 <span class="math inline">\(V=2\)</span> 및 <span class="math inline">\(pvalidation = 0.2\)</span>로 설정하면 각 폴드에 대해 검증 세트에 약 6개의 샘플 단위를 가진 두 개의 폴드를 얻습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -847,22 +868,20 @@ and validation folds?
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 </section>
-<section id="bootstrap" class="level4" data-number="2.5.1.6">
-<h4 data-number="2.5.1.6" class="anchored" data-anchor-id="bootstrap"><span class="header-section-number">2.5.1.6</span> Bootstrap</h4>
-<p>Like the Monte Carlo cross-validation scheme, the bootstrap cross-validation scheme also consists of randomly selecting sampled units, <em>with replacement</em>, for the training set; the rest of the sampled units are allocated to the validation set. This process is then repeated multiple times, generating (at random) new training and validation partitions of the dataset each time. In contrast to the Monte Carlo cross-validation scheme, the total number of sampled units in training and validation sets (i.e., the sizes of the two partitions) across folds is not held constant. Also, as the name suggests, sampling is performed with replacement (as in the bootstrap <span class="citation" data-cites="davison1997bootstrap">(<a href="#ref-davison1997bootstrap" role="doc-biblioref">Davison and Hinkley 1997</a>)</span>), hence the exact same observational units may be included in multiple training sets. The proportion of observational units in the validation sets is a random variable, with expectation <span class="math inline">\(\sim 0.368\)</span>. <!--
-nh: I don't follow the last bit about the proportion -- might be that I'm
-missing something but it seems to be coming out of nowhere
+<section id="부트스트랩-bootstrap" class="level4" data-number="6.5.2.6">
+<h4 data-number="6.5.2.6" class="anchored" data-anchor-id="부트스트랩-bootstrap"><span class="header-section-number">6.5.2.6</span> 부트스트랩 (Bootstrap)</h4>
+<p>몬테카를로 교차 검증 체계와 마찬가지로 부트스트랩 교차 검증 체계도 훈련 세트를 위해 샘플 단위를 _복원 추출_로 무작위 선택하며, 나머지 샘플 단위는 검증 세트에 할당됩니다. 그런 다음 이 과정을 여러 번 반복하여 매번 데이터셋의 새로운 훈련 및 검증 파티션을 (무작위로) 생성합니다. 몬테카를로 교차 검증 체계와 달리 폴드 간에 훈련 및 검증 세트의 총 샘플 단위 수(즉, 두 파티션의 크기)가 일정하게 유지되지 않습니다. 또한 이름에서 알 수 있듯이 추출은 복원 추출(부트스트랩 <span class="citation" data-cites="davison1997bootstrap">(<a href="#ref-davison1997bootstrap" role="doc-biblioref">Davison and Hinkley 1997</a>)</span>에서와 같이)로 수행되므로 정확히 동일한 관찰 단위가 여러 훈련 세트에 포함될 수 있습니다. 검증 세트 내 관찰 단위의 비율은 무작위 변수이며, 기댓값은 약 <span class="math inline">\(0.368\)</span>입니다. <!--
+nh: 비율에 대한 마지막 부분은 잘 이해가 가지 않습니다 -- 제가 무언가 놓치고 있는 것 같지만 난데없이 튀어나온 것 같습니다.
 --></p>
-<p>We illustrate the usage of the bootstrap cross-validation scheme with <code>origami</code> below, using the <code>folds_bootstrap(n, V)</code> function. In order to set up <code>folds_bootstrap(n, V)</code>, we need to specify the following arguments:</p>
+<p>아래에서 <code>folds_bootstrap(n, V)</code> 함수를 사용하여 <code>origami</code>로 부트스트랩 교차 검증 체계의 사용법을 보여줍니다. <code>folds_bootstrap(n, V)</code>를 설정하려면 다음 인자를 지정해야 합니다.</p>
 <ol type="1">
-<li>the total number of observations we wish to cross-validate; and</li>
-<li>the number of folds.</li>
+<li>교차 검증하고자 하는 총 관찰값 수</li>
+<li>폴드 수</li>
 </ol>
-<p>For example, setting <span class="math inline">\(V=2\)</span>, we obtain two folds, each with different numbers of sampled units in the validation sets across the folds.</p>
+<p>예를 들어 <span class="math inline">\(V=2\)</span>로 설정하면 폴드 간에 검증 세트의 샘플 단위 수가 서로 다른 두 개의 폴드를 얻습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -896,24 +915,22 @@ missing something but it seems to be coming out of nowhere
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 <!--
 RP:
-Should we add stratified cross-validation and clustered cross-validation
-examples with origami? I think these are both pretty common
+origami를 사용한 층화 교차 검증(stratified cross-validation) 및 클러스터 교차 검증(clustered cross-validation) 예시를 추가해야 할까요? 둘 다 꽤 흔하다고 생각합니다.
 -->
 </section>
 </section>
-<section id="cross-validation-for-time-series-data" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="cross-validation-for-time-series-data"><span class="header-section-number">2.5.2</span> Cross-validation for Time-series Data</h3>
-<p>The <code>origami</code> package also supports numerous cross-validation schemes for time-series data, for both single and multiple time-series with arbitrary time and network dependence.</p>
+<section id="시계열-데이터를-위한-교차-검증" class="level3" data-number="6.5.3">
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="시계열-데이터를-위한-교차-검증"><span class="header-section-number">6.5.3</span> 시계열 데이터를 위한 교차 검증</h3>
+<p><code>origami</code> 패키지는 임의의 시간 및 네트워크 종속성을 갖는 단일 및 다중 시계열 모두에 대해 시계열 데이터를 위한 수많은 교차 검증 체계도 지원합니다.</p>
 </section>
-<section id="airpassenger-data-example" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="airpassenger-data-example"><code>AirPassenger</code> Data Example</h3>
-<p>In order to illustrate different cross-validation schemes for time-series, we will be using the <em>AirPassenger</em> data; this is a widely used, freely available dataset. The <em>AirPassenger</em> dataset, included in <code>R</code>, provides monthly totals of international airline passengers between the years 1949 and 1960.</p>
-<p><strong>Goal:</strong> we want to forecast the number of airline passengers at time <span class="math inline">\(h\)</span> horizon using the historical data from 1949 to 1960.</p>
+<section id="airpassenger-데이터-예제" class="level3" data-number="6.5.4">
+<h3 data-number="6.5.4" class="anchored" data-anchor-id="airpassenger-데이터-예제"><span class="header-section-number">6.5.4</span> <code>AirPassenger</code> 데이터 예제</h3>
+<p>시계열을 위한 다양한 교차 검증 체계를 설명하기 위해 널리 사용되고 무료로 제공되는 데이터셋인 <em>AirPassenger</em> 데이터를 사용하겠습니다. <code>R</code>에 포함된 <em>AirPassenger</em> 데이터셋은 1949년부터 1960년 사이의 국제선 항공기 승객의 월별 총계를 제공합니다.</p>
+<p><strong>목표:</strong> 1949년부터 1960년까지의 과거 데이터를 사용하여 시점 <span class="math inline">\(h\)</span> 이후의 항공기 승객 수를 예측하고자 합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -924,9 +941,9 @@ examples with origami? I think these are both pretty common
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(AP) <span class="sc">+</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Passenger numbers (1000's)"</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Air Passengers from 1949 to 1961"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"날짜"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"승객 수 (1000명 단위)"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"1949년부터 1961년까지의 항공 승객 수"</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">length</span>(AP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -939,28 +956,28 @@ examples with origami? I think these are both pretty common
 </div>
 </div>
 </div>
-<section id="rolling-origin" class="level4" data-number="2.5.2.1">
-<h4 data-number="2.5.2.1" class="anchored" data-anchor-id="rolling-origin"><span class="header-section-number">2.5.2.1</span> Rolling origin</h4>
-<p>The rolling origin cross-validation scheme lends itself to “online” learning algorithms, in which large streams of data have to be fit continually (respecting time), where the fit of the learning algorithm is (constantly) updated as more data accrues. In general, the rolling origin scheme defines an initial training set, and, with each iteration, the size of the training set grows by a batch of <span class="math inline">\(m\)</span> observations, the size of the validation set remains constant, there might be a gap between training and validation times of size <span class="math inline">\(h\)</span> (a lag window), and new folds are added until time <span class="math inline">\(t\)</span> is reached in the validation set. The time points included in the training set always lag behind behind those in the validation set.</p>
-<p>To further illustrate rolling origin cross-validation, we show below an example that yields three folds. Here, the first window size is fifteen time points, on which we first train the candidate learning algorithm. We then evaluate its performance on ten time points with a gap (<span class="math inline">\(h\)</span>) of five time points between the training and validation sets.</p>
-<p>In the following, we train the learning algorithm on a longer stream of data, 25 time points, including the original fifteen with which we initially started. Then, we evaluate its performance at a (temporal) distance ten time points ahead.</p>
+<section id="롤링-오리진-rolling-origin" class="level4" data-number="6.5.4.1">
+<h4 data-number="6.5.4.1" class="anchored" data-anchor-id="롤링-오리진-rolling-origin"><span class="header-section-number">6.5.4.1</span> 롤링 오리진 (Rolling origin)</h4>
+<p>롤링 오리진 교차 검증 체계는 대규모 데이터 스트림을 지속적으로(시간을 준수하며) 적합시켜야 하는 “온라인” 학습 알고리즘에 적합하며, 데이터가 더 쌓임에 따라 학습 알고리즘의 적합이 (끊임없이) 업데이트됩니다. 일반적으로 롤링 오리진 체계는 초기 훈련 세트를 정의하며, 각 반복마다 훈련 세트의 크기가 <span class="math inline">\(m\)</span>개의 관찰값 배치만큼 커지고, 검증 세트의 크기는 일정하게 유지되며, 훈련 시간과 검증 시간 사이에 크기 <span class="math inline">\(h\)</span>의 간격(지연 창, lag window)이 있을 수 있으며, 검증 세트에서 시점 <span class="math inline">\(t\)</span>에 도달할 때까지 새로운 폴드가 추가됩니다. 훈련 세트에 포함된 시점은 항상 검증 세트의 시점보다 뒤쳐집니다.</p>
+<p>롤링 오리진 교차 검증을 더 자세히 설명하기 위해 아래에 세 개의 폴드를 생성하는 예시를 보여줍니다. 여기서 첫 번째 창 크기는 15개 시점이며, 여기서 먼저 후보 학습 알고리즘을 훈련시킵니다. 그런 다음 훈련 세트와 검증 세트 사이에 5개 시점의 간격(<span class="math inline">\(h\)</span>)을 두고 10개 시점에 대해 성능을 평가합니다.</p>
+<p>다음으로, 처음에 시작했던 원래의 15개를 포함하여 더 긴 데이터 스트림인 25개 시점에서 학습 알고리즘을 훈련시킵니다. 그런 다음 (시간적) 거리로 10개 시점 앞선 위치에서 성능을 평가합니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/rolling_origin.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Rolling origin CV</figcaption>
+<p><img src="img/png/rolling_origin.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>롤링 오리진 CV</figcaption>
 </figure>
 </div>
 </div>
-<p>We illustrate the usage of the rolling origin cross-validation scheme with <code>origami</code> below, using the <code>folds_rolling_origin(n, first_window, validation_size, gap, batch)</code> function. In order to set up <code>folds_rolling_origin(n, first_window, validation_size, gap, batch)</code>, we need the following,</p>
+<p>아래에서 <code>folds_rolling_origin(n, first_window, validation_size, gap, batch)</code> 함수를 사용하여 <code>origami</code>로 롤링 오리진 교차 검증 체계의 사용법을 보여줍니다. <code>folds_rolling_origin(n, first_window, validation_size, gap, batch)</code>을 설정하려면 다음이 필요합니다.</p>
 <ol type="1">
-<li>the total number of time points we wish to cross-validate (<code>n</code>);</li>
-<li>the size of the first training set (<code>first_window</code>);</li>
-<li>the size of the validation set (<code>validation_size</code>);</li>
-<li>the gap between training and validation set(<code>gap</code>); and</li>
-<li>the size of the training set update per iteration of cross-validation (<code>batch</code>).</li>
+<li>교차 검증하고자 하는 총 시점 수 (<code>n</code>)</li>
+<li>첫 번째 훈련 세트의 크기 (<code>first_window</code>)</li>
+<li>검증 세트의 크기 (<code>validation_size</code>)</li>
+<li>훈련 세트와 검증 세트 사이의 간격 (<code>gap</code>)</li>
+<li>교차 검증 반복당 훈련 세트 업데이트 크기 (<code>batch</code>)</li>
 </ol>
-<p>Our time-series has <span class="math inline">\(t=144\)</span> time points. Setting <code>first_window</code> to <span class="math inline">\(50\)</span>, <code>validation_size</code> to 10, <code>gap</code> to 5, and <code>batch</code> to 20 yields four time-series folds; we show the first two below.</p>
+<p>우리의 시계열은 <span class="math inline">\(t=144\)</span>개 시점을 가집니다. <code>first_window</code>를 <span class="math inline">\(50\)</span>, <code>validation_size</code>를 10, <code>gap</code>을 5, <code>batch</code>를 20으로 설정하면 4개의 시계열 폴드가 생성됩니다. 아래에 처음 두 개를 보여줍니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -998,31 +1015,30 @@ examples with origami? I think these are both pretty common
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 </section>
-<section id="rolling-window" class="level4" data-number="2.5.2.2">
-<h4 data-number="2.5.2.2" class="anchored" data-anchor-id="rolling-window"><span class="header-section-number">2.5.2.2</span> Rolling window</h4>
-<p>Rather than adding more and more time points to the training set in each iteration of cross-validation (as under the rolling origin scheme), the rolling window cross-validation scheme “rolls” the training sample forward in time by <span class="math inline">\(m\)</span> units (of time). This strategy can be useful, for example, in settings with parametric learning algorithms, which are often very sensitive to moment (e.g., mean, variance) or parameter drift, which is itself challenging to explicitly account for in the model construction step. The rolling window scheme is also computationally more efficient, and possibly warranted over rolling origin when working in streaming data analysis where the training data is too large for convenient access. In contrast to the rolling origin scheme, the sampled units in the training set are always the same for each iteration of the rolling window scheme.</p>
-<p>The illustration below depicts rolling window cross-validation using three time-series folds. The first window size is 15 time points, on which we first train the candidate learning algorithm. As in the previous illustration, we evaluate its performance on 10 time points, with a gap of size 5 time points between the training and validation sets. However, for the next fold, we train the learning algorithm on time points further away from the origin (here, 10 time points). Note that the size of the training set in the new fold is the same as in the first fold (both include 15 time points). This setup keeps the training sets comparable over time (and across folds), unlike under the rolling origin cross-validation scheme. We then evaluate the performance of the candidate learning algorithm on 10 time points in the future.</p>
+<section id="롤링-윈도우-rolling-window" class="level4" data-number="6.5.4.2">
+<h4 data-number="6.5.4.2" class="anchored" data-anchor-id="롤링-윈도우-rolling-window"><span class="header-section-number">6.5.4.2</span> 롤링 윈도우 (Rolling window)</h4>
+<p>교차 검증의 각 반복에서 훈련 세트에 점점 더 많은 시점을 추가하는 대신(롤링 오리진 체계에서와 같이), 롤링 윈도우 교차 검증 체계는 훈련 샘플을 시간상 <span class="math inline">\(m\)</span> 단위(시간 단위)만큼 앞으로 “굴립니다(rolls)”. 이 전략은 예를 들어 모멘트(예: 평균, 분산) 또는 파라미터 드리프트(drift)에 매우 민감한 모수적 학습 알고리즘이 있는 환경에서 유용할 수 있으며, 드리프트 자체는 모델 구축 단계에서 명시적으로 설명하기 어렵습니다. 롤링 윈도우 체계는 또한 계산적으로 더 효율적이며, 훈련 데이터가 너무 커서 편리하게 접근할 수 없는 스트리밍 데이터 분석에서 작업할 때 롤링 오리진보다 정당화될 수 있습니다. 롤링 오리진 체계와 달리 롤링 윈도우 체계의 각 반복에서 훈련 세트의 샘플 단위 수는 항상 동일합니다.</p>
+<p>아래 그림은 세 개의 시계열 폴드를 사용한 롤링 윈도우 교차 검증을 묘사합니다. 첫 번째 창 크기는 15개 시점이며, 여기서 먼저 후보 학습 알고리즘을 훈련시킵니다. 이전 그림에서와 같이 훈련 세트와 검증 세트 사이에 크기 5개 시점의 간격을 두고 10개 시점에서 성능을 평가합니다. 그러나 다음 폴드에서는 오리진(기점)에서 더 멀어진 시점(여기서는 10개 시점)에서 학습 알고리즘을 훈련시킵니다. 새로운 폴드에서의 훈련 세트 크기는 첫 번째 폴드와 동일함(둘 다 15개 시점 포함)에 유의하십시오. 이 설정은 롤링 오리진 교차 검증 체계와 달리 시간이 지남에 따라(그리고 폴드 전체에 걸쳐) 훈련 세트를 비교 가능하게 유지합니다. 그런 다음 미래의 10개 시점에서 후보 학습 알고리즘의 성능을 평가합니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/rolling_window.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Rolling window CV</figcaption>
+<p><img src="img/png/rolling_window.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>롤링 윈도우 CV</figcaption>
 </figure>
 </div>
 </div>
-<p>We demonstrate the usage of the rolling window cross-validation scheme with <code>origami</code> below, using the <code>folds_rolling_window(n, window_size, validation_size, gap, batch)</code> function. In order to set up <code>folds_rolling_window(n, window_size, validation_size, gap, batch)</code>, we need to specify the following arguments:</p>
+<p>아래에서 <code>folds_rolling_window(n, window_size, validation_size, gap, batch)</code> 함수를 사용하여 <code>origami</code>로 롤링 윈도우 교차 검증 체계의 사용법을 시연합니다. <code>folds_rolling_window(n, window_size, validation_size, gap, batch)</code>를 설정하려면 다음 인자를 지정해야 합니다.</p>
 <ol type="1">
-<li>the total number of time points we wish to cross-validate (<code>n</code>);</li>
-<li>the size of the training sets (<code>window_size</code>);</li>
-<li>the size of the validation set (<code>validation_size</code>);</li>
-<li>the gap between training and validation set (<code>gap</code>); and</li>
-<li>the size of the training set update per iteration of cross-validation (<code>batch</code>).</li>
+<li>교차 검증하고자 하는 총 시점 수 (<code>n</code>)</li>
+<li>훈련 세트의 크기 (<code>window_size</code>)</li>
+<li>검증 세트의 크기 (<code>validation_size</code>)</li>
+<li>훈련 세트와 검증 세트 사이의 간격 (<code>gap</code>)</li>
+<li>교차 검증 반복당 훈련 세트 업데이트 크기 (<code>batch</code>)</li>
 </ol>
-<p>Setting the <code>window_size</code> to <span class="math inline">\(50\)</span>, <code>validation_size</code> to 10, <code>gap</code> to 5 and <code>batch</code> to 20, we also get 4 time-series folds; we show the first two below.</p>
+<p><code>window_size</code>를 <span class="math inline">\(50\)</span>, <code>validation_size</code>를 10, <code>gap</code>을 5, <code>batch</code>를 20으로 설정하면 마찬가지로 4개의 시계열 폴드를 얻습니다. 아래에 처음 두 개를 보여줍니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1059,59 +1075,58 @@ and validation folds?
 </details>
 </div>
 <!--
-nh: should we comment briefly on the displayed structure of the training
-and validation folds?
+nh: 표시된 훈련 및 검증 폴드 구조에 대해 간략하게 코멘트해야 할까요?
 -->
 </section>
-<section id="rolling-origin-with-v-fold" class="level4" data-number="2.5.2.3">
-<h4 data-number="2.5.2.3" class="anchored" data-anchor-id="rolling-origin-with-v-fold"><span class="header-section-number">2.5.2.3</span> Rolling origin with <span class="math inline">\(V\)</span>-fold</h4>
-<p>A variant of the rolling origin cross-validation scheme, accounting for sample dependence, is the rolling-origin-<span class="math inline">\(V\)</span>-fold cross-validation scheme. In contrast to the canonical rolling origin scheme, under this hybrid scheme, sampled units in the training and validation sets are <em>not</em> the same, which this scheme accomplishes by incorporating <span class="math inline">\(V\)</span>-fold cross-validation within the time-series setup. Here, the learning algorithm’s predictions are evaluated on the future time points of the time-series observational units excluded from the training step, accommodating potential dependence not only across time but also across observational units. To use the rolling-origin-<span class="math inline">\(V\)</span>-fold cross-validation scheme with <code>origami</code>, we can invoke the <code>folds_vfold_rolling_origin_pooled(n, t, id, time, V, first_window, validation_size, gap, batch)</code> function. In the figure below, we show <span class="math inline">\(V=2\)</span> folds, alongside two time-series (rolling origin) cross-validation folds.</p>
+<section id="v-폴드가-결합된-롤링-오리진" class="level4" data-number="6.5.4.3">
+<h4 data-number="6.5.4.3" class="anchored" data-anchor-id="v-폴드가-결합된-롤링-오리진"><span class="header-section-number">6.5.4.3</span> <span class="math inline">\(V\)</span>-폴드가 결합된 롤링 오리진</h4>
+<p>샘플 의존성을 고려한 롤링 오리진 교차 검증 체계의 변형은 롤링 오리진-<span class="math inline">\(V\)</span>-폴드(rolling-origin-<span class="math inline">\(V\)</span>-fold) 교차 검증 체계입니다. 정통 롤링 오리진 체계와 달리, 이 하이브리드 체계 하에서는 훈련 세트와 검증 세트의 샘플 단위가 동일하지 <em>않으며</em>, 이 체계는 시계열 설정 내에 <span class="math inline">\(V\)</span>-폴드 교차 검증을 통합함으로써 이를 달성합니다. 여기서 학습 알고리즘의 예측은 훈련 단계에서 제외된 시계열 관찰 단위의 미래 시점에서 평가되어, 시간 경과에 따른 의존성뿐만 아니라 관찰 단위 간의 잠재적 의존성도 수용합니다. <code>origami</code>와 함께 롤링 오리진-<span class="math inline">\(V\)</span>-폴드 교차 검증 체계를 사용하려면 <code>folds_vfold_rolling_origin_pooled(n, t, id, time, V, first_window, validation_size, gap, batch)</code> 함수를 호출하면 됩니다. 아래 그림에서는 두 개의 시계열(롤링 오리진) 교차 검증 폴드와 함께 <span class="math inline">\(V=2\)</span> 폴드를 보여줍니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/rolling_origin_v_fold.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Rolling origin V-fold CV</figcaption>
+<p><img src="img/png/rolling_origin_v_fold.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>롤링 오리진 V-폴드 CV</figcaption>
 </figure>
 </div>
 </div>
 </section>
-<section id="rolling-window-with-v-fold" class="level4" data-number="2.5.2.4">
-<h4 data-number="2.5.2.4" class="anchored" data-anchor-id="rolling-window-with-v-fold"><span class="header-section-number">2.5.2.4</span> Rolling window with <span class="math inline">\(V\)</span>-fold</h4>
-<p>Just like the scheme described above, the rolling window approach, like the rolling origin approach, can be extended to support multiple time-series with arbitrary sample-level dependence by incorporating a <span class="math inline">\(V\)</span>-fold splitting component. This rolling-window-<span class="math inline">\(V\)</span>-fold cross-validation scheme can be used through <code>origami</code> via the <code>folds_vfold_rolling_window_pooled(n, t, id, time, V, window_size, validation_size, gap, batch)</code> function. The figure below displays <span class="math inline">\(V=2\)</span> folds and two time-series (rolling window) cross-validation folds.</p>
+<section id="v-폴드가-결합된-롤링-윈도우" class="level4" data-number="6.5.4.4">
+<h4 data-number="6.5.4.4" class="anchored" data-anchor-id="v-폴드가-결합된-롤링-윈도우"><span class="header-section-number">6.5.4.4</span> <span class="math inline">\(V\)</span>-폴드가 결합된 롤링 윈도우</h4>
+<p>위에서 설명한 체계와 마찬가지로 롤링 윈도우 방식도 롤링 오리진 방식과 마찬가지로 <span class="math inline">\(V\)</span>-폴드 분할 구성 요소를 통합함으로써 임의의 샘플 수준 의존성을 갖는 다중 시계열을 지원하도록 확장될 수 있습니다. 이 롤링 윈도우-<span class="math inline">\(V\)</span>-폴드 교차 검증 체계는 <code>origami</code>에서 <code>folds_vfold_rolling_window_pooled(n, t, id, time, V, window_size, validation_size, gap, batch)</code> 함수를 통해 사용될 수 있습니다. 아래 그림은 <span class="math inline">\(V=2\)</span> 폴드와 두 개의 시계열(롤링 윈도우) 교차 검증 폴드를 보여줍니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="../img/png/rolling_window_v_fold.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption>Rolling window V-fold CV</figcaption>
+<p><img src="img/png/rolling_window_v_fold.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>롤링 윈도우 V-폴드 CV</figcaption>
 </figure>
 </div>
 </div>
 </section>
 </section>
 </section>
-<section id="general-workflow-of-origami" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="general-workflow-of-origami"><span class="header-section-number">2.6</span> General workflow of <code>origami</code></h2>
-<p>Before we dive into more details, let’s take a moment to review some of the basic functionality in the <code>origami</code> <code>R</code> package. The main workhorse function in <code>origami</code> is <code>cross_validate()</code>. To start off, the user must define the fold structure and a function that operates on each fold (this <code>cv_fun()</code>, in <code>origami</code>’s parlance, usually dictates how the candidate learning algorithm is trained and its predictions validated).</p>
-<p>Once passed to <code>cross_validate()</code>, the workhorse function will iteratively apply the specified function (i.e., <code>cv_fun()</code>) to each fold, combining the fold-specific results in a meaningful way. We will see this in action in later sections — for now, we provide specific details on each each step of this process below.</p>
-<section id="define-folds" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="define-folds"><span class="header-section-number">2.6.1</span> (1) Define folds</h3>
-<p>The <code>folds</code> object passed to <code>cross_validate</code> is a <code>list</code> of folds; such <code>list</code> objects are generated using the <code>make_folds()</code> helper function. Each fold consists of a <code>list</code> with a <code>"training"</code> index vector, a <code>"validation"</code> index vector, and a <code>"fold_index"</code> (its order in the overall <code>list</code> of folds). The <code>make_folds()</code> function supports a variety of cross-validation schemes, described in the preceding section. The <code>make_folds()</code> function can also ensure balance across levels of a given variable (through the <code>strata_ids</code> arguments), and it can also keep all observations on the same independent unit together (via the <code>cluster_ids</code> argument).</p>
+<section id="origami의-일반적인-워크플로" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="origami의-일반적인-워크플로"><span class="header-section-number">6.6</span> <code>origami</code>의 일반적인 워크플로</h2>
+<p>더 자세한 내용을 살펴보기 전에 <code>origami</code> <code>R</code> 패키지의 몇 가지 기본 기능을 검토해 보겠습니다. <code>origami</code>에서 주로 사용되는 함수는 <code>cross_validate()</code>입니다. 우선 사용자는 폴드 구조와 각 폴드에서 작동하는 함수를 정의해야 합니다(이 <code>cv_fun()</code>은 <code>origami</code> 용어로 대개 후보 학습 알고리즘이 어떻게 훈련되고 그 예측이 어떻게 검증되는지를 규정합니다).</p>
+<p><code>cross_validate()</code>에 전달되면, 이 핵심 함수는 지정된 함수(즉, <code>cv_fun()</code>)를 각 폴드에 반복적으로 적용하여 폴드별 결과를 의미 있는 방식으로 결합합니다. 나중에 실제 작동 모습을 보게 될 것입니다 — 지금은 아래에서 이 프로세스의 각 단계에 대한 구체적인 세부 사항을 제공합니다.</p>
+<section id="폴드-정의" class="level3" data-number="6.6.1">
+<h3 data-number="6.6.1" class="anchored" data-anchor-id="폴드-정의"><span class="header-section-number">6.6.1</span> (1) 폴드 정의</h3>
+<p><code>cross_validate</code>에 전달되는 <code>folds</code> 객체는 폴드들의 <code>list</code>입니다. 이러한 <code>list</code> 객체는 <code>make_folds()</code> 도우미 함수를 사용하여 생성됩니다. 각 폴드는 <code>"training"</code> 인덱스 벡터, <code>"validation"</code> 인덱스 벡터 및 <code>"fold_index"</code>(전체 폴드 <code>list</code>에서의 순서)가 포함된 <code>list</code>로 구성됩니다. <code>make_folds()</code> 함수는 이전 섹션에서 설명한 다양한 교차 검증 체계를 지원합니다. <code>make_folds()</code> 함수는 또한 (<code>strata_ids</code> 인자를 통해) 특정 변수의 수준 간 균형을 보장할 수 있으며, (<code>cluster_ids</code> 인자를 통해) 동일한 독립 단위에 대한 모든 관찰값을 함께 유지할 수도 있습니다.</p>
 </section>
-<section id="define-the-fold-function" class="level3" data-number="2.6.2">
-<h3 data-number="2.6.2" class="anchored" data-anchor-id="define-the-fold-function"><span class="header-section-number">2.6.2</span> (2) Define the fold function</h3>
-<p>The <code>cv_fun</code> argument to <code>cross_validate()</code> is a custom function that performs some operation on each fold (again, <em>usually</em> this specifies the training of the candidate learning algorithm and its evaluation on a given training/validation split, i.e., in a single fold). The first argument to this function is the <code>fold</code>, which specifies the indices of the units in a given training/validation split (note that this first argument is automatically passed to the <code>cv_fun()</code> by <code>cross_validate()</code>, which queries the folds object from <code>make_folds()</code> in doing so). Additional arguments can be passed to the <code>cv_fun()</code> through the <code>...</code> argument to <code>cross_validate()</code>. Within this function, the convenience functions <code>training()</code>, <code>validation()</code> and <code>fold_index()</code> can be used to return the various components of a fold object. When the <code>training()</code> or <code>validation()</code> functions are passed an object of a particular class, they will index that object in a sensible way. For instance, if the input object is a vector, these helper functions will index the vector directly, but if the input object is a <code>data.frame</code> or <code>matrix</code>, these functions will automatically index the rows. This allows the user to easily partition data into training and validation sets. The fold function must return a named <code>list</code> of results containing whatever fold-specific outputs are desired.</p>
+<section id="폴드-함수-정의" class="level3" data-number="6.6.2">
+<h3 data-number="6.6.2" class="anchored" data-anchor-id="폴드-함수-정의"><span class="header-section-number">6.6.2</span> (2) 폴드 함수 정의</h3>
+<p><code>cross_validate()</code>의 <code>cv_fun</code> 인자는 각 폴드에서 어떤 연산을 수행하는 사용자 정의 함수입니다(다시 말하지만, <em>대개</em> 이는 후보 학습 알고리즘의 훈련과 주어진 훈련/검증 분할, 즉 단일 폴드에서의 평가를 지정합니다). 이 함수의 첫 번째 인자는 <code>fold</code>이며, 이는 주어진 훈련/검증 분할에서의 단위 인덱스를 지정합니다(이 첫 번째 인자는 <code>cross_validate()</code>에 의해 자동으로 <code>cv_fun()</code>에 전달되며, 이때 <code>make_folds()</code>에서 생성된 폴드 객체를 쿼리합니다). 추가 인자는 <code>cross_validate()</code>의 <code>...</code> 인자를 통해 <code>cv_fun()</code>에 전달될 수 있습니다. 이 함수 내에서 편의 함수인 <code>training()</code>, <code>validation()</code> 및 <code>fold_index()</code>를 사용하여 폴드 객체의 다양한 구성 요소를 반환할 수 있습니다. <code>training()</code> 또는 <code>validation()</code> 함수에 특정 클래스의 객체가 전달되면, 해당 객체를 합리적인 방식으로 인덱싱합니다. 예를 들어 입력 객체가 벡터라면 이 도우미 함수들은 벡터를 직접 인덱싱하지만, 입력 객체가 <code>data.frame</code> 또는 <code>matrix</code>라면 이 함수들은 자동으로 행(row)을 인덱싱합니다. 이를 통해 사용자는 데이터를 훈련 세트와 검증 세트로 쉽게 나눌 수 있습니다. 폴드 함수는 저장하고자 하는 폴드별 출력이 무엇이든 포함하는 이름이 지정된 결과 <code>list</code>를 반환해야 합니다.</p>
 </section>
-<section id="apply-cross_validate" class="level3" data-number="2.6.3">
-<h3 data-number="2.6.3" class="anchored" data-anchor-id="apply-cross_validate"><span class="header-section-number">2.6.3</span> (3) Apply <code>cross_validate()</code></h3>
-<p>After defining the folds, the <code>cross_validate()</code> function can be used to map the <code>cv_fun()</code> across the <code>folds</code>; internally, this uses either <code>lapply()</code> or <code>future_lapply()</code> (a parallelized variant of the same). In this way, <code>cross_validate()</code> can be easily parallelized by specifying a parallelization scheme (i.e., a <code>plan</code> from the <a href="https://Cran.R-project.org/package=future">future parallelization framework for <code>R</code></a> <span class="citation" data-cites="bengtsson2021unifying">(<a href="#ref-bengtsson2021unifying" role="doc-biblioref">Bengtsson 2021</a>)</span>). The application of <code>cross_validate()</code> generates a list of results, matching the customized <code>list</code> specified in the relevant <code>cv_fun()</code>. As noted above, each call to <code>cv_fun()</code> itself returns a <code>list</code> of results, with different named slots for each type of result we wish to store. The main <code>cross_validate()</code> loop generates a <code>list</code> of these individual, fold-specific <code>list</code>s of results (a <code>list</code> of <code>list</code>s or “meta-list”). Internally, this “meta-list” is cleaned up (by concatenation) such that only a single slot per type of result specified by the <code>cv_fun()</code> is returned (this too is a <code>list</code> of the results for each fold). By default, the <code>combine_results()</code> helper function is used to combine the individual, fold-specific <code>list</code>s of results in a sensible manner. How results are combined is determined automatically by examining the data types of the results from the first fold. This can be modified by specifying a <code>list</code> of arguments in the <code>.combine_control</code> argument.</p>
+<section id="cross_validate-적용" class="level3" data-number="6.6.3">
+<h3 data-number="6.6.3" class="anchored" data-anchor-id="cross_validate-적용"><span class="header-section-number">6.6.3</span> (3) <code>cross_validate()</code> 적용</h3>
+<p>폴드를 정의한 후 <code>cross_validate()</code> 함수를 사용하여 <code>folds</code>에 걸쳐 <code>cv_fun()</code>을 매핑할 수 있습니다. 내부적으로 이는 <code>lapply()</code> 또는 <code>future_lapply()</code>(동일한 함수의 병렬화된 변형)를 사용합니다. 이런 방식으로 <code>cross_validate()</code>는 <a href="https://Cran.R-project.org/package=future"><code>R</code>을 위한 future 병렬화 프레임워크</a> <span class="citation" data-cites="bengtsson2021unifying">(<a href="#ref-bengtsson2021unifying" role="doc-biblioref">Bengtsson 2021</a>)</span>의 병렬화 체계(즉, <code>plan</code>)를 지정하여 쉽게 병렬화될 수 있습니다. <code>cross_validate()</code>의 적용은 관련 <code>cv_fun()</code>에서 지정된 사용자 정의 <code>list</code>와 일치하는 결과 리스트를 생성합니다. 위에서 언급했듯이, <code>cv_fun()</code>에 대한 각 호출은 저장하려는 각 결과 유형에 대해 이름이 지정된 슬롯이 있는 결과 <code>list</code>를 자체적으로 반환합니다. 메인 <code>cross_validate()</code> 루프는 이러한 개별 폴드별 결과 <code>list</code>들의 리스트(<code>list</code>들의 <code>list</code> 또는 “메타 리스트”)를 생성합니다. 내부적으로 이 “메타 리스트”는 <code>cv_fun()</code>에 의해 지정된 각 결과 유형당 단 하나의 슬롯만 반환되도록 (연결(concatenation)을 통해) 정리됩니다(이것 역시 각 폴드에 대한 결과들의 <code>list</code>입니다). 기본적으로 <code>combine_results()</code> 도우미 함수를 사용하여 개별 폴드별 결과 <code>list</code>들을 합리적인 방식으로 결합합니다. 결과가 어떻게 결합되는지는 첫 번째 폴드 결과의 데이터 유형을 검사하여 자동으로 결정됩니다. 이는 <code>.combine_control</code> 인자에 인자들의 <code>list</code>를 지정하여 수정할 수 있습니다.</p>
 </section>
 </section>
-<section id="cross-validation-in-action" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="cross-validation-in-action"><span class="header-section-number">2.7</span> Cross-validation in action</h2>
-<p>We’ve waited long enough. Now, let’s see <code>origami</code> in action! In the next chapter, we will learn how to use cross-validation with the Super Learner algorithm, and how we can utilize the power of cross-validation to build optimal ensembles of algorithms — going far beyond the application of cross-validation to a single statistical learning method.</p>
-<section id="cross-validation-with-linear-regression" class="level3" data-number="2.7.1">
-<h3 data-number="2.7.1" class="anchored" data-anchor-id="cross-validation-with-linear-regression"><span class="header-section-number">2.7.1</span> Cross-validation with linear regression</h3>
-<p>First, let’s load the relevant <code>R</code> packages, set a seed (for reproducibility), and once again load the WASH Benefits example dataset. For illustrative purposes, we’ll examine the application of cross-validation to simple linear regression with <code>origami</code>, focusing on predicting the weight-for-height Z-score (<code>whz</code>) using all of the other available covariates in the dataset. As mentioned before, we will assume the dataset contains only independent and identically distributed units, ignoring the clustering structure imposed by the trial design. For the sake of illustration, we will work with only a subset of the data, removing all observational units with missing covariate data from the analysis-ready dataset. In the prior chapter, we discussed how to deal with missingness.</p>
+<section id="교차-검증의-실제-활용" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="교차-검증의-실제-활용"><span class="header-section-number">6.7</span> 교차 검증의 실제 활용</h2>
+<p>오래 기다리셨습니다. 이제 <code>origami</code>가 실제로 작동하는 모습을 봅시다! 다음 장에서는 슈퍼 러너 알고리즘과 함께 교차 검증을 사용하는 방법, 그리고 단일 통계 학습 방법에 교차 검증을 적용하는 것을 훨씬 뛰어넘어 교차 검증의 힘을 활용하여 알고리즘의 최적 앙상블을 구축하는 방법을 배울 것입니다.</p>
+<section id="선형-회귀와-교차-검증" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="선형-회귀와-교차-검증"><span class="header-section-number">6.7.1</span> 선형 회귀와 교차 검증</h3>
+<p>먼저 관련 <code>R</code> 패키지를 로드하고, (재현성을 위해) 시드를 설정하고, 다시 한번 WASH Benefits 예제 데이터셋을 로드해 보겠습니다. 설명을 위해 <code>origami</code>를 사용한 단순 선형 회귀에 교차 검증을 적용하는 과정을 살펴보고, 데이터셋의 가용한 다른 모든 공변량을 사용하여 연령 대비 체중 Z-점수(<code>whz</code>)를 예측하는 데 집중하겠습니다. 앞서 언급했듯이, 임상 시험 설계에 의해 부과된 클러스터링 구조를 무시하고 데이터셋에 독립적이고 동일하게 분포된 단위만 포함되어 있다고 가정하겠습니다. 설명을 위해 분석용 데이터셋에서 공변량 데이터가 누락된 모든 관찰 단위를 제거하고 데이터의 하위 집합만 사용하여 작업하겠습니다. 이전 장에서 누락 데이터를 처리하는 방법을 논의했습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1119,7 +1134,7 @@ and validation folds?
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load data set and take a peek</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 데이터셋 로드 및 살펴보기</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> <span class="fu">fread</span>(</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/tlverse/tlverse-data/master/"</span>,</span>
@@ -1128,17 +1143,17 @@ and validation folds?
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># remove missing data with drop_na(), then pick just the first 500 rows</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># drop_na()로 누락 데이터 제거 후 처음 500개 행만 선택</span></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>washb_data <span class="ot">&lt;-</span> washb_data <span class="sc">%&gt;%</span></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>)</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># specify the outcome and covariates as character vectors</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 변수와 공변량을 문자열 벡터로 지정</span></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>outcome <span class="ot">&lt;-</span> <span class="st">"whz"</span></span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>covars <span class="ot">&lt;-</span> <span class="fu">colnames</span>(washb_data)[<span class="sc">-</span><span class="fu">which</span>(<span class="fu">names</span>(washb_data) <span class="sc">==</span> outcome)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Here’s a look at the data:</p>
+<p>데이터의 모습은 다음과 같습니다.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll;
@@ -1362,7 +1377,7 @@ height:300px; overflow-x: scroll; width:100%; ">
 </div>
 </div>
 </div>
-<p>Let’s remind ourselves of the covariates to be used in the prediction step:</p>
+<p>예측 단계에서 사용될 공변량을 상기해 봅시다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1376,7 +1391,7 @@ height:300px; overflow-x: scroll; width:100%; ">
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">25</span>] <span class="st">"asset_moto"</span>     <span class="st">"asset_sewmach"</span>  <span class="st">"asset_mobile"</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Next, let’s fit a simple main-terms linear regression model to the analysis-ready dataset. Here, our goal is to predict the weight-for-height Z-score (<code>"whz"</code>, which we assigned to the variable <code>outcome</code>) using all of the available covariate data. Let’s try it out:</p>
+<p>다음으로 분석용 데이터셋에 단순 주효과 선형 회귀 모델을 적합시켜 보겠습니다. 여기서 우리의 목표는 가용한 모든 공변량 데이터를 사용하여 연령 대비 체중 Z-점수(<code>"whz"</code>, 변수 <code>outcome</code>에 할당함)를 예측하는 것입니다. 시도해 봅시다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1453,7 +1468,7 @@ height:300px; overflow-x: scroll; width:100%; ">
 <span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span> <span class="fl">1.27</span> on <span class="dv">52</span> and <span class="dv">447</span> DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="fl">0.104</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>We can assess the quality of the model fit on the dataset by comparing the linear model’s predictions of the weight-for-height Z-score against the observations of the same in the dataset. This is the well-known, and standard, mean squared error (MSE). We can extract this summary measure from the <code>lm</code> model object like so</p>
+<p>우리는 데이터셋에서의 연령 대비 체중 Z-점수 관찰값과 선형 모델의 예측값을 비교함으로써 데이터셋에 대한 모델 적합의 품질을 평가할 수 있습니다. 이것이 잘 알려진 표준적인 평균 제곱 오차(MSE)입니다. 다음과 같이 <code>lm</code> 모델 객체에서 이 요약 척도를 추출할 수 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1461,29 +1476,29 @@ height:300px; overflow-x: scroll; width:100%; ">
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.8657</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>The MSE estimate is 0.8657, which, from examination of the above, is merely the mean of the squared residuals of the model fit. An important problem arises when we assess the learning algorithm’s quality in this way — that is, because we have trained our linear regression model on the complete analysis-ready dataset and then assessed its performance (the MSE) on the same dataset, all of the data is used for both model training and validation. Unfortunately, this simple estimate of the MSE is overly optimistic. Why? The linear regression model is trained on the same dataset used in its evaluation, not unlike reusing problems from a homework assignment in a course examination. Of course, we are generally not interested in how well the algorithm explains variation in the observed dataset; rather, we are interested in how well the explanations provided by the learning algorithm generalize to a target population from which this particular sample is drawn. By using all of the data available to us for training the learning algorithm, we are left unable to honestly evaluate how well the algorithm fits (and, thus, explains) variation at the level of the target population. <!--
+<p>MSE 추정치는 0.8657이며, 위를 검토해 보면 이는 단순히 모델 적합의 잔차 제곱 평균입니다. 이런 방식으로 학습 알고리즘의 품질을 평가할 때 중요한 문제가 발생합니다 — 즉, 완전한 분석용 데이터셋에서 선형 회귀 모델을 훈련시킨 다음 동일한 데이터셋에서 성능(MSE)을 평가했기 때문에 모든 데이터가 모델 훈련과 검증 모두에 사용되었기 때문입니다. 불행하게도 이 단순한 MSE 추정치는 지나치게 낙관적입니다. 왜 그럴까요? 선형 회귀 모델은 평가에 사용된 것과 동일한 데이터셋에서 훈련되었으며, 이는 마치 학교 시험에서 숙제 과제로 냈던 문제를 다시 사용하는 것과 다르지 않습니다. 물론 우리는 일반적으로 알고리즘이 관찰된 데이터셋의 변동을 얼마나 잘 설명하는지에는 관심이 없습니다. 오히려 우리는 학습 알고리즘이 제공하는 설명이 이 특정 샘플이 추출된 타겟 모집단에 얼마나 잘 일반화되는지에 관심이 있습니다. 학습 알고리즘을 훈련하는 데 사용할 수 있는 모든 데이터를 사용함으로써, 우리는 알고리즘이 타겟 모집단 수준에서 변동을 얼마나 잘 적합시키는지(따라서 설명하는지) 정직하게 평가할 수 없게 됩니다. <!--
 RP: 
-suggestion to make the above paragraph more concise
---> To resolve this issue, cross-validation allows for a particular procedure (e.g., linear regression) to be implemented over training and validation splits of the dataset, evaluating how well the procedure fits on a holdout (or validation) set. This evaluation of the learning algorithm’s quality on data unseen during the training phase provides an honest evaluation of the algorithm’s generalization error.</p>
-<p>We can easily incorporate cross-validation into our linear regression procedure using <code>origami</code>. First, let’s define a new function to perform linear regression on a specific partition of the dataset (i.e., a fold):</p>
+위 단락을 더 간결하게 만들 것을 제안함
+--> 이 문제를 해결하기 위해 교차 검증을 사용하면 데이터셋의 훈련 및 검증 분할에 걸쳐 특정 절차(예: 선형 회귀)를 구현하여, 훈련 단계에서 제외된 홀드아웃(또는 검증) 세트에 대해 절차가 얼마나 잘 적합되는지 평가할 수 있습니다. 훈련 단계에서 보지 못한 데이터에 대해 학습 알고리즘의 품질을 평가하는 것은 알고리즘의 일반화 오차에 대한 정직한 평가를 제공합니다.</p>
+<p><code>origami</code>를 사용하여 선형 회귀 절차에 교차 검증을 쉽게 통합할 수 있습니다. 먼저 데이터셋의 특정 파티션(즉, 폴드)에서 선형 회귀를 수행하는 새로운 함수를 정의해 보겠습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cv_lm <span class="ot">&lt;-</span> <span class="cf">function</span>(fold, data, reg_form) {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get name and index of outcome variable from regression formula</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 회귀 식에서 결과 변수의 이름과 인덱스 가져오기</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  out_var <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">unlist</span>(<span class="fu">str_split</span>(reg_form, <span class="st">" "</span>))[<span class="dv">1</span>])</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  out_var_ind <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">which</span>(<span class="fu">colnames</span>(data) <span class="sc">==</span> out_var))</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split up data into training and validation sets</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 데이터를 훈련 세트와 검증 세트로 나누기</span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data)</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  valid_data <span class="ot">&lt;-</span> <span class="fu">validation</span>(data)</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fit linear model on training set and predict on validation set</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 훈련 세트에서 선형 모델 적합 및 검증 세트에서 예측</span></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">as.formula</span>(reg_form), <span class="at">data =</span> train_data)</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, <span class="at">newdata =</span> valid_data)</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  valid_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(valid_data)</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># capture results to be returned as output</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 결과 캡처하여 출력으로 반환</span></span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">coef =</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(<span class="fu">coef</span>(mod))),</span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">SE =</span> (preds <span class="sc">-</span> valid_data[, out_var_ind])<span class="sc">^</span><span class="dv">2</span></span>
@@ -1492,24 +1507,24 @@ suggestion to make the above paragraph more concise
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Our <code>cv_lm()</code> function is quite simple: It merely splits the available data into distinct training and validation sets (using the eponymous functions provided in <code>origami</code>), fits the linear model on the training set, and evaluates the quality of the trained linear regression model on the validation set. This is a simple example of what <code>origami</code> considers to be a <code>cv_fun()</code> — functions for applying a particular routine over an input dataset in cross-validated manner.</p>
-<p>Having defined such a function, we can simply generate a set of partitions using <code>origami</code>’s <code>make_folds()</code> function and apply our <code>cv_lm()</code> function over the resultant <code>folds</code> object using <code>cross_validate()</code>. Below, we replicate the re-substitution estimate of the error — we did this “by hand” above — using the functions <code>make_folds()</code> and <code>cv_lm()</code>.</p>
+<p>우리의 <code>cv_lm()</code> 함수는 매우 간단합니다. 단순히 가용한 데이터를 별개의 훈련 및 검증 세트로 나누고(<code>origami</code>에서 제공하는 동명의 함수 사용), 훈련 세트에서 선형 모델을 적합시키고, 검증 세트에서 훈련된 선형 회귀 모델의 품질을 평가합니다. 이는 <code>origami</code>가 <code>cv_fun()</code>이라고 간주하는 것의 간단한 예입니다 — 입력 데이터셋에 대해 교차 검증된 방식으로 특정 루틴을 적용하기 위한 함수입니다.</p>
+<p>그러한 함수를 정의했으므로 <code>origami</code>의 <code>make_folds()</code> 함수를 사용하여 파티션 세트를 생성하고 <code>cross_validate()</code>를 사용하여 결과물인 <code>folds</code> 객체에 대해 <code>cv_lm()</code> 함수를 적용하기만 하면 됩니다. 아래에서는 <code>make_folds()</code> 및 <code>cv_lm()</code> 함수를 사용하여 위에서 “수동으로” 수행했던 오차의 재대입 추정치를 재현합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-substitution estimate</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 재대입 추정치</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>resub <span class="ot">&lt;-</span> <span class="fu">make_folds</span>(washb_data, <span class="at">fold_fun =</span> folds_resubstitution)[[<span class="dv">1</span>]]</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>resub_results <span class="ot">&lt;-</span> <span class="fu">cv_lm</span>(<span class="at">fold =</span> resub, <span class="at">data =</span> washb_data, <span class="at">reg_form =</span> <span class="st">"whz ~ ."</span>)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resub_results<span class="sc">$</span>SE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.8657</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>This (nearly) matches the estimate of the error that we obtained above.</p>
-<p>We can more honestly evaluate the error by <span class="math inline">\(V\)</span>-fold cross-validation, which partitions the dataset into <span class="math inline">\(V\)</span> subsets, fitting the algorithm on <span class="math inline">\(V - 1\)</span> of the subsets (training) and evaluating on the subset that was held out from fitting (validation). This is repeated such that each holdout subset takes a turn being used for validation. We can easily apply our <code>cv_lm()</code> function in this way using <code>origami</code>’s <code>cross_validate()</code> (note that by default this function performs <span class="math inline">\(10\)</span>-fold cross-validation):</p>
+<p>이는 위에서 얻은 오차 추정치와 (거의) 일치합니다.</p>
+<p>우리는 <span class="math inline">\(V\)</span>-폴드 교차 검증을 통해 오차를 더 정직하게 평가할 수 있습니다. <span class="math inline">\(V\)</span>-폴드 교차 검증은 데이터셋을 <span class="math inline">\(V\)</span>개의 하위 집합으로 나누고, 하위 집합 중 <span class="math inline">\(V - 1\)</span>개에서 알고리즘을 적합시키고(훈련), 적합에서 제외된 하위 집합에서 평가합니다(검증). 이는 각 홀드아웃 하위 집합이 돌아가며 검증에 사용되도록 반복됩니다. <code>origami</code>의 <code>cross_validate()</code>를 사용하여 다음과 같이 <code>cv_lm()</code> 함수를 쉽게 적용할 수 있습니다(기본적으로 이 함수는 10-폴드 교차 검증을 수행합니다).</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cross-validated estimate</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차 검증된 추정치</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">make_folds</span>(washb_data)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>cvlm_results <span class="ot">&lt;-</span> <span class="fu">cross_validate</span>(</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cv_fun =</span> cv_lm, <span class="at">folds =</span> folds, <span class="at">data =</span> washb_data, <span class="at">reg_form =</span> <span class="st">"whz ~ ."</span>,</span>
@@ -1519,32 +1534,32 @@ suggestion to make the above paragraph more concise
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1.35</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Having performed <span class="math inline">\(V\)</span>-fold cross-validation with 10 folds (the default), we quickly notice that our previous estimate of the model error (by re-substitution) was a bit optimistic. The honest estimate of the linear regression model’s error is larger!</p>
+<p>10개 폴드(기본값)를 사용하여 <span class="math inline">\(V\)</span>-폴드 교차 검증을 수행하고 나면, 이전의 모델 오차 추정치(재대입 방식)가 약간 낙관적이었음을 금방 알 수 있습니다. 선형 회귀 모델 오차의 정직한 추정치가 더 큽니다!</p>
 </section>
-<section id="cross-validation-with-random-forests" class="level3" data-number="2.7.2">
-<h3 data-number="2.7.2" class="anchored" data-anchor-id="cross-validation-with-random-forests"><span class="header-section-number">2.7.2</span> Cross-validation with random forests</h3>
-<p>To examine <code>origami</code> further, let’s return to our example analysis using the WASH Benefits dataset. Here, we will write a new <code>cv_fun()</code> function. As an example, we will use Breiman’s random forest algorithm <span class="citation" data-cites="breiman2001random">(<a href="#ref-breiman2001random" role="doc-biblioref">Breiman 2001</a>)</span>, implemented in the <code>randomForest()</code> function (from the <code>randomForest</code> package):</p>
+<section id="랜덤-포레스트와-교차-검증" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="랜덤-포레스트와-교차-검증"><span class="header-section-number">6.7.2</span> 랜덤 포레스트와 교차 검증</h3>
+<p><code>origami</code>를 더 살펴보기 위해 WASH Benefits 데이터셋을 사용한 예제 분석으로 돌아가 보겠습니다. 여기서는 새로운 <code>cv_fun()</code> 함수를 작성하겠습니다. 예시로 Breiman의 랜덤 포레스트 알고리즘 <span class="citation" data-cites="breiman2001random">(<a href="#ref-breiman2001random" role="doc-biblioref">Breiman 2001</a>)</span>을 사용하며, 이는 (<code>randomForest</code> 패키지의) <code>randomForest()</code> 함수에 구현되어 있습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure to load the package!</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 패키지 로드 확인!</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>cv_rf <span class="ot">&lt;-</span> <span class="cf">function</span>(fold, data, reg_form) {</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get name and index of outcome variable from regression formula</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 회귀 식에서 결과 변수의 이름과 인덱스 가져오기</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  out_var <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">unlist</span>(<span class="fu">str_split</span>(reg_form, <span class="st">" "</span>))[<span class="dv">1</span>])</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  out_var_ind <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">which</span>(<span class="fu">colnames</span>(data) <span class="sc">==</span> out_var))</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># define training and validation sets based on input object of class "folds"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "folds" 클래스의 입력 객체를 기반으로 훈련 및 검증 세트 정의</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  valid_data <span class="ot">&lt;-</span> <span class="fu">validation</span>(data)</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fit Random Forest regression on training set and predict on holdout set</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 훈련 세트에서 랜덤 포레스트 회귀 적합 및 홀드아웃 세트에서 예측</span></span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  mod <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="at">formula =</span> <span class="fu">as.formula</span>(reg_form), <span class="at">data =</span> train_data)</span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod, <span class="at">newdata =</span> valid_data)</span>
 <span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  valid_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(valid_data)</span>
 <span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># define output object to be returned as list (for flexibility)</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># (유연성을 위해) 리스트로 반환될 출력 객체 정의</span></span>
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">coef =</span> <span class="fu">data.frame</span>(mod<span class="sc">$</span>coefs),</span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">SE =</span> ((preds <span class="sc">-</span> valid_data[, out_var_ind])<span class="sc">^</span><span class="dv">2</span>)</span>
@@ -1553,12 +1568,12 @@ suggestion to make the above paragraph more concise
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>The <code>cv_rf()</code> function, which cross-validates the training and evaluation of the <code>randomForest</code> algorithm, used our previous <code>cv_lm()</code> function as a template. For now, individual <code>cv_fun()</code>s must be written by hand; however, in future releases of the package, a wrapper may be made available to support auto-generating <code>cv_fun</code>s for use with <code>origami</code>.</p>
-<p>Below, we use <code>cross_validate()</code> to apply our custom <code>cv_rf()</code> function over the <code>folds</code> object generated by <code>make_folds()</code>:</p>
+<p><code>randomForest</code> 알고리즘의 훈련 및 평가를 교차 검증하는 <code>cv_rf()</code> 함수는 이전의 <code>cv_lm()</code> 함수를 템플릿으로 사용했습니다. 현재로서는 개별 <code>cv_fun()</code>을 수동으로 작성해야 하지만, 향후 패키지 릴리스에서는 <code>origami</code>에서 사용할 수 있는 <code>cv_fun</code>을 자동 생성하도록 지원하는 래퍼가 제공될 수 있습니다.</p>
+<p>아래에서는 <code>cross_validate()</code>를 사용하여 <code>make_folds()</code>에서 생성된 <code>folds</code> 객체에 대해 사용자 정의 <code>cv_rf()</code> 함수를 적용합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># now, let's cross-validate...</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이제 교차 검증해 봅시다...</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">make_folds</span>(washb_data)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cvrf_results <span class="ot">&lt;-</span> <span class="fu">cross_validate</span>(</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cv_fun =</span> cv_rf, <span class="at">folds =</span> folds,</span>
@@ -1569,11 +1584,11 @@ suggestion to make the above paragraph more concise
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">1.027</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Using <span class="math inline">\(V\)</span>-fold cross-validation with 10 folds, we obtain an honest estimate of the prediction error of this random forest. This is one example of how <code>origami</code>’s <code>cross_validate()</code> procedure can be generalized to arbitrary estimation techniques, as long as an appropriate <code>cv_fun()</code> function is available.</p>
+<p>10개 폴드를 사용한 <span class="math inline">\(V\)</span>-폴드 교차 검증을 통해 이 랜덤 포레스트의 예측 오차에 대한 정직한 추정치를 얻었습니다. 이는 적절한 <code>cv_fun()</code> 함수만 있다면 <code>origami</code>의 <code>cross_validate()</code> 절차가 임의의 추정 기술로 어떻게 일반화될 수 있는지 보여주는 한 가지 예입니다.</p>
 </section>
-<section id="cross-validation-with-arima" class="level3" data-number="2.7.3">
-<h3 data-number="2.7.3" class="anchored" data-anchor-id="cross-validation-with-arima"><span class="header-section-number">2.7.3</span> Cross-validation with ARIMA</h3>
-<p>Cross-validation can also be used for the selection of forecasting models in settings with time-series data. Here, the partitioning scheme mirrors the application of the forecasting model: We’ll train the learning algorithm on past observations (either all available or a recent, in time, subset), and then use the fitted model to predict the next (again, in time) few observations. To demonstrate this, we return to the <code>AirPassengers</code> dataset, a monthly time-series of passenger air traffic for thousands of travelers.</p>
+<section id="arima와-교차-검증" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="arima와-교차-검증"><span class="header-section-number">6.7.3</span> ARIMA와 교차 검증</h3>
+<p>교차 검증은 시계열 데이터가 있는 환경에서 예측 모델 선택을 위해서도 사용될 수 있습니다. 여기서 파티셔닝 체계는 예측 모델의 적용을 반영합니다. 과거 관찰값(전체 가용 데이터 또는 시간상 최근 하위 집합)에서 학습 알고리즘을 훈련시킨 다음, 적합된 모델을 사용하여 다음(마찬가지로 시간상) 몇 개의 관찰값을 예측합니다. 이를 시연하기 위해 수천 명의 여행자에 대한 월별 승객 항공 교통량 시계열인 <code>AirPassengers</code> 데이터셋으로 돌아가겠습니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1594,7 +1609,7 @@ suggestion to make the above paragraph more concise
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="dv">1960</span> <span class="dv">417</span> <span class="dv">391</span> <span class="dv">419</span> <span class="dv">461</span> <span class="dv">472</span> <span class="dv">535</span> <span class="dv">622</span> <span class="dv">606</span> <span class="dv">508</span> <span class="dv">461</span> <span class="dv">390</span> <span class="dv">432</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>Suppose we want to pick between two forecasting models with different ARIMA (AutoRegressive Integrated Moving Average) model configurations. We can choose among such models by evaluating their forecasting performance. First, we set up an appropriate cross-validation scheme for use with time-series data. Here, we pick the rolling origin cross-validation scheme described above.</p>
+<p>서로 다른 ARIMA(자기회귀 누적 이동 평균, AutoRegressive Integrated Moving Average) 모델 구성을 갖는 두 가지 예측 모델 중에서 선택하고 싶다고 가정해 봅시다. 이러한 모델들의 예측 성능을 평가함으로써 모델을 선택할 수 있습니다. 먼저 시계열 데이터와 함께 사용할 적절한 교차 검증 체계를 설정합니다. 여기서는 위에서 설명한 롤링 오리진 교차 검증 체계를 선택합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1603,11 +1618,11 @@ suggestion to make the above paragraph more concise
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">first_window =</span> <span class="dv">36</span>, <span class="at">validation_size =</span> <span class="dv">24</span>, <span class="at">batch =</span> <span class="dv">10</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># How many folds where generated?</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 몇 개의 폴드가 생성되었나요?</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(folds)</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">9</span></span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the first 2 folds.</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 처음 2개의 폴드를 검토합니다.</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>folds[[<span class="dv">1</span>]]</span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>v</span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
@@ -1636,23 +1651,23 @@ suggestion to make the above paragraph more concise
 <span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"fold"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>By default, <code>folds_rolling_origin</code> will increase the size of the training set by one time point in each training fold. Had we followed the default option, we would have 85 folds to train! Luckily, we can pass the <code>batch</code> as an option to <code>folds_rolling_origin</code>, telling it to increase the size of the training set by 10 points in each iteration (so that we don’t have so many training folds). Since we want to forecast the immediately following time point, the <code>gap</code> argument remains at its default of zero.</p>
+<p>기본적으로 <code>folds_rolling_origin</code>은 각 훈련 폴드에서 훈련 세트의 크기를 한 시점씩 증가시킵니다. 기본 옵션을 따랐다면 85개의 폴드를 훈련시켜야 했을 것입니다! 다행히 <code>batch</code>를 옵션으로 <code>folds_rolling_origin</code>에 전달하여 각 반복에서 훈련 세트의 크기를 10포인트씩 증가시키도록 지시할 수 있습니다(훈련 폴드가 너무 많아지지 않도록). 바로 다음 시점을 예측하고 싶으므로 <code>gap</code> 인자는 기본값인 0으로 유지합니다.</p>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure to load the package!</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 패키지 로드 확인!</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># function to calculate cross-validated squared error</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차 검증된 제곱 오차를 계산하는 함수</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>cv_forecasts <span class="ot">&lt;-</span> <span class="cf">function</span>(fold, data) {</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get training and validation data</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 훈련 및 검증 데이터 가져오기</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data)</span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  valid_data <span class="ot">&lt;-</span> <span class="fu">validation</span>(data)</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  valid_size <span class="ot">&lt;-</span> <span class="fu">length</span>(valid_data)</span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  train_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">log10</span>(train_data), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First arima model</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 첫 번째 arima 모델</span></span>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  arima_fit <span class="ot">&lt;-</span> <span class="fu">arima</span>(train_ts, <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal =</span> <span class="fu">list</span>(</span>
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
@@ -1663,7 +1678,7 @@ suggestion to make the above paragraph more concise
 <span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  arima_pred <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span>raw_arima_pred<span class="sc">$</span>pred</span>
 <span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  arima_MSE <span class="ot">&lt;-</span> <span class="fu">mean</span>((arima_pred <span class="sc">-</span> valid_data)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Second arima model</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 두 번째 arima 모델</span></span>
 <span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  arima_fit2 <span class="ot">&lt;-</span> <span class="fu">arima</span>(train_ts, <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
 <span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">seasonal =</span> <span class="fu">list</span>(</span>
 <span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
@@ -1701,56 +1716,55 @@ suggestion to make the above paragraph more concise
 <span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a> <span class="fl">601.1</span>  <span class="fl">634.2</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p>By applying <code>cross_validate()</code> with this <code>cv_forecasts()</code> custom function, we find that the ARIMA model with no AR (autoregressive) component seems to be a better fit for this dataset.</p>
+<p>이 <code>cv_forecasts()</code> 사용자 정의 함수를 사용하여 <code>cross_validate()</code>를 적용한 결과, AR(자기회귀) 구성 요소가 없는 ARIMA 모델이 이 데이터셋에 더 잘 맞는 것으로 보입니다.</p>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.8</span> Exercises</h2>
+<section id="연습-문제" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="연습-문제"><span class="header-section-number">6.8</span> 연습 문제</h2>
 <!--
 RP:
-Love this structure
+이 구조가 마음에 듭니다.
 -->
-<section id="review-of-key-concepts" class="level3" data-number="2.8.1">
-<h3 data-number="2.8.1" class="anchored" data-anchor-id="review-of-key-concepts"><span class="header-section-number">2.8.1</span> Review of Key Concepts</h3>
+<section id="핵심-개념-복습" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="핵심-개념-복습"><span class="header-section-number">6.8.1</span> 핵심 개념 복습</h3>
 <ol type="1">
-<li><p>Compare and contrast <span class="math inline">\(V\)</span>-fold cross-validation with re-substitution cross-validation. What are some of the differences between the two methods? How are they similar? Describe a scenario when you would use one over the other.</p></li>
-<li><p>What are the advantages and disadvantages of <span class="math inline">\(V\)</span>-fold cross-validation relative to:</p>
+<li><p><span class="math inline">\(V\)</span>-폴드 교차 검증과 재대입 교차 검증을 비교하고 대조하십시오. 두 방법 사이의 몇 가지 차이점은 무엇입니까? 어떻게 비슷합니까? 하나를 다른 하나보다 더 선호해서 사용할 시나리오를 설명하십시오.</p></li>
+<li><p>다음 방법에 비해 <span class="math inline">\(V\)</span>-폴드 교차 검증의 장단점은 무엇입니까?</p>
 <ol type="a">
-<li>holdout cross-validation?</li>
-<li>leave-one-out cross-validation?</li>
+<li>홀드아웃 교차 검증</li>
+<li>하나 빼기 교차 검증</li>
 </ol></li>
-<li><p>Why is <span class="math inline">\(V\)</span>-fold cross-validation inappropriate for use with time-series data?</p></li>
-<li><p>Would you use rolling window or rolling origin cross-validation for non-stationary time-series? Why? <!--
+<li><p>시계열 데이터와 함께 사용하기에 <span class="math inline">\(V\)</span>-폴드 교차 검증이 부적절한 이유는 무엇입니까?</p></li>
+<li><p>비정상 시계열(non-stationary time-series)에 대해 롤링 윈도우 교차 검증을 사용하겠습니까, 아니면 롤링 오리진 교차 검증을 사용하겠습니까? 왜 그렇습니까? <!--
 RP:
-Not sure if reader will understand non-stationary time-series in Q4. 
-Could rephrase to something along the lines of why you would use one or the 
-other, or provide a definition in parenthesis
---> ### The Ideas in Action</p></li>
-<li><p>Let <span class="math inline">\(Y\)</span> be a binary variable with <span class="math inline">\(P(Y=1 \mid W) = 0.01\)</span>, that is, a rare outcome. What kind of cross-validation scheme should be used with this type of outcome? How can we do this with the <code>origami</code> package?</p></li>
-<li><p>Consider the WASH Benefits example dataset discussed in this chapter. How can we incorporate cluster-level information into a cross-validation scheme? How can we implement this strategy with the <code>origami</code> package?</p></li>
+독자가 Q4에서 비정상 시계열을 이해할지 모르겠습니다. 
+하나 또는 다른 하나를 사용하는 이유에 대한 라인에 따라 다시 표현하거나 괄호 안에 정의를 제공할 수 있습니다.
+--> ### 아이디어 실행하기</p></li>
+<li><p><span class="math inline">\(Y\)</span>가 <span class="math inline">\(P(Y=1 \mid W) = 0.01\)</span>인 이분형 변수, 즉 희귀 결과(rare outcome)라고 합시다. 이러한 유형의 결과에는 어떤 종류의 교차 검증 체계를 사용해야 합니까? <code>origami</code> 패키지로 어떻게 이를 수행할 수 있습니까?</p></li>
+<li><p>이 장에서 논의된 WASH Benefits 예제 데이터셋을 고려하십시오. 클러스터 수준 정보를 교차 검증 체계에 어떻게 통합할 수 있습니까? <code>origami</code> 패키지로 이 전략을 어떻게 구현할 수 있습니까?</p></li>
 </ol>
 </section>
-<section id="advanced-topics" class="level3" data-number="2.8.2">
-<h3 data-number="2.8.2" class="anchored" data-anchor-id="advanced-topics"><span class="header-section-number">2.8.2</span> Advanced Topics</h3>
+<section id="고급-주제" class="level3" data-number="6.8.2">
+<h3 data-number="6.8.2" class="anchored" data-anchor-id="고급-주제"><span class="header-section-number">6.8.2</span> 고급 주제</h3>
 <!--
 RP:
-Holy shit these are hard :,) but good! idk, but want to know, the answer to Q2!
+세상에, 이것들은 어렵네요 :,) 하지만 좋습니다! Q2에 대한 답을 모르겠지만 알고 싶네요!
 -->
 <ol type="1">
-<li><p>Think about a dataset with a spatial dependence structure, in which the degree of dependence is known such that the groups formed by this dependence structure are clear and where there are no spillover effects. What kind of cross-validation scheme would be appropriate in this case?</p></li>
-<li><p>Continuing from the previous problem, what kind of procedure, and cross-validation scheme, can we use if the spatial dependence is not as clearly defined as in assumptions made in the preceding problem?</p></li>
-<li><p>Consider a classification problem with a large number of predictors and a binary outcome. Your friendly neighborhood statistician proposes the following analysis:</p>
+<li><p>공간적 의존성 구조(spatial dependence structure)를 가진 데이터셋을 생각해 보십시오. 여기서 의존성 정도가 알려져 있어 이 의존성 구조에 의해 형성된 그룹이 명확하고 파급 효과(spillover effects)가 없습니다. 이 경우 어떤 종류의 교차 검증 체계가 적절하겠습니까?</p></li>
+<li><p>이전 문제에 이어서, 공간적 의존성이 이전 문제에서 세운 가정만큼 명확하게 정의되지 않은 경우 어떤 절차와 교차 검증 체계를 사용할 수 있습니까?</p></li>
+<li><p>많은 수의 예측 변수와 이분형 결과가 있는 분류 문제를 고려하십시오. 여러분의 친절한 이웃 통계학자가 다음과 같은 분석을 제안합니다.</p>
 <ol type="a">
-<li>First, screen the predictors, isolating only those covariates that are strongly correlated with the (binary) outcome labels.</li>
-<li>Next, train a learning algorithm using only this subset of covariates that are highly correlated with the outcome.</li>
-<li>Finally, use cross-validation to estimate the tuning parameters and the performance of the learning algorithm.</li>
+<li>먼저 예측 변수를 스크리닝하여 (이분형) 결과 레이블과 강하게 상관된 공변량만 분리합니다.</li>
+<li>다음으로, 결과와 높은 상관관계가 있는 이러한 공변량의 하위 집합만 사용하여 학습 알고리즘을 훈련시킵니다.</li>
+<li>마지막으로, 교차 검증을 사용하여 튜닝 파라미터와 학습 알고리즘의 성능을 추정합니다.</li>
 </ol>
-<p>Is this application of cross-validation correct? Why or why not?</p></li>
+<p>이러한 교차 검증의 적용이 맞습니까? 왜 그렇습니까, 아니면 왜 아닙니까?</p></li>
 </ol>
 <!--
-## Appendix
+## 부록
 
-### Exercise solutions
+### 연습 문제 풀이
 -->
 
 
@@ -2192,13 +2206,13 @@ van der Vaart, Aad W, Sandrine Dudoit, and Mark J van der Laan. 2006. <span>“O
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../qmd_files/04-roadmap.html" class="pagination-link" aria-label="(PART) Part 2: Foundations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">(PART) Part 2: Foundations</span>
+      <a href="./04-roadmap.html" class="pagination-link" aria-label="(PART) 2부: 기초">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">(PART) 2부: 기초</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../qmd_files/06-sl3.html" class="pagination-link" aria-label="Super Learning">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Super Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06-sl3.html" class="pagination-link" aria-label="슈퍼 러닝">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">슈퍼 러닝</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
