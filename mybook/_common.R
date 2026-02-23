@@ -75,7 +75,7 @@ knitr::write_bib(c(
 # borrowed from https://github.com/tidymodels/TMwR/blob/master/_common.R
 theme_transparent <- function(...) {
   # use black-white theme as base
-  ret <- ggplot2::theme_bw(...)
+  ret <- ggplot2::theme_bw(base_family = "Noto Sans CJK KR", ...)
 
   # modify with transparencies
   trans_rect <- ggplot2::element_rect(fill = "transparent", colour = NA)
@@ -92,5 +92,5 @@ theme_transparent <- function(...) {
 library(ggplot2)
 theme_set(theme_transparent())
 theme_update(
-  text = element_text(size = 20)
+  text = element_text(size = 20, family = "Noto Sans CJK KR")
 )

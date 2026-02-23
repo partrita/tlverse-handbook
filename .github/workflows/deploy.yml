@@ -17,6 +17,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Install Noto Sans CJK KR font
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
+          sudo fc-cache -f -v
+
       - name: Set up Pixi
         uses: prefix-dev/setup-pixi@v0.8.1
         with:

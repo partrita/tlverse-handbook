@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "`tlverse`와 함께하는 R에서의 타겟 러닝"
+  title: "`tlverse`와 함께하는 타겟 러닝"
   author: "Mark van der Laan, Jeremy Coyle, Nima Hejazi, Ivana Malenica, Rachael Phillips, Alan Hubbard"
   date: "2026-02-21"
   language: ko
@@ -48,4 +48,5 @@ format:
     theme: cosmo
     css: css/style.css
     toc: true
+    include-before-body: html_extras/mathjax_header.html
     # code-fold: true

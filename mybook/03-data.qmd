@@ -32,12 +32,13 @@ dat <- read_csv(
 
 [`skimr` 패키지](https://CRAN.R-project.org/package=skimr)를 사용하여 WASH Benefits 데이터셋에 측정된 변수들을 빠르게 요약할 수 있습니다.
 
-```{r skim_washb_data, echo=FALSE}
+```{r skim_washb_data, results="asis", echo=FALSE}
 library(skimr)
+# results="asis"와 knit_print를 사용하여 skimr 출력이 마크다운 표로 렌더링되도록 합니다.
 if (knitr::is_latex_output()) {
-  skim_no_sparks(dat)
+  knitr::knit_print(skim_no_sparks(dat))
 } else {
-  skim(dat)
+  knitr::knit_print(skim(dat))
 }
 ```
 관련 변수들에 대한 편리한 요약이 위에 나타나며, 각 공변량의 주변부 특성을 설명하는 스파크라인 시각화가 포함되어 있습니다. *asset* 변수들은 연구 참여자들의 사회경제적 지위를 반영한다는 점에 유의하십시오. 또한 치료 그룹의 분포가 균등하며(대조군이 2배 더 많음), 이는 물론 설계에 의한 것임을 알 수 있습니다.

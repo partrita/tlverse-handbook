@@ -8,7 +8,7 @@ source("_common.R")
 
 # 환영합니다 
 
-_`R`을 활용한 타겟 러닝: `tlverse` 소프트웨어 생태계를 이용한 인과 데이터 과학_은 [`tlverse` 생태계](https://github.com/tlverse)에서 제공하는 소프트웨어 스택을 사용하여 타겟 러닝 방법론을 실무에 적용하기 위한 완전 재현 가능한 오픈 소스 전자 핸드북입니다. 이 저작물은 현재 초안 단계에 있으며, 커뮤니티의 의견을 수렴하기 위해 공개되어 있습니다. 내용을 확인하거나 기여하시려면 [GitHub 저장소](https://github.com/tlverse/tlverse-handbook)를 방문해 주세요.
+`R`을 활용한 타겟 러닝: `tlverse` 소프트웨어 생태계를 이용한 인과 데이터 과학_은 [`tlverse` 생태계](https://github.com/tlverse)에서 제공하는 소프트웨어 스택을 사용하여 타겟 러닝 방법론을 실무에 적용하기 위한 완전 재현 가능한 오픈 소스 전자 핸드북입니다. 이 저작물은 현재 초안 단계에 있으며, 커뮤니티의 의견을 수렴하기 위해 공개되어 있습니다. 내용을 확인하거나 기여하시려면 [GitHub 저장소](https://github.com/tlverse/tlverse-handbook)를 방문해 주세요.
 
 <img style="float: left; margin-right: 1%; margin-bottom: 0.01em"
      src="img/logos/tlverse-logo.svg" width="30%" height="30%">
