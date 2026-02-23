@@ -8,9 +8,9 @@ book:
   date: "2026-02-21"
   language: ko
   chapters:
+    - index.qmd
     - part: "1부: 예비 지식 "
       chapters:
-        - index.qmd
         - 01-intro.qmd
         - 02-tlverse.qmd
         - 03-data.qmd

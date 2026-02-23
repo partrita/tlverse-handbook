@@ -24,7 +24,7 @@ _Nima Hejazi_
 확률적 치료 요법 또는 *확률적 중재*는 *현실적인* 인과 효과를 정의하기 위한 비교적 단순하면서도 매우 유연하고 표현력이 풍부한 프레임워크를 구성합니다. 이전에 논의된 중재 요법과 달리, 확률적 중재는 이분형, 순서형, 연속형 등 거의 모든 방식의 치료 변수에 적용될 수 있으며, 이 형식을 통해 풍부한 인과 효과 세트를 정의할 수 있습니다. 이 장에서는 정적 및 동적 치료 요법을 쉽게 적용할 수 없는 *연속형* 치료 변수에 적용될 수 있는 몇 가지 유형의 확률적 중재를 살펴보는 데 중점을 둡니다. 특히, 결과적으로 나타나는 인과 효과는 일반적인 회귀 조정과 유사한 해석을 갖는다는 편리한 특징이 있습니다.
 
 다음 장에서는 확률적 중재의 두 가지 대안적 사용법을 소개할 것입니다. 하나는 최근에 공식화된 이분형 치료 변수에 적용 가능한 중재 [@kennedy2019nonparametric]이고, 다른 하나는 치료 후 변수 또는 매개 변수가 존재할 때의 인과 효과 정의입니다. 여기서는 [`tmle3shift` R 패키지](https://github.com/tlverse/tmle3shift)에서 제공하는 도구에 중점을 둘 것입니다.
-치료 변수의 관찰된 값을 가산적으로 이동(shift)시키는 확률적 중재의 인과 효과에 대한 타겟 최소 손실 기반 추정치를 노출합니다. 보다 구체적인 수학적 세부 사항은 @diaz2012population, @diaz2018stochastic, @hejazi2020tmle3shift 및 @hejazi2021flexible에서 확인할 수 있습니다. 인과적 매개변수의 적절한 선택 및 정의는 로드맵의 세 번째 단계에 해당하며, 우리는 확률적 중재의 가치를 평가하는 과정이 로드맵의 다른 모든 핵심 단계와 어떻게 조화를 이루는지 보여줄 것입니다.
+치료 변수의 관찰된 값을 가산적으로 이동(shift)시키는 확률적 중재의 인과 효과에 대한 타겟 최소 손실 기반 추정치를 노출합니다. 보다 구체적인 수학적 세부 사항은 @diaz2012population, @diaz2018stochastic, @hejazi2020efficient 및 @hejazi2021semiparametric 에서 확인할 수 있습니다. 인과적 매개변수의 적절한 선택 및 정의는 로드맵의 세 번째 단계에 해당하며, 우리는 확률적 중재의 가치를 평가하는 과정이 로드맵의 다른 모든 핵심 단계와 어떻게 조화를 이루는지 보여줄 것입니다.
 
 ## 데이터 및 노드 구조
 
@@ -65,9 +65,9 @@ setnames(data, c("W1", "W2", "W3", "A", "Y"))
 # 노드 리스트 구성
 node_list <- list(W = c("W1", "W2", "W3"), A = "A", Y = "Y")
 ```
-중제 후의 값 $A_{\delta}$는 그것이 임의의 (실제로 사용자 정의된) 분포에서 추출되었다는 의미에서 확률적으로 수정됩니다. 정적 중재의 익숙한 사례는 단일 값에 모든 질량을 두는 퇴화된 후보 분포를 선택함으로써 회복될 수 있습니다. @stock1989nonparametric 은 이러한 확률적 중재의 총 효과 추정을 처음 고려했습니다.
+중재 후의 값 $A_{\delta}$는 그것이 임의의 (실제로 사용자 정의된) 분포에서 추출되었다는 의미에서 확률적으로 수정됩니다. 정적 중재의 익숙한 사례는 단일 값에 모든 질량을 두는 퇴화된 후보 분포를 선택함으로써 회복될 수 있습니다. @stock1989nonparametric 은 이러한 확률적 중재의 총 효과 추정을 처음 고려했습니다.
 
-후보 중제 밀도 $g_{A_{\delta}}(A \mid W)$의 선택에 대한 제한은 거의 없지만, 실제로는 자연적(중제 전) 밀도 $g(A \mid W)$에 대한 지식을 기반으로 선택되는 경우가 많습니다. $g_{A_{\delta}}(A \mid W)$가 *조각마다 매끄럽게 가역적*(piecewise smooth invertible)(아래 참조)일 때 [@haneuse2013estimation], 중제 후 밀도 $g_{A_{\delta}}(A \mid W)$와 관찰된 쌍 $\{A, W\}$를 중제 후 수치 $A_{\delta}$로 매핑하는 함수 $d(A, W; \delta)$ 사이에는 직접적인 대응 관계가 존재합니다. 이러한 경우 $d(A, W; \delta)$에 의해 정의된 확률적 중재는 치료의 자연적 수치에 의존한다고 하며, *수정된 치료 정책*(modified treatment policy, MTP) [@haneuse2013estimation; @diaz2018stochastic; @hejazi2021semiparametric]이라고 불립니다. @haneuse2013estimation과 @young2014identification은 수정된 치료 정책과 일반적인 확률적 중재 하에서의 인과 효과 해석을 대조하는 자세한 논의를 제공합니다.
+후보 중재 밀도 $g_{A_{\delta}}(A \mid W)$의 선택에 대한 제한은 거의 없지만, 실제로는 자연적(중재 전) 밀도 $g(A \mid W)$에 대한 지식을 기반으로 선택되는 경우가 많습니다. $g_{A_{\delta}}(A \mid W)$가 *조각마다 매끄럽게 가역적*(piecewise smooth invertible)(아래 참조)일 때 [@haneuse2013estimation], 중재 후 밀도 $g_{A_{\delta}}(A \mid W)$와 관찰된 쌍 $\{A, W\}$를 중재 후 수치 $A_{\delta}$로 매핑하는 함수 $d(A, W; \delta)$ 사이에는 직접적인 대응 관계가 존재합니다. 이러한 경우 $d(A, W; \delta)$에 의해 정의된 확률적 중재는 치료의 자연적 수치에 의존한다고 하며, *수정된 치료 정책*(modified treatment policy, MTP) [@haneuse2013estimation; @diaz2018stochastic; @hejazi2021semiparametric] 이라고 불립니다. @haneuse2013estimation 과 @young2014identification 은 수정된 치료 정책과 일반적인 확률적 중재 하에서의 인과 효과 해석을 대조하는 자세한 논의를 제공합니다.
 
 ::: {.callout-note icon=false title="조각마다 매끄러운 가역성"}
 각 $w \in \mathcal{W}$에 대해, 구간 $\mathcal{I}(w) = (l(w,), u(w))$가 하위 구간 $\mathcal{I}_{\delta,j}(w): j = 1, \ldots, J(w)$들로 분할될 수 있어서, $d(a, w; \delta)$가 $\mathcal{I}_{\delta,j}(w)$ 내의 어떤 $d_j(a, w; \delta)$와 같고 $d_j(\cdot,w; \delta)$가 도함수 $b_j'(\cdot, w; \delta)$를 갖는 역함수 $b_j(\cdot, w; \delta)$를 갖는다고 가정합니다.
@@ -85,9 +85,9 @@ Essentially, for a given $d(A,W; \delta)$ to exhibit this property, the
   \end{cases}
   (\#eq:shift)
 \end{equation}
-여기서 $\delta \in \mathbb{R}$은 공변량 계층 $W = w$의 문맥에서 관찰된 $A = a$가 이동되어야 하는 정도를 정의하며, $l(w)$와 $u(w)$는 계층 $W = w$에서의 치료 $A$의 최소 및 최대값입니다. 예를 들어, $A$가 (연속형인) 영양 보충제 복용량(예: 비타민 알약 수)을 나타내고 $W = w$ 조건 하의 $A$ 분포의 지지 집합(support)이 구간 $(l(w), u(w))$에 있다고 가정해 보십시오. 즉, 공변량 계층 $W = w$인 개인의 최소 알약 복용량은 $l(w)$이고, 최대는 $u(w)$입니다. 이러한 확률적 중재는 클리닉 정책이 개인의 기본 특성 $W$에 기반하여 평소 권장되는 양($A$)보다 $\delta$만큼 더 많은 알약을 섭취하도록($A \delta$) 권장하는 결과로 해석될 수 있습니다. 이러한 부류의 확률적 중재는 @diaz2012population 에 의해 도입되었으며 @haneuse2013estimation, @diaz2018stochastic, @hejazi2020efficient 및 @hejazi2021semiparametric에서 추가로 논의되었습니다. 이 부류의 중재는 @diaz2012population 에 따라 무작위 추출 $\P_{A_{\delta}}(g_{0, A})(A = a \mid W) = g_{0,A}(a - \delta(W) \mid W)$를 고려함으로써 일반적인 확률적 중재로 표현될 수 있습니다.
+여기서 $\delta \in \mathbb{R}$은 공변량 계층 $W = w$의 문맥에서 관찰된 $A = a$가 이동되어야 하는 정도를 정의하며, $l(w)$와 $u(w)$는 계층 $W = w$에서의 치료 $A$의 최소 및 최대값입니다. 예를 들어, $A$가 (연속형인) 영양 보충제 복용량(예: 비타민 알약 수)을 나타내고 $W = w$ 조건 하의 $A$ 분포의 지지 집합(support)이 구간 $(l(w), u(w))$에 있다고 가정해 보십시오. 즉, 공변량 계층 $W = w$인 개인의 최소 알약 복용량은 $l(w)$이고, 최대는 $u(w)$입니다. 이러한 확률적 중재는 클리닉 정책이 개인의 기본 특성 $W$에 기반하여 평소 권장되는 양($A$)보다 $\delta$만큼 더 많은 알약을 섭취하도록($A \delta$) 권장하는 결과로 해석될 수 있습니다. 이러한 부류의 확률적 중재는 @diaz2012population 에 의해 도입되었으며 @haneuse2013estimation, @diaz2018stochastic, @hejazi2020efficient 및 @hejazi2021semiparametric 에서 추가로 논의되었습니다. 이 부류의 중재는 @diaz2012population 에 따라 무작위 추출 $\P_{A_{\delta}}(g_{0, A})(A = a \mid W) = g_{0,A}(a - \delta(W) \mid W)$를 고려함으로써 일반적인 확률적 중재로 표현될 수 있습니다.
 
-중제의 인과 효과를 평가하기 위해, 우리는 확률적으로 수정된 중제 분포 하에서의 결과의 반사실적 평균을 관심 매개변수로 고려합니다. 타겟 인과 추정치는 반사실적 결과 변수 $Y_{A_{\delta}}$의 평균인 $\psi_{0, \delta} \coloneqq \E_{P_0^{A_{\delta}}}\{Y_{A_{\delta}}\}$입니다. @diaz2018stochastic 은 $\psi_{0, \delta}$가 $O$ 분포의 함수(functional)로 식별될 수 있음을 보여주었습니다:
+중재의 인과 효과를 평가하기 위해, 우리는 확률적으로 수정된 중재 분포 하에서의 결과의 반사실적 평균을 관심 매개변수로 고려합니다. 타겟 인과 추정치는 반사실적 결과 변수 $Y_{A_{\delta}}$의 평균인 $\psi_{0, \delta} \coloneqq \E_{P_0^{A_{\delta}}}\{Y_{A_{\delta}}\}$입니다. @diaz2018stochastic 은 $\psi_{0, \delta}$가 $O$ 분포의 함수(functional)로 식별될 수 있음을 보여주었습니다:
 \begin{align}
   \psi_{0,\delta} = \int_{\mathcal{W}} \int_{\mathcal{A}} & \E_{P_0}
    \{Y \mid A = d(a, w), W = w\} \nonumber \\ &q_{0, A}(a \mid W = w)
@@ -348,7 +348,7 @@ $$\delta_{\text{min}}(a, w) = \text{argmin}_{\left\{\delta \leq 0, \frac{g(a - \
     \end{cases},
   (\#eq:shift-bounded-simple)
 \end{equation}
-이는 중제 후 밀도 $g(a - \delta \mid w)$와 자연적 치료 밀도 $g(a \mid w)$의 비율 $C(\delta)$가 경계 $M$을 초과하지 않을 때 자연적 치료 값 $A = a$를 $\delta$만큼 이동시키는 중재에 해당합니다. $C(\delta)$가 경계 $M$을 초과할 경우, 확률적 중재는 해당 단위를 치료 수정에서 제외하여 자연적 치료 값 $A = a$로 남겨둡니다.
+이는 중재 후 밀도 $g(a - \delta \mid w)$와 자연적 치료 밀도 $g(a \mid w)$의 비율 $C(\delta)$가 경계 $M$을 초과하지 않을 때 자연적 치료 값 $A = a$를 $\delta$만큼 이동시키는 중재에 해당합니다. $C(\delta)$가 경계 $M$을 초과할 경우, 확률적 중재는 해당 단위를 치료 수정에서 제외하여 자연적 치료 값 $A = a$로 남겨둡니다.
 
 ### `tmle3_Spec`을 통한 `vimshift` 초기화
 
@@ -477,7 +477,6 @@ washb_tmle_fit
 
 ---
 
----
 
 ## 연습 문제
 
@@ -487,8 +486,6 @@ washb_tmle_fit
 슈퍼 러너를 위한 알고리즘 `sl3` 라이브러리를 단순하고 해석 가능한 라이브러리로 설정하고, 이 새로운 라이브러리를 사용하여 이동 $\delta = 0$일 때 어머니의 출산 당시 나이(`momage`)의 반사실적 평균을 추정해 보세요. 이 반사실적 평균은 관찰된 데이터 측면에서 무엇과 같습니까?
 :::
 
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
 
 ```{r shift-action-ex1-sol, echo=FALSE}
 ```
@@ -498,8 +495,6 @@ washb_tmle_fit
 이동 매개변수 $\delta$의 격자 값(예: $\{-1, 0, +1\}$)을 사용하여 앞의 질문에서 선택한 변수에 대해 분석을 반복하고, 한계 구조 모델(MSM)을 사용하여 이 이동 시퀀스에 대한 경향을 요약해 보세요.
 :::
 
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
 
 ```{r shift-action-ex2-sol, echo=FALSE}
 ```
@@ -508,9 +503,6 @@ washb_tmle_fit
 ::: {.callout-tip title="연습 문제 3"}
 동일한 이동 격자를 사용하되, 이번에는 한계 구조 모델의 매개변수를 직접 타겟팅하여 앞의 분석을 반복해 보세요. 결과를 해석해 보세요. 즉, 한계 구조 모델의 기울기는 선택한 이동 시퀀스 전반의 경향에 대해 무엇을 말해줍니까?
 :::
-
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
 
 ```{r shift-action-ex3-sol, echo=FALSE}
 ```
@@ -522,24 +514,13 @@ washb_tmle_fit
 확률적 중재의 인과 효과를 해석할 수 있는 두 가지 (동등한) 방법에 대해 설명해 보세요.
 :::
 
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
-:::
-
 ::: {.callout-tip title="연습 문제 5"}
 여러 이동 격자 $\{ \delta_1, \ldots, \delta_k \}$에 걸친 추정치와 경향을 요약하는 한계 구조 모델 매개변수가 제공하는 정보가 우리의 발견에 대한 해석을 어떻게 풍부하게 할 수 있을까요?
 :::
 
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
-:::
 
 ::: {.callout-tip title="연습 문제 6"}
 한계 구조 모델의 매개변수를 직접 타겟팅할 때의 장점은 무엇입니까?
-:::
-
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
 :::
 
 <!--

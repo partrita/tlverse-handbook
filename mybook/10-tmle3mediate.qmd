@@ -416,43 +416,16 @@ washb_pie_decomp <- tmle3(
 WASH Benefits 데이터셋을 살펴보고, 치료가 키 대비 몸무게 Z-점수(WHZ)에 미치는 효과의 잠재적 매개체 세트를 다르게 선택해 보세요. 이렇게 새로 선택한 매개체 세트(또는 단일 매개체)를 사용하여 자연적 직접 및 간접 효과를 추정해 보세요. 이러한 추정치에 대한 해석을 제공하세요.
 :::
 
-::: {.solution}
-추후 제공 예정
-:::
 
 ::: {.callout-tip title="연습 문제 2"}
 자연적 직접 효과와 간접 효과의 가법성(additivity)이 성립하는지 평가해 보세요. 위에서 추정된 자연적 직접 및 간접 효과를 사용하여 그 합이 ATE를 복구합니까?
 :::
 
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
-:::
 
 ::: {.callout-tip title="연습 문제"}
 WASH Benefits 예제에서 자연적 직접 및 간접 효과의 식별에 필요한 가정이 타당한지 평가해 보세요. 특히 치료 및 매개체 양의 조건에 대한 경험적 진단 측면에서 이 평가를 수행하세요.
 :::
 
-::: {.callout-note icon=false title="해답"}
-추후 제공 예정
-:::
-
-### 개념의 실전 적용
-
-::: {.exercise}
-추후 제공 예정
-:::
-
-::: {.solution}
-추후 제공 예정
-:::
-
-::: {.exercise}
-추후 제공 예정
-:::
-
-::: {.solution}
-추후 제공 예정
-:::
 
 <!--
 1. Incremental propensity score interventions.
