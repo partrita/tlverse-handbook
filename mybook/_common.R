@@ -73,9 +73,9 @@ knitr::write_bib(c(
 
 # create and set global ggplot theme
 # borrowed from https://github.com/tidymodels/TMwR/blob/master/_common.R
-theme_transparent <- function(...) {
+theme_transparent <- function(base_family = "Noto Sans CJK KR", ...) {
   # use black-white theme as base
-  ret <- ggplot2::theme_bw(base_family = "Noto Sans CJK KR", ...)
+  ret <- ggplot2::theme_bw(base_family = base_family, ...)
 
   # modify with transparencies
   trans_rect <- ggplot2::element_rect(fill = "transparent", colour = NA)
