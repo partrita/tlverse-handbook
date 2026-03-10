@@ -604,7 +604,8 @@ Q_learning(tmle_spec_Q, initial_likelihood, tmle_task)[1]
 
 ```{r data_vim-nodes-mopttx}
 # 기본 공변량을 3개 범주로 빈 처리:
-data$W1<-ifelse(data$W1<quantile(data$W1)[2],1,ifelse(data$W1<quantile(data$W1)[3],2,3))
+w1_quantiles <- quantile(data$W1)
+data$W1 <- ifelse(data$W1 < w1_quantiles[2], 1, ifelse(data$W1 < w1_quantiles[3], 2, 3))
 
 node_list <- list(
   W = c("W3", "W4", "W2"),
