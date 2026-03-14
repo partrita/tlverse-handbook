@@ -991,7 +991,8 @@ the data-generating distribution [described previously](#oit-eval):
 
 ```{r data_vim-nodes-mopttx}
 # bin baseline covariates to 3 categories:
-data$W1<-ifelse(data$W1<quantile(data$W1)[2],1,ifelse(data$W1<quantile(data$W1)[3],2,3))
+w1_quantiles <- quantile(data$W1)
+data$W1 <- ifelse(data$W1 < w1_quantiles[2], 1, ifelse(data$W1 < w1_quantiles[3], 2, 3))
 
 node_list <- list(
   W = c("W3", "W4", "W2"),
