@@ -914,13 +914,14 @@ window.Quarto = {
 <p>설명을 위해, <a href="#oit-eval">이전에 설명한</a> 데이터 생성 분포에 해당하는 기본 공변량을 범주화합니다:</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 기본 공변량을 3개 범주로 빈 처리:</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>W1<span class="ot">&lt;-</span><span class="fu">ifelse</span>(data<span class="sc">$</span>W1<span class="sc">&lt;</span><span class="fu">quantile</span>(data<span class="sc">$</span>W1)[<span class="dv">2</span>],<span class="dv">1</span>,<span class="fu">ifelse</span>(data<span class="sc">$</span>W1<span class="sc">&lt;</span><span class="fu">quantile</span>(data<span class="sc">$</span>W1)[<span class="dv">3</span>],<span class="dv">2</span>,<span class="dv">3</span>))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> <span class="fu">c</span>(<span class="st">"W3"</span>, <span class="st">"W4"</span>, <span class="st">"W2"</span>),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">c</span>(<span class="st">"W1"</span>, <span class="st">"A"</span>),</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="st">"Y"</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>w1_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(data<span class="sc">$</span>W1)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>W1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data<span class="sc">$</span>W1 <span class="sc">&lt;</span> w1_quantiles[<span class="dv">2</span>], <span class="dv">1</span>, <span class="fu">ifelse</span>(data<span class="sc">$</span>W1 <span class="sc">&lt;</span> w1_quantiles[<span class="dv">3</span>], <span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>node_list <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">W =</span> <span class="fu">c</span>(<span class="st">"W3"</span>, <span class="st">"W4"</span>, <span class="st">"W2"</span>),</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">c</span>(<span class="st">"W1"</span>, <span class="st">"A"</span>),</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Y =</span> <span class="st">"Y"</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>이제 노드 리스트에 치료로 <span class="math inline">\(W_1\)</span>도 포함됩니다! 걱정하지 마세요. 여전히 모든 기본 공변량에 대해 적절하게 조정할 것입니다.</p>
 </section>
