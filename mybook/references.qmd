@@ -3,7 +3,7 @@ source("_common.R")
 ```
 
 ::: {.content-visible when-format="html"}
-# References {.unnumbered}
+# 참고문헌 {.unnumbered}
 :::
 
 ::: {#refs}
